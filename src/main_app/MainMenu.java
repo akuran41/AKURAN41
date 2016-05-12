@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import project_const.WindowArgs;
-import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
@@ -31,7 +30,6 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 	private JLabel				lblUsername;
 
 	private CreateLabel				createLabel;
-	private CreateButton			createButton;
 	private CreateSeparator			createSeparator;
 
 	private int					_id;
@@ -70,8 +68,6 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 
 		// Etiket nesnesi olustur
 		createLabel = new CreateLabel();
-		//	Dugme nesnesini olustur
-		createButton = new CreateButton();
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
 

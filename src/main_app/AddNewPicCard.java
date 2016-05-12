@@ -3,26 +3,18 @@ package main_app;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-
-import db_process.ConnectDatabase;
-import db_process.WriteDatabase;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
 
 public class AddNewPicCard extends JFrame
 {
@@ -32,7 +24,6 @@ public class AddNewPicCard extends JFrame
 	private JLabel				lblUsername;
 
 	private int					_id;
-	private int					auth_id;
 	private String				user_name;
 	private JTextField textField;
 
@@ -90,39 +81,6 @@ public class AddNewPicCard extends JFrame
 		JSeparator separator = new JSeparator();
 		separator.setBounds(10, 59, 414, 2);
 		contentPane.add(separator);
-
-		JButton btnCikis = new JButton("CIKIS");
-		btnCikis.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				// Sistemden cikis saatini veri tabanina yaz
-				int cevap = JOptionPane.showConfirmDialog(null, "Sistemden Cikmak istediginize eminmisiniz?", "Guvenli Cikis", JOptionPane.OK_CANCEL_OPTION);
-
-				if (cevap == JOptionPane.YES_OPTION)
-				{
-					ConnectDatabase connection = null;
-
-					try
-					{
-						connection = new ConnectDatabase(true);
-					}
-					catch (SQLException e)
-					{
-						e.printStackTrace();
-					}
-
-					WriteDatabase updateLogut = new WriteDatabase(connection.getMysqlConnection());
-					updateLogut.executeQuery("UPDATE user_log SET logout_time = '" + (System.currentTimeMillis() / 1000) + "' WHERE user_id = '" + _id
-							+ "' ORDER BY _id DESC LIMIT 1");
-
-					System.exit(1);
-					System.gc();
-				}
-			}
-		});
-		btnCikis.setBounds(10, 28, 89, 23);
-		contentPane.add(btnCikis);
 		
 		JLabel lblBitkiId = new JLabel("Bitki ID");
 		lblBitkiId.setFont(new Font("Tahoma", Font.PLAIN, 13));
