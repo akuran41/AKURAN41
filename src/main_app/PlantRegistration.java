@@ -4,17 +4,23 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Properties;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -49,8 +55,6 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private JTextField			txtBitkiCinsi;
 	private JTextField			txtBitkiYore;
 	private JTextField			txtYetismeSuresi;
-	private JTextField			txtHasatZamani;
-	private JTextField			txtEkimZamani;
 	private JTextField			txtHasatBoy;
 	private JTextField			txtHasatAgirlik;
 	private JTextField			txtHasatSatisFiyati;
@@ -90,6 +94,9 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private JComboBox<String>	comboDikimSekli;
 	private JComboBox<String>	comboSatisSekli;
 	private JComboBox<String>	comboBitkiTuru;
+	
+	private Date				txtHasatZamani;
+	private Date				txtEkimZamani;
 
 	private JLabel				lblUsername;
 	private JLabel				lblForImageHolder;
@@ -100,6 +107,9 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private CreateSeparator		createSeparator;
 
 	private File				file;
+
+	private JDatePickerImpl 	datePickerForEkim;
+	private JDatePickerImpl 	datePickerForHasat;
 
 	private int					_id;
 
@@ -147,7 +157,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		createInputArea();
 
 		String[] boxOptions = {"YAPRAK", "KÖK", "SEBZE", "MEYVE", "ÇİÇEK"};
-		comboBitkiTuru = new JComboBox(boxOptions);
+		comboBitkiTuru = new JComboBox<String>(boxOptions);
 		comboBitkiTuru.setBounds(107, 91, 175, 25);
 		contentPane.add(comboBitkiTuru);
 
@@ -182,7 +192,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		try
 		{
 			// Ulkelerin listesini getir
-			comboBitkiUlke = new JComboBox(getCountryList());
+			comboBitkiUlke = new JComboBox<String>(getCountryList());
 		}
 		catch (SQLException e)
 		{
@@ -192,47 +202,18 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		comboBitkiUlke.setBounds(107, 127, 175, 25);
 		contentPane.add(comboBitkiUlke);
 
-		txtHasatZamani = new JTextField();
-		txtHasatZamani.setEditable(false);
-		txtHasatZamani.setBounds(107, 212, 155, 25);
-		contentPane.add(txtHasatZamani);
-		txtHasatZamani.setColumns(10);
-
-		JButton btnNewButton = new JButton("...");
-		btnNewButton.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				myDatePicker(txtHasatZamani);
-			}
-		});
-		btnNewButton.setBounds(265, 212, 25, 25);
-		contentPane.add(btnNewButton);
-
-		txtEkimZamani = new JTextField();
-		txtEkimZamani.setEditable(false);
-		txtEkimZamani.setBounds(107, 176, 155, 25);
-		contentPane.add(txtEkimZamani);
-		txtEkimZamani.setColumns(10);
-
-		JButton btnNewButton_1 = new JButton("...");
-		btnNewButton_1.addActionListener(new ActionListener()
-		{
-			public void actionPerformed(ActionEvent arg0)
-			{
-				myDatePicker(txtEkimZamani);
-			}
-		});
-		btnNewButton_1.setBounds(265, 176, 25, 25);
-		contentPane.add(btnNewButton_1);
+		//	Datepicker for Hasat zamani
+		myDatePickerForHasat();
+		//	Datepicker for Ekim zamani
+		myDatePickerForEkim();
 
 		String[] dikimSekli = {"ADET", "DEMET", "KASA", "KG"};
-		comboDikimSekli = new JComboBox(dikimSekli);
+		comboDikimSekli = new JComboBox<String>(dikimSekli);
 		comboDikimSekli.setBounds(107, 369, 175, 25);
 		contentPane.add(comboDikimSekli);
 
 		String[] satisSekli = {"TOHUM", "FİDE", "SOĞAN"};
-		comboSatisSekli = new JComboBox(satisSekli);
+		comboSatisSekli = new JComboBox<String>(satisSekli);
 		comboSatisSekli.setBounds(401, 369, 175, 25);
 		contentPane.add(comboSatisSekli);
 
@@ -251,6 +232,9 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 				{
 					e1.printStackTrace();
 				}
+				
+				//	Pencereyi kapat
+				dispose();
 			}
 		});
 		contentPane.add(btnKayit);
@@ -436,20 +420,51 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(txtGeceGidaF);
 	}
 
-	private String myDatePicker(JTextField txtEkimZamani2)
+	private void myDatePickerForEkim()
 	{
 		UtilDateModel model = new UtilDateModel();
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, null);
-		JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, null);
-		datePicker.setBounds(220, 350, 120, 30);
-		contentPane.add(datePicker);
+		
+		Properties p = new Properties();
+		p.put("text.today", "Today");
+		p.put("text.month", "Month");
+		p.put("text.year", "Year");
+		
+	    JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+	    datePickerForEkim = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+	    datePickerForEkim.setBounds(107, 176, 175, 25);
+		contentPane.add(datePickerForEkim);
+		
+		contentPane.validate();
+	}
 
-		return null;
+	private void myDatePickerForHasat()
+	{
+		UtilDateModel model = new UtilDateModel();
+		
+		Properties p = new Properties();
+		p.put("text.today", "Bugün");
+		p.put("text.month", "Ay");
+		p.put("text.year", "Yıl");
+		
+	    JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
+	    datePickerForHasat = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+	    datePickerForHasat.setBounds(107, 212, 175, 25);
+		contentPane.add(datePickerForHasat);
+		
+		contentPane.validate();
 	}
 
 	private void registerMyPlant() throws SQLException, IOException
 	{
 		//	Bitki SQL sorgusu
+		
+		txtEkimZamani = (Date) datePickerForEkim.getModel().getValue();
+		txtHasatZamani = (Date) datePickerForHasat.getModel().getValue();
+		
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String ekim = df.format(txtEkimZamani);
+	    String hasat = df.format(txtHasatZamani);
+		
 		String query = "INSERT INTO bitki(bitki_adi, bitki_cinsi, bitki_turu, bitki_resim, bitki_ulke, bitki_yore, bitki_ekme_zamani, bitki_yetisme_suresi, bitki_hasat_zamani, "
 				+ "bitki_tohum_satici, bitki_tohum_fiyat, bitki_fide_satici, bitki_fide_fiyat, bitki_hasat_boy, bitki_hasat_agirlik, bitki_hasat_fiyat, bitki_satis_tip, bitki_dikim_tip, "
 				+ "bitki_isik_siddet, bitki_isik_dalgaboy, bitki_gunduz_isik_sure, bitki_gece_isik_sure, bitki_gunduz_ortam_isi, bitki_gece_ortam_isi, bitki_gunduz_nem, bitki_gece_nem, "
@@ -457,7 +472,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 				+ "bitki_gunduz_gida_b, bitki_gunduz_gida_c, bitki_gunduz_gida_d, bitki_gunduz_gida_e, bitki_gunduz_gida_f, bitki_gece_gida_a, bitki_gece_gida_b, bitki_gece_gida_c, "
 				+ "bitki_gece_gida_d, bitki_gece_gida_e, bitki_gece_gida_f) "
 				+ "VALUES ('" + txtBitkiAdi.getText() + "', '" + txtBitkiCinsi.getText() + "', '" + comboBitkiTuru.getSelectedItem() + "', '" + file.getName() + "', '" + comboBitkiUlke.getSelectedItem() + "', "
-				+ "'" + txtBitkiYore.getText() + "', '" + txtEkimZamani.getText() + "', '" + txtYetismeSuresi.getText() + "', '" + txtHasatZamani.getText() + "', '" + txtTohumSatici.getText() + "', "
+				+ "'" + txtBitkiYore.getText() + "', '" + ekim + "', '" + txtYetismeSuresi.getText() + "', '" + hasat + "', '" + txtTohumSatici.getText() + "', "
 				+ "'" + txtTohumFiyat.getText() + "', '" + txtFideSatici.getText() + "', '" + txtFideFiyat.getText() + "', '" + txtHasatBoy.getText() + "', '" + txtHasatAgirlik.getText() + "', '" + txtHasatSatisFiyati.getText() + "', '" + comboSatisSekli.getSelectedItem() + "', '" + comboDikimSekli.getSelectedItem() + "', "
 				+ "'" + txtIsikSiddeti.getText() + "', '" + txtIsikDalgaboyu.getText() + "', '" + txtGunduzIsikSure.getText() + "', '" + txtGeceIsikSure.getText() + "', '" + txtGunduzOrtamIsi.getText() + "', '" + txtGeceOrtamIsi.getText() + "', '" + txtGunduzNemOran.getText() + "', '" + txtGeceNemOran.getText() + "', "
 				+ "'" + txtGunduzO2Oran.getText() + "', '" + txtGeceO2Oran.getText() + "', '" + txtGunCO2Oran.getText() + "', '" + txtGeceCO2Oran.getText() + "', '" + txtGunCansuyuIsi.getText() + "', '" + txtGeceCansuyuIsi.getText() + "', '" + txtCansuyuPh.getText() + "', '" + txtGunduzGidaA.getText() + "', "
@@ -468,14 +483,13 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		Connection connection = connectDatabase.getMysqlConnection();
 		WriteDatabase writeLog = new WriteDatabase(connection);
 		
+		writeLog.executeQuery(query);
 		writeLog.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) "
-				+ "VALUES('" + _id + "', '" + CreateTime.getCurrentTime() + "', '" + txtBitkiAdi.getText() + " isimli bitkinin giriş kaydını oluşturdu.)");
+				+ "VALUES('" + _id + "', '" + CreateTime.getCurrentTime() + "', '" + txtBitkiAdi.getText() + " isimli bitkinin giriş kaydını oluşturdu.')");
 		
 		//	Secilen resmi C:\sera\resimler dizini altina kopyala
 		File destLocation = new File(FilePath.getImageFolder() + "\\" + file.getName());
 		FileUtils.moveFile(file, destLocation);
-		
-		
 	}
 
 	private String[] getCountryList() throws SQLException
@@ -515,5 +529,31 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	public void setAuthID(int auth_id)
 	{
 		// Auto-generated method stub
+	}
+
+	public class DateLabelFormatter extends AbstractFormatter
+	{
+		private static final long	serialVersionUID	= -2466386115859717262L;
+		
+		private String datePattern = "yyyy-MM-dd";
+	    private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern, Locale.getDefault());
+
+	    @Override
+	    public Object stringToValue(String text) throws ParseException
+	    {
+	        return dateFormatter.parseObject(text);
+	    }
+
+	    @Override
+	    public String valueToString(Object value) throws ParseException
+	    {
+	        if (value != null)
+	        {
+	            Calendar cal = (Calendar) value;
+	            return dateFormatter.format(cal.getTime());
+	        }
+
+	        return "";
+	    }
 	}
 }
