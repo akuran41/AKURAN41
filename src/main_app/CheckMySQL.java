@@ -30,6 +30,8 @@ public class CheckMySQL
 
 		// Check ini file first
 		checkMySql.checkIniFile();
+		// Create image folder
+		checkMySql.checkPictureFolder();
 		// check connection
 		checkMySql.sqlConnection();
 	}
@@ -46,25 +48,25 @@ public class CheckMySQL
 				// Veritabani baglantisi yap.
 				connectDatabase = new ConnectDatabase();
 
-				//	INI dosyasindan veri tabani ismini al
+				// INI dosyasindan veri tabani ismini al
 				String myDatabaseName = new ReadMyIniFile().getMyDatabaseName();
 				String databaseName = "";
-				
+
 				ResultSet resultSet = connectDatabase.getMysqlConnection().getMetaData().getCatalogs();
 
 				// MySQL icindeki veritbani listesini al
 				while (resultSet.next())
 				{
-					//	Eger liste icerisinde SERA isminde veri tabani varsa
-					//	donguyu sonlandir
-					if(resultSet.getString(1).equals(myDatabaseName))
+					// Eger liste icerisinde SERA isminde veri tabani varsa
+					// donguyu sonlandir
+					if (resultSet.getString(1).equals(myDatabaseName))
 					{
 						databaseName = resultSet.getString(1);
 						break;
 					}
 				}
-				
-				//	ResultSet i kapat
+
+				// ResultSet i kapat
 				resultSet.close();
 
 				if (databaseName.equals(myDatabaseName))
@@ -119,5 +121,14 @@ public class CheckMySQL
 				e.printStackTrace();
 			}
 		}
+	}
+
+	private void checkPictureFolder()
+	{
+		File file = new File(FilePath.getImageFolder());
+		// Eger sistem uzerinde C:\sera\resimler klasoru yoksa yeni klasor
+		// olustur.
+		if (!file.exists())
+			file.mkdirs();
 	}
 }

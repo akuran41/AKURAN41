@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.apache.commons.io.FileUtils;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -35,6 +37,8 @@ import utils.CreateTime;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
+import db_process.WriteDatabase;
+import files.FilePath;
 
 public class PlantRegistration extends JFrame implements LoginDataDisplay
 {
@@ -43,7 +47,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 
 	private JTextField			txtBitkiAdi;
 	private JTextField			txtBitkiCinsi;
-	private JTextField			textField;
+	private JTextField			txtBitkiYore;
 	private JTextField			txtYetismeSuresi;
 	private JTextField			txtHasatZamani;
 	private JTextField			txtEkimZamani;
@@ -94,7 +98,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private CreateInput			createInput;
 	private CreateButton		createButton;
 	private CreateSeparator		createSeparator;
-	
+
 	private File				file;
 
 	private int					_id;
@@ -154,7 +158,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 			{
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-				
+
 				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
 
 				// Get Integer type result from DialogPane
@@ -166,7 +170,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 					// Then assign Folder name to file
 					file = fileChooser.getSelectedFile();
 					// Display textField
-					
+
 					ImageIcon imageIcon = new ImageIcon(file.toString());
 					lblForImageHolder.setIcon(imageIcon);
 				}
@@ -195,6 +199,13 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		txtHasatZamani.setColumns(10);
 
 		JButton btnNewButton = new JButton("...");
+		btnNewButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				myDatePicker(txtHasatZamani);
+			}
+		});
 		btnNewButton.setBounds(265, 212, 25, 25);
 		contentPane.add(btnNewButton);
 
@@ -209,7 +220,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				myDataPicker(txtEkimZamani);
+				myDatePicker(txtEkimZamani);
 			}
 		});
 		btnNewButton_1.setBounds(265, 176, 25, 25);
@@ -226,6 +237,22 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(comboSatisSekli);
 
 		JButton btnKayit = createButton.generateButton("KAYIT", 880, 727);
+		btnKayit.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				// Bitki kayit et.
+				try
+				{
+					registerMyPlant();
+				}
+				catch (SQLException | IOException e1)
+				{
+					e1.printStackTrace();
+				}
+			}
+		});
 		contentPane.add(btnKayit);
 
 		JButton btnIptal = createButton.generateButton("İPTAL", 10, 727);
@@ -335,8 +362,8 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(txtBitkiAdi);
 		txtBitkiCinsi = createInput.generateTextField(false, 401, 56, 175);
 		contentPane.add(txtBitkiCinsi);
-		textField = createInput.generateTextField(false, 401, 127, 175);
-		contentPane.add(textField);
+		txtBitkiYore = createInput.generateTextField(false, 401, 127, 175);
+		contentPane.add(txtBitkiYore);
 		txtYetismeSuresi = createInput.generateTextField(true, 401, 182, 75);
 		contentPane.add(txtYetismeSuresi);
 		txtHasatBoy = createInput.generateTextField(true, 401, 212, 75);
@@ -409,7 +436,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(txtGeceGidaF);
 	}
 
-	private String myDataPicker(JTextField txtEkimZamani2)
+	private String myDatePicker(JTextField txtEkimZamani2)
 	{
 		UtilDateModel model = new UtilDateModel();
 		JDatePanelImpl datePanel = new JDatePanelImpl(model, null);
@@ -420,9 +447,39 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		return null;
 	}
 
+	private void registerMyPlant() throws SQLException, IOException
+	{
+		//	Bitki SQL sorgusu
+		String query = "INSERT INTO bitki(bitki_adi, bitki_cinsi, bitki_turu, bitki_resim, bitki_ulke, bitki_yore, bitki_ekme_zamani, bitki_yetisme_suresi, bitki_hasat_zamani, "
+				+ "bitki_tohum_satici, bitki_tohum_fiyat, bitki_fide_satici, bitki_fide_fiyat, bitki_hasat_boy, bitki_hasat_agirlik, bitki_hasat_fiyat, bitki_satis_tip, bitki_dikim_tip, "
+				+ "bitki_isik_siddet, bitki_isik_dalgaboy, bitki_gunduz_isik_sure, bitki_gece_isik_sure, bitki_gunduz_ortam_isi, bitki_gece_ortam_isi, bitki_gunduz_nem, bitki_gece_nem, "
+				+ "bitki_gunduz_o2, bitki_gece_o2, bitki_gunduz_c2o, bitki_gece_c2o, bitki_gunduz_cansuyu_isi, bitki_gece_cansuyu_isi, bitki_cansuyu_ph, bitki_gunduz_gida_a, "
+				+ "bitki_gunduz_gida_b, bitki_gunduz_gida_c, bitki_gunduz_gida_d, bitki_gunduz_gida_e, bitki_gunduz_gida_f, bitki_gece_gida_a, bitki_gece_gida_b, bitki_gece_gida_c, "
+				+ "bitki_gece_gida_d, bitki_gece_gida_e, bitki_gece_gida_f) "
+				+ "VALUES ('" + txtBitkiAdi.getText() + "', '" + txtBitkiCinsi.getText() + "', '" + comboBitkiTuru.getSelectedItem() + "', '" + file.getName() + "', '" + comboBitkiUlke.getSelectedItem() + "', "
+				+ "'" + txtBitkiYore.getText() + "', '" + txtEkimZamani.getText() + "', '" + txtYetismeSuresi.getText() + "', '" + txtHasatZamani.getText() + "', '" + txtTohumSatici.getText() + "', "
+				+ "'" + txtTohumFiyat.getText() + "', '" + txtFideSatici.getText() + "', '" + txtFideFiyat.getText() + "', '" + txtHasatBoy.getText() + "', '" + txtHasatAgirlik.getText() + "', '" + txtHasatSatisFiyati.getText() + "', '" + comboSatisSekli.getSelectedItem() + "', '" + comboDikimSekli.getSelectedItem() + "', "
+				+ "'" + txtIsikSiddeti.getText() + "', '" + txtIsikDalgaboyu.getText() + "', '" + txtGunduzIsikSure.getText() + "', '" + txtGeceIsikSure.getText() + "', '" + txtGunduzOrtamIsi.getText() + "', '" + txtGeceOrtamIsi.getText() + "', '" + txtGunduzNemOran.getText() + "', '" + txtGeceNemOran.getText() + "', "
+				+ "'" + txtGunduzO2Oran.getText() + "', '" + txtGeceO2Oran.getText() + "', '" + txtGunCO2Oran.getText() + "', '" + txtGeceCO2Oran.getText() + "', '" + txtGunCansuyuIsi.getText() + "', '" + txtGeceCansuyuIsi.getText() + "', '" + txtCansuyuPh.getText() + "', '" + txtGunduzGidaA.getText() + "', "
+				+ "'" + txtGunduzGidaB.getText() + "', '" + txtGunduzGidaC.getText() + "', '" + txtGunduzGidaD.getText() + "', '" + txtGunduzGidaE.getText() + "', '" + txtGunduzGidaF.getText() + "', '" + txtGeceGidaA.getText() + "', '" + txtGeceGidaB.getText() + "', '" + txtGeceGidaC.getText() + "', "
+				+ "'" + txtGeceGidaD.getText() + "', '" + txtGeceGidaE.getText() + "', '" + txtGeceGidaF.getText() + "')";
+		
+		ConnectDatabase connectDatabase = new ConnectDatabase(true);
+		Connection connection = connectDatabase.getMysqlConnection();
+		WriteDatabase writeLog = new WriteDatabase(connection);
+		
+		writeLog.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) "
+				+ "VALUES('" + _id + "', '" + CreateTime.getCurrentTime() + "', '" + txtBitkiAdi.getText() + " isimli bitkinin giriş kaydını oluşturdu.)");
+		
+		//	Secilen resmi C:\sera\resimler dizini altina kopyala
+		File destLocation = new File(FilePath.getImageFolder() + "\\" + file.getName());
+		FileUtils.moveFile(file, destLocation);
+		
+		
+	}
+
 	private String[] getCountryList() throws SQLException
 	{
-		// boolean isInit = false;
 		String[] countryList = new String[246];
 
 		ConnectDatabase connectDatabase = new ConnectDatabase(true);

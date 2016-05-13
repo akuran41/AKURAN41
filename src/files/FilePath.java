@@ -11,4 +11,9 @@ public class FilePath
 	{
 		return "\\mysera.ini";
 	}
+	
+	public static final String getImageFolder()
+	{
+		return "C:\\sera\\resimler";
+	}
 }
