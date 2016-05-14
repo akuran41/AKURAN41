@@ -29,8 +29,8 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 
 	private JLabel				lblUsername;
 
-	private CreateLabel				createLabel;
-	private CreateSeparator			createSeparator;
+	private CreateLabel			createLabel;
+	private CreateSeparator		createSeparator;
 
 	private int					_id;
 	private int					auth_id;
@@ -58,7 +58,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 	public MainMenu()
 	{
 		setResizable(WindowArgs._ISRESIZE);
-		setTitle("Ana Menu");
+		setTitle("Ana Menü");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 408, 497);
 		contentPane = new JPanel();
@@ -99,7 +99,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(contentPane, "Bu bolume erisim yetkiniz yok.", "HATA", JOptionPane.ERROR_MESSAGE, null);
+					displayNoAuth();
 				}
 			}
 		});
@@ -107,7 +107,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		btnNewButton_1.setBounds(10, 328, 120, 120);
 		contentPane.add(btnNewButton_1);
 
-		JButton btnNewButton_2 = new JButton("<html>LOG<br>YONETIMI</html>");
+		JButton btnNewButton_2 = new JButton("<html>LOG<br>YÖNETİMİ</html>");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_2.setBounds(270, 200, 120, 120);
 		contentPane.add(btnNewButton_2);
@@ -116,9 +116,8 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		contentPane.add(lblUsername);
 		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 190, 31, 200, 20));
 		contentPane.add(createSeparator.generateSeparator(10, 56, 390));
-		
 
-		JButton btnCikis = new JButton("CIKIS");
+		JButton btnCikis = new JButton("ÇIKIŞ");
 		btnCikis.setForeground(Color.RED);
 		btnCikis.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnCikis.addActionListener(new ActionListener()
@@ -126,7 +125,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 			public void actionPerformed(ActionEvent arg0)
 			{
 				// Sistemden cikis saatini veri tabanina yaz
-				int cevap = JOptionPane.showConfirmDialog(null, "Sistemden Cikmak istediginize eminmisiniz?", "Guvenli Cikis", JOptionPane.OK_CANCEL_OPTION);
+				int cevap = JOptionPane.showConfirmDialog(null, "Sistemden çıkmak istediğinize eminmisiniz?", "Güvenli Çıkış", JOptionPane.OK_CANCEL_OPTION);
 
 				if (cevap == JOptionPane.YES_OPTION)
 				{
@@ -141,8 +140,8 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 						e.printStackTrace();
 					}
 
-					String queryForLog = "INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '"
-							+ CreateTime.getCurrentTime() + "', 'Sistemden cikis yapti.')";
+					String queryForLog = "INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
+							+ "', 'Sistemden çıkış yaptı.')";
 
 					WriteDatabase updateLogut = new WriteDatabase(connection.getMysqlConnection());
 					updateLogut.executeQuery(queryForLog);
@@ -155,40 +154,71 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		btnCikis.setBounds(300, 358, 90, 90);
 		contentPane.add(btnCikis);
 
-		JButton btnBitkiEkle = new JButton("<html>BITKI<br>EKLE</html>");
+		JButton btnBitkiEkle = new JButton("<html>BİTKİ<br>EKLE</html>");
 		btnBitkiEkle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				PlantRegistration registerNewPlant = new PlantRegistration();
-				registerNewPlant.setUserID(_id);
-				registerNewPlant.setUserName(user_name);
-				registerNewPlant.setVisible(true);
+				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
+				{
+					PlantRegistration registerNewPlant = new PlantRegistration();
+					registerNewPlant.setUserID(_id);
+					registerNewPlant.setUserName(user_name);
+					registerNewPlant.setVisible(true);
+				}
+				else
+				{
+					displayNoAuth();
+				}
 			}
 		});
 		btnBitkiEkle.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnBitkiEkle.setBounds(10, 69, 120, 120);
 		contentPane.add(btnBitkiEkle);
 
-		JButton btnNewButton_4 = new JButton("<html>BITKI<br>DUZENLE</html>");
+		JButton btnNewButton_4 = new JButton("<html>BİTKİ<br>DÜZENLE</html>");
+		btnNewButton_4.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
+				{
+					PlantManagment plantManagment = new PlantManagment();
+					plantManagment.setUserID(_id);
+					plantManagment.setUserName(user_name);
+					plantManagment.setVisible(true);
+				}
+				else
+				{
+					displayNoAuth();
+				}
+			}
+		});
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_4.setBounds(140, 69, 120, 120);
 		contentPane.add(btnNewButton_4);
 
-		JButton btnNewButton_5 = new JButton("<html>KART<br>DUZENLE</html>");
+		JButton btnNewButton_5 = new JButton("<html>KART<br>DÜZENLE</html>");
 		btnNewButton_5.setFont(new Font("Tahoma", Font.BOLD, 17));
 		btnNewButton_5.setBounds(140, 200, 120, 120);
 		contentPane.add(btnNewButton_5);
 
-		JButton btnNewButton_6 = new JButton("<html>KULLANICI<br>DUZENLE</html>");
+		JButton btnNewButton_6 = new JButton("<html>KULLANICI<br>DÜZENLE</html>");
 		btnNewButton_6.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				UserManagment userManagment = new UserManagment();
-				userManagment.setUserID(_id);
-				userManagment.setUserName(user_name);
-				userManagment.setVisible(true);
+				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
+				{
+					UserManagment userManagment = new UserManagment();
+					userManagment.setUserID(_id);
+					userManagment.setUserName(user_name);
+					userManagment.setVisible(true);
+				}
+				else
+				{
+					displayNoAuth();
+				}
 			}
 		});
 		btnNewButton_6.setFont(new Font("Tahoma", Font.BOLD, 17));
@@ -197,6 +227,12 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 
 		contentPane.revalidate();
 		contentPane.repaint();
+	}
+	
+	private void displayNoAuth()
+	{
+		//	If user has no privilege then display error message
+		JOptionPane.showMessageDialog(contentPane, "Bu bölüme erişim yetkiniz yok.", "HATA", JOptionPane.ERROR_MESSAGE, null);
 	}
 
 	@Override
