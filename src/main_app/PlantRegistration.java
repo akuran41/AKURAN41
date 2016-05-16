@@ -335,7 +335,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(createLabel.generateLabel("Gece Gıda F", false, 1, 1, 13, 834, 248, 85, 25));
 
 		lblForImageHolder = new JLabel("");
-		lblForImageHolder.setIcon(new ImageIcon(PlantRegistration.class.getResource("/main_app/kirmizi-lahana.jpg")));
+		lblForImageHolder.setIcon(new ImageIcon(PlantRegistration.class.getResource("/main_app/no_pic.png")));
 		lblForImageHolder.setBounds(621, 297, 382, 398);
 		contentPane.add(lblForImageHolder);
 	}

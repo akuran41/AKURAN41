@@ -2,7 +2,6 @@ package main_app;
 
 import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -13,16 +12,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import ui.CreateButton;
+import ui.CreateLabel;
+import ui.CreateSeparator;
 import utils.AuthConverter;
 import utils.CreateTime;
+import utils.DisplayError;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -38,6 +39,10 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 	private JLabel				lblUsername;
 
 	private ConnectDatabase		connection			= null;
+	private DisplayError		displayError;
+	private CreateLabel			createLabel;
+	private CreateButton		createButton;
+	private CreateSeparator		createSeparator;
 
 	private int					_id;
 	private String				user_name;
@@ -80,6 +85,15 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		// Etiket nesnesi olustur
+		createLabel = new CreateLabel();
+		// Dugme nesnesini olustur
+		createButton = new CreateButton();
+		// Separator nesnesi olustur
+		createSeparator = new CreateSeparator();
+		// Hata mesajı nesnesini olustur.
+		displayError = new DisplayError(contentPane);
+
 		String[] tableHeader = new String[]{"ID", "Ad Soyad", "Yetki", "Login ID", "Mail Adresi", "Telefon", "Kay\u0131t Tarihi"};
 
 		table = new JTable();
@@ -98,25 +112,11 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		table.setBounds(10, 69, 746, 268);
 		contentPane.add(table);
 
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 56, 845, 2);
-		contentPane.add(separator);
-
-		JLabel label = new JLabel("2016/05/04 17:46");
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		label.setForeground(Color.RED);
-		label.setFont(new Font("Tahoma", Font.BOLD, 13));
-		label.setBounds(655, 33, 200, 20);
-		label.setText(CreateTime.getCurrentTime());
-		
-		contentPane.add(label);
-
-		lblUsername = new JLabel("user_name");
-		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUsername.setForeground(Color.RED);
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUsername.setBounds(655, 11, 200, 20);
+		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 655, 33, 200, 20));
+		lblUsername = createLabel.generateLabel("", true, 1, 3, 15, 655, 11, 200, 20);
 		contentPane.add(lblUsername);
+		contentPane.add(createSeparator.generateSeparator(10, 56, 845));
+		contentPane.add(createSeparator.generateSeparator(10, 348, 845));
 
 		JButton btnDuzenle = new JButton("Düzenle");
 		btnDuzenle.addActionListener(new ActionListener()
@@ -124,15 +124,15 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 			public void actionPerformed(ActionEvent e)
 			{
 				int x = table.getSelectedRow();
-				
+
 				if (x == -1)
 				{
-					JOptionPane.showMessageDialog(contentPane, "En az bir kayit secmelisiniz.", "Hata", JOptionPane.WARNING_MESSAGE, null);
+					displayError.showMessageDialog("En az bir kayıt seçmelisiniz.", "Hata", JOptionPane.WARNING_MESSAGE);
 				}
 				else
 				{
 					Object str = table.getValueAt(x, 0);
-					
+
 					UserEdit editUser = new UserEdit();
 					editUser.setUserID(_id);
 					editUser.setUserName(user_name);
@@ -153,12 +153,11 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 
 				if (x == -1)
 				{
-					JOptionPane.showMessageDialog(contentPane, "En az bir kayit secmelisiniz.", "Hata", JOptionPane.WARNING_MESSAGE, null);
+					displayError.showMessageDialog("En az bir kayıt seçmelisiniz.", "Hata", JOptionPane.WARNING_MESSAGE);
 				}
 				else
 				{
-					int deleteUser = JOptionPane.showConfirmDialog(contentPane, "Bu kullaniciyi silmek istediginizden eminmisiniz?", "Uyari",
-							JOptionPane.YES_NO_OPTION);
+					int deleteUser = displayError.showConfirmDialog("Bu kullaniciyi silmek istediginizden eminmisiniz?", "Uyari", JOptionPane.YES_NO_OPTION);
 
 					if (deleteUser == JOptionPane.YES_OPTION)
 					{
@@ -171,8 +170,8 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 						deleteUserFromDatabase.executeQuery(queryForDelete);
 
 						// Yapilan islemi Log kaydi yap
-						String queryForLog = "INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '"
-								+ CreateTime.getCurrentTime() + "', '" + userNameFormTable + " isimli kullaniciyi sildi.')";
+						String queryForLog = "INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
+								+ "', '" + userNameFormTable + " isimli kullaniciyi sildi.')";
 						deleteUserFromDatabase.executeQuery(queryForLog);
 						// Pencereyi kapat
 						dispose();
@@ -183,11 +182,7 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		btnSl.setBounds(766, 103, 89, 23);
 		contentPane.add(btnSl);
 
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 348, 845, 2);
-		contentPane.add(separator_1);
-
-		JButton button = new JButton("IPTAL");
+		JButton button = createButton.generateButton("İPTAL", 735, 361);
 		button.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -195,8 +190,6 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 				dispose();
 			}
 		});
-		button.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		button.setBounds(735, 361, 120, 30);
 		contentPane.add(button);
 	}
 

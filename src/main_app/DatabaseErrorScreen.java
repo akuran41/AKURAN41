@@ -1,8 +1,6 @@
 package main_app;
 
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -11,10 +9,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
 import project_const.WindowArgs;
+import ui.CreateButton;
+import ui.CreateLabel;
+import ui.CreateSeparator;
 import db_process.CreateDatabase;
 
 public class DatabaseErrorScreen extends JFrame
@@ -26,6 +26,10 @@ public class DatabaseErrorScreen extends JFrame
 	private JButton				btnCancel;
 	private JButton				btnSetup;
 	private JLabel				lblNewLabel;
+
+	private CreateLabel			createLabel;
+	private CreateButton		createButton;
+	private CreateSeparator		createSeparator;
 
 	public static void main(String[] args)
 	{
@@ -48,27 +52,28 @@ public class DatabaseErrorScreen extends JFrame
 
 	public DatabaseErrorScreen()
 	{
-		setTitle("Veritabani Hatasi");
+		setTitle("Veritabanı Hatası");
 		setResizable(WindowArgs._ISRESIZE);
 		setAlwaysOnTop(WindowArgs._ONTOP);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 556, 265);
+		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 541, 254);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblMysqlVeriTabanina = new JLabel(
-				"<html>Veritabani bulunamadi.<br>Veritabani olusturmak icin <b>OLUSTUR</b> dugmesine, programi sonlandirmak icin <b>IPTAL</b> dugmesine basiniz.</html>");
-		lblMysqlVeriTabanina.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblMysqlVeriTabanina.setBounds(10, 11, 530, 70);
-		getContentPane().add(lblMysqlVeriTabanina);
+		// Etiket nesnesi olustur
+		createLabel = new CreateLabel();
+		// Dugme nesnesini olustur
+		createButton = new CreateButton();
+		// Separator nesnesi olustur
+		createSeparator = new CreateSeparator();
 
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 174, 512, 2);
-		getContentPane().add(separator);
+		contentPane.add(createLabel.generateLabel("<html>Veritabanı bulunamadı.<br>Veritabanı oluşturmak için <b>OLUŞTUR</b> düğmesine, programı sonlandırmak için <b>İPTAL</b> düğmesine basınız.</html>", false, 1, 1, 15, 10, 11, 530, 70));
+		contentPane.add(createSeparator.generateSeparator(10, 174, 512));
+		
 
-		btnCancel = new JButton("IPTAL");
+		btnCancel = createButton.generateButton("İPTAL", 402, 187);
 		btnCancel.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -79,17 +84,14 @@ public class DatabaseErrorScreen extends JFrame
 				System.exit(1);
 			}
 		});
-		btnCancel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCancel.setBounds(402, 187, 120, 30);
-		getContentPane().add(btnCancel);
+		contentPane.add(btnCancel);
 
-		btnSetup = new JButton("OLUSTUR");
+		btnSetup = createButton.generateButton("OLUŞTUR", 10, 187);
 		btnSetup.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				// Eger veritabani yoksa o zaman yenisini olustur.
-
 				try
 				{
 					// Veritabani olustur daha sonra sistemden
@@ -108,15 +110,10 @@ public class DatabaseErrorScreen extends JFrame
 				btnCancel.setText("KAPAT");
 			}
 		});
-		btnSetup.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnSetup.setBounds(10, 187, 120, 30);
-		getContentPane().add(btnSetup);
+		contentPane.add(btnSetup);
 
-		lblNewLabel = new JLabel("<html>Veri tabani olusturuldu. <b>KAPAT</b> dugmesine basarak sistemi kapatip, yeniden baslatin.</html>");
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblNewLabel.setBounds(10, 110, 512, 40);
-		contentPane.add(lblNewLabel);
+		lblNewLabel = createLabel.generateLabel("<html>Veritabanı oluşturuldu. <b>KAPAT</b> düğmesine basarak sistemi kapatıp, yeniden başlatın.</html>", true, 2, 1, 15, 10, 110, 512, 40);
 		lblNewLabel.setVisible(false);
+		contentPane.add(lblNewLabel);
 	}
 }

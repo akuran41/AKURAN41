@@ -20,6 +20,7 @@ import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
+import utils.DisplayError;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
@@ -59,7 +60,7 @@ public class KullaniciGiris extends JFrame
 	{
 		setResizable(WindowArgs._ISRESIZE);
 		setAlwaysOnTop(WindowArgs._ONTOP);
-		setTitle("Kullanici Girisi");
+		setTitle("Kullanıcı Girişi");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 362, 226);
 		contentPane = new JPanel();
@@ -69,15 +70,15 @@ public class KullaniciGiris extends JFrame
 
 		// Etiket nesnesi olustur
 		createLabel = new CreateLabel();
-		//	Dugme nesnesini olustur
+		// Dugme nesnesini olustur
 		createButton = new CreateButton();
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
 
-		contentPane.add(createLabel.generateLabel("Sistemi kullanmak icin lutfen giris yapiniz.", false, 1, 2, 15, 10, 11, 336, 30));
-		contentPane.add(createLabel.generateLabel("Kullanici Adi", false, 1, 3, 15, 10, 68, 115, 25));
-		contentPane.add(createLabel.generateLabel("Sifre", false, 1, 3, 15, 10, 104, 115, 25));
-		contentPane.add(createLabel.generateLabel("Varsayilan kullanici adi ve sifresi : admin ", true, 1, 3, 13, 20, 45, 269, 17));
+		contentPane.add(createLabel.generateLabel("Sistemi kullanmak için lütfen giriş yapınız.", false, 1, 2, 15, 10, 11, 336, 30));
+		contentPane.add(createLabel.generateLabel("Kullanıcı Adı", false, 1, 3, 15, 10, 68, 115, 25));
+		contentPane.add(createLabel.generateLabel("Şifre", false, 1, 3, 15, 10, 104, 115, 25));
+		contentPane.add(createLabel.generateLabel("Varsayılan kullanıcı adı ve şifresi : admin ", true, 1, 3, 13, 20, 45, 269, 17));
 
 		textField = new JTextField();
 		textField.setBounds(135, 68, 154, 25);
@@ -90,7 +91,7 @@ public class KullaniciGiris extends JFrame
 
 		contentPane.add(createSeparator.generateSeparator(10, 140, 336));
 
-		JButton btnIptal = createButton.generateButton("IPTAL", 10, 153);
+		JButton btnIptal = createButton.generateButton("İPTAL", 10, 153);
 		btnIptal.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -103,7 +104,7 @@ public class KullaniciGiris extends JFrame
 		});
 		contentPane.add(btnIptal);
 
-		JButton btnGiris = createButton.generateButton("GIRIS", 226, 153);
+		JButton btnGiris = createButton.generateButton("GİRİŞ", 226, 153);
 		btnGiris.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -142,7 +143,7 @@ public class KullaniciGiris extends JFrame
 						else
 						{
 							// Kullanici adi veya sifresi yanlis ise
-							JOptionPane.showMessageDialog(frame, "Kullanici adi veya sifreniz hatali.\nLutfen tekrar deneyiniz.", "Hatali Giris",
+							new DisplayError(contentPane).showMessageDialog("Kullanıcı adı veya şifresi hatalı.\nLütfen tekrar deneyiniz.", "Hatali Giriş",
 									JOptionPane.WARNING_MESSAGE);
 						}
 					}

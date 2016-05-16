@@ -1,22 +1,20 @@
 package main_app;
 
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
-import project_const.ButtonArgs;
-import project_const.WindowArgs;
 import mysql.SetupMySQL;
-import java.awt.Color;
+import project_const.WindowArgs;
+import ui.CreateButton;
+import ui.CreateLabel;
+import ui.CreateSeparator;
 
 public class FailedToConnect extends JFrame
 {
@@ -26,6 +24,10 @@ public class FailedToConnect extends JFrame
 	private JButton				btnCancel;
 	private JButton				btnRun;
 	private JButton				btnSetup;
+
+	private CreateLabel			createLabel;
+	private CreateButton		createButton;
+	private CreateSeparator		createSeparator;
 
 	public static void main(String[] args)
 	{
@@ -48,41 +50,31 @@ public class FailedToConnect extends JFrame
 
 	public FailedToConnect()
 	{
-		setTitle("Baglanti Hatasi");
+		setTitle("Bağlantı Hatası");
 		setResizable(WindowArgs._ISRESIZE);
 		setAlwaysOnTop(WindowArgs._ONTOP);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 556, 335);
+		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 542, 323);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		JLabel lblMysqlVeriTabanina = new JLabel("<html>MySQL veri tabanina baglanmaya calisilirken hata olustu.<br>Bu durumun olasi sebepleri :</html>");
-		lblMysqlVeriTabanina.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblMysqlVeriTabanina.setBounds(10, 11, 424, 70);
-		getContentPane().add(lblMysqlVeriTabanina);
+		// Etiket nesnesi olustur
+		createLabel = new CreateLabel();
+		// Dugme nesnesini olustur
+		createButton = new CreateButton();
+		// Separator nesnesi olustur
+		createSeparator = new CreateSeparator();
 
-		JLabel lblSisteminizde = new JLabel("1 - Sisteminizde MySQL veri tabani kurulu olmayabilir.");
-		lblSisteminizde.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblSisteminizde.setBounds(10, 70, 424, 30);
-		getContentPane().add(lblSisteminizde);
+		contentPane.add(createLabel.generateLabel("<html>MySQL veritabanına bağlanmaya çalışılırken hata oluştu.<br>Bu durumun olası sebepleri :</html>", false, 1, 1, 15, 10, 11, 424, 70));
+		contentPane.add(createLabel.generateLabel("1 - Sisteminizde MySQL veritabanı kurulu olmayabilir.", false, 1, 1, 15, 10, 70, 424, 30));
+		contentPane.add(createLabel.generateLabel("2 - MySQL veritabanı şuan için çalışmıyor olabilir.", false, 1, 1, 15, 10, 93, 424, 30));
+		contentPane.add(createSeparator.generateSeparator(10, 242, 512));
+		contentPane.add(createLabel.generateLabel("<html>Eğer sisteminizde MySQL kurulu ise <b>ÇALIŞTIR</b>, değil ise <b>KUR</b> düğmesine basınız.", false, 1, 1, 15, 10, 125, 519, 40));
+		contentPane.add(createLabel.generateLabel("<html>Kurulum tamamlandıktan sonra, <b><i><u>Sadece</u></i></b> MySQL <b>Kullanıcı adı</b> ve <b>Şifre</b> sini<br><font color='red'><u><i><b>\"C:\\Windows\\sera\\mysera.ini\"</b></i></u></font> dosyasının içine yazınız.</html>", false, 1, 1, 13, 10, 192, 512, 35));
 
-		JLabel lblMysql = new JLabel("2 - MySQL veritabani suan icin calismiyor olabilir.");
-		lblMysql.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblMysql.setBounds(10, 93, 424, 30);
-		getContentPane().add(lblMysql);
-
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 242, 512, 2);
-		getContentPane().add(separator);
-
-		JLabel lblEgerSisteminizdeMysql = new JLabel("<html>Eger sisteminizde MySQL kurulu ise <b>CALISTIR</b>, degil ise <b>KUR</b> dugmesine basiniz.");
-		lblEgerSisteminizdeMysql.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblEgerSisteminizdeMysql.setBounds(10, 125, 519, 40);
-		getContentPane().add(lblEgerSisteminizdeMysql);
-
-		btnCancel = new JButton("IPTAL");
+		btnCancel = createButton.generateButton("İPTAL", 402, 255);
 		btnCancel.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -93,11 +85,9 @@ public class FailedToConnect extends JFrame
 				System.exit(1);
 			}
 		});
-		btnCancel.setFont(new Font(ButtonArgs._FONT, Font.PLAIN, ButtonArgs._SIZE));
-		btnCancel.setBounds(402, 255, ButtonArgs._WIDTH, ButtonArgs._HEIGHT);
-		getContentPane().add(btnCancel);
+		contentPane.add(btnCancel);
 
-		btnRun = new JButton("CALISTIR");
+		btnRun = createButton.generateButton("ÇALIŞTIR", 205, 255);
 		btnRun.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -110,11 +100,9 @@ public class FailedToConnect extends JFrame
 				btnCancel.setText("KAPAT");
 			}
 		});
-		btnRun.setFont(new Font(ButtonArgs._FONT, Font.PLAIN, ButtonArgs._SIZE));
-		btnRun.setBounds(205, 255, ButtonArgs._WIDTH, ButtonArgs._HEIGHT);
-		getContentPane().add(btnRun);
+		contentPane.add(btnRun);
 
-		btnSetup = new JButton("KUR");
+		btnSetup = createButton.generateButton("KUR", 10, 255);
 		btnSetup.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -133,16 +121,7 @@ public class FailedToConnect extends JFrame
 				btnCancel.setText("KAPAT");
 			}
 		});
-		btnSetup.setFont(new Font(ButtonArgs._FONT, Font.PLAIN, ButtonArgs._SIZE));
-		btnSetup.setBounds(10, 255, ButtonArgs._WIDTH, ButtonArgs._HEIGHT);
-		getContentPane().add(btnSetup);
-
-		JLabel lblKurulumTamamlandiktanSonra = new JLabel(
-				"<html>Kurulum tamamlandiktan sonra, <b><i><u>Sadece</u></i></b> MySQL <b>Kullanici adi</b> ve <b>Sifre</b> sini<br><font color='red'><u><i><b>\"C:\\Windows\\sera\\mysera.ini\"</b></i></u></font> dosyasinin icine yaziniz.</html>");
-		lblKurulumTamamlandiktanSonra.setForeground(Color.BLACK);
-		lblKurulumTamamlandiktanSonra.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblKurulumTamamlandiktanSonra.setBounds(10, 192, 512, 35);
-		contentPane.add(lblKurulumTamamlandiktanSonra);
+		contentPane.add(btnSetup);
 	}
 
 	private void startMySQL()
