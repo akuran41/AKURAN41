@@ -12,11 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.table.DefaultTableModel;
 
 import ui.CreateButton;
 import ui.CreateLabel;
@@ -34,7 +34,6 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 	private static final long	serialVersionUID	= -3892496455332751876L;
 	private JPanel				contentPane;
 	private JTable				table;
-	private DefaultTableModel	dtm;
 
 	private JLabel				lblUsername;
 
@@ -94,23 +93,15 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		// Hata mesajı nesnesini olustur.
 		displayError = new DisplayError(contentPane);
 
-		String[] tableHeader = new String[]{"ID", "Ad Soyad", "Yetki", "Login ID", "Mail Adresi", "Telefon", "Kay\u0131t Tarihi"};
-
-		table = new JTable();
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		dtm = new DefaultTableModel(0, 0);
-		dtm.setColumnIdentifiers(tableHeader);
-
 		// Table nesnesine model ekle
-		table.setModel(dtm);
-		// Bilgileri al
-		getUserList(dtm);
-
-		table.setSurrendersFocusOnKeystroke(true);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setBounds(10, 69, 746, 268);
-		contentPane.add(table);
+		try
+		{
+			getUserList();
+		}
+		catch (SQLException e1)
+		{
+			e1.printStackTrace();
+		}
 
 		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 655, 33, 200, 20));
 		lblUsername = createLabel.generateLabel("", true, 1, 3, 15, 655, 11, 200, 20);
@@ -182,7 +173,7 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		btnSl.setBounds(766, 103, 89, 23);
 		contentPane.add(btnSl);
 
-		JButton button = createButton.generateButton("İPTAL", 735, 361);
+		JButton button = createButton.generateButton("İptal", 735, 361);
 		button.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -193,26 +184,55 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		contentPane.add(button);
 	}
 
-	private void getUserList(DefaultTableModel dtm)
+	private void getUserList() throws SQLException
 	{
-		String query = "SELECT _id, user_name, auth_id, user_id, user_mail, user_phone, user_register FROM user ORDER BY user_name ASC";
+		int counter = 0;
 
-		try
+		Object[] tableHeader = new String[]{"ID", "Ad Soyad", "Yetki", "Login ID", "Mail Adresi", "Telefon", "Kay\u0131t Tarihi"};
+
+		ReadDatabase getUserList = new ReadDatabase(connection.getMysqlConnection());
+		ResultSet rsCounter = getUserList.getData("SELECT COUNT(_id) FROM user");
+
+		while (rsCounter.next())
 		{
-			ReadDatabase getUserList = new ReadDatabase(connection.getMysqlConnection());
-
-			ResultSet rs = getUserList.getData(query);
-
-			while (rs.next())
-			{
-				dtm.addRow(new Object[]{rs.getInt(1), rs.getString(2), AuthConverter.convertIdToReadableAuth(rs.getInt(3)), rs.getString(4), rs.getString(5),
-						rs.getString(6), rs.getDate(7)});
-			}
+			counter = rsCounter.getInt(1);
 		}
-		catch (SQLException e)
+
+		Object[][] data = new Object[counter][7];
+
+		counter = 0;
+		
+		ResultSet rs = getUserList.getData("SELECT _id, user_name, auth_id, user_id, user_mail, user_phone, user_register FROM user ORDER BY user_name ASC");
+		while (rs.next())
 		{
-			e.printStackTrace();
+			data[counter][0] = rs.getInt(1);
+			data[counter][1] = rs.getString(2);
+			data[counter][2] = AuthConverter.convertIdToReadableAuth(rs.getInt(3));
+			data[counter][3] = rs.getString(4);
+			data[counter][4] = rs.getString(5);
+			data[counter][5] = rs.getString(6);
+			data[counter][6] = rs.getDate(7);
+
+			counter++;
 		}
+
+		table = new JTable(data, tableHeader);
+		//	Tablodaki verileri secilebilir yap
+		table.setEnabled(true);
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		//	Sadece her seferinde tek bir kayit secilmesine izin ver
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		//	Sort
+		table.setAutoCreateRowSorter(true);
+		table.setBounds(10, 69, 746, 268);
+
+		JScrollPane scrollPane = new JScrollPane(table);
+		//	ScrollPane olculeri table ile ayni olmak zorunda
+		scrollPane.setBounds(10, 69, 746, 268);
+		contentPane.add(scrollPane);
+		//	Ekrani guncelle
+		validate();
 	}
 
 	@Override

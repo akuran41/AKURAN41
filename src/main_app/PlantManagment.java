@@ -1,32 +1,42 @@
 package main_app;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import utils.LoginDataDisplay;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.SwingConstants;
 import javax.swing.JSeparator;
-import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import ui.CreateButton;
+import ui.CreateLabel;
+import ui.CreateSeparator;
+import utils.DisplayError;
+import utils.LoginDataDisplay;
+import db_process.ConnectDatabase;
 
 public class PlantManagment extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= -3598167150109127981L;
 	private JPanel				contentPane;
+	private JTable				table;
 
 	private JLabel				lblUsername;
 
+	private ConnectDatabase		connection			= null;
+	private DisplayError		displayError;
+	private CreateLabel			createLabel;
+	private CreateButton		createButton;
+	private CreateSeparator		createSeparator;
+
 	private int					_id;
 	private String				user_name;
-	private JTable				table;
 
 	public static void main(String[] args)
 	{
@@ -57,6 +67,15 @@ public class PlantManagment extends JFrame implements LoginDataDisplay
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		// Etiket nesnesi olustur
+		createLabel = new CreateLabel();
+		// Dugme nesnesini olustur
+		createButton = new CreateButton();
+		// Separator nesnesi olustur
+		createSeparator = new CreateSeparator();
+		// Hata mesajı nesnesini olustur.
+		displayError = new DisplayError(contentPane);
 
 		JLabel label = new JLabel("user_name");
 		label.setHorizontalAlignment(SwingConstants.RIGHT);
