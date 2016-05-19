@@ -102,7 +102,7 @@ public class AddNewPicCard extends JFrame
 		lblBitkiAdi.setBounds(10, 108, 75, 25);
 		contentPane.add(lblBitkiAdi);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox();
 		comboBox.setBounds(75, 108, 175, 25);
 		contentPane.add(comboBox);
 

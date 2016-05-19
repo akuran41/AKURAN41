@@ -1,8 +1,6 @@
 package main_app;
 
-import java.awt.Color;
 import java.awt.EventQueue;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -15,14 +13,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import project_const.ButtonArgs;
+import ui.CreateButton;
+import ui.CreateInput;
+import ui.CreateLabel;
+import ui.CreateSeparator;
 import utils.AuthConverter;
 import utils.CreateTime;
+import utils.DisplayError;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -46,12 +46,15 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 	private JLabel				lblUsername;
 	private JLabel				lblNewLabel;
 
-	private ConnectDatabase		connectDatabase;
-	private Connection			connection;
+	private ConnectDatabase		connectDatabase		= null;
+	private CreateLabel			createLabel;
+	private CreateInput			createInput;
+	private CreateButton		createButton;
+	private CreateSeparator		createSeparator;
+	private DisplayError		displayError;
 
 	private int					_id;
 	private int					userIDForEdit;
-	private String				user_name;
 
 	public static void main(String[] args)
 	{
@@ -78,7 +81,6 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 		try
 		{
 			connectDatabase = new ConnectDatabase(true);
-			connection = connectDatabase.getMysqlConnection();
 		}
 		catch (SQLException e1)
 		{
@@ -93,127 +95,68 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		lblUsername = new JLabel((String) null);
-		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblUsername.setForeground(Color.RED);
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblUsername.setBounds(240, 11, 200, 20);
-		lblUsername.setText(user_name);
+		// Etiket nesnesi olustur
+		createLabel = new CreateLabel();
+		// Input nesnesi olustur
+		createInput = new CreateInput();
+		// Dugme nesnesini olustur
+		createButton = new CreateButton();
+		// Separator nesnesi olustur
+		createSeparator = new CreateSeparator();
+		// Hata mesajı nesnesini olustur.
+		displayError = new DisplayError(contentPane);
+
+		lblUsername = createLabel.generateLabel("", true, 1, 3, 15, 240, 11, 200, 20);
 		contentPane.add(lblUsername);
+		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 240, 33, 200, 20));
+		contentPane.add(createSeparator.generateSeparator(10, 56, 429));
+		contentPane.add(createLabel.generateLabel("Ad", false, 1, 1, 13, 10, 69, 75, 25));
+		contentPane.add(createLabel.generateLabel("Soyad", false, 1, 1, 13, 224, 69, 75, 25));
+		contentPane.add(createLabel.generateLabel("Kullanıcı Adı", false, 1, 1, 13, 10, 105, 75, 25));
+		contentPane.add(createLabel.generateLabel("Yetki", false, 1, 1, 13, 224, 105, 75, 25));
+		contentPane.add(createLabel.generateLabel("Şifre", false, 1, 1, 13, 10, 139, 75, 25));
+		contentPane.add(createLabel.generateLabel("Telefon", false, 1, 1, 13, 10, 175, 75, 25));
+		contentPane.add(createLabel.generateLabel("e-Mail", false, 1, 1, 13, 10, 211, 75, 25));
+		contentPane.add(createLabel.generateLabel("0", false, 1, 1, 15, 95, 177, 10, 25));
+		contentPane.add(createLabel.generateLabel("-", false, 1, 1, 15, 140, 175, 5, 25));
+		contentPane.add(createLabel.generateLabel("-", false, 1, 1, 15, 185, 175, 5, 25));
+		contentPane.add(createLabel.generateLabel("Kayıt Tarihi : ", false, 1, 1, 13, 10, 11, 80, 25));
+		lblNewLabel = createLabel.generateLabel("", true, 1, 1, 13, 90, 11, 121, 25);
+		contentPane.add(lblNewLabel);
+		contentPane.add(createLabel.generateLabel("Şifre değişmeyecekse boş bırakın", true, 1, 1, 13, 224, 146, 216, 14));
+		contentPane.add(createSeparator.generateSeparator(10, 247, 429));
 
-		JLabel label_1 = new JLabel("2016/05/04 14:23");
-		label_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		label_1.setForeground(Color.RED);
-		label_1.setFont(new Font("Tahoma", Font.BOLD, 13));
-		label_1.setBounds(240, 33, 200, 20);
-		label_1.setText(CreateTime.getCurrentTime());
-
-		contentPane.add(label_1);
-
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 56, 429, 2);
-		contentPane.add(separator);
-
-		JLabel lblKullaniciAdi = new JLabel("Adi");
-		lblKullaniciAdi.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblKullaniciAdi.setBounds(10, 69, 75, 25);
-		contentPane.add(lblKullaniciAdi);
-
-		JLabel lblSoyadi = new JLabel("Soyadi");
-		lblSoyadi.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblSoyadi.setBounds(224, 69, 75, 25);
-		contentPane.add(lblSoyadi);
-
-		JLabel lblKullaniciAdi_1 = new JLabel("Kullanici Adi");
-		lblKullaniciAdi_1.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblKullaniciAdi_1.setBounds(10, 105, 75, 25);
-		contentPane.add(lblKullaniciAdi_1);
-
-		JLabel lblYetki = new JLabel("Yetki");
-		lblYetki.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblYetki.setBounds(224, 105, 75, 25);
-		contentPane.add(lblYetki);
-
-		JLabel lblSifre = new JLabel("Sifre");
-		lblSifre.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblSifre.setBounds(10, 139, 75, 25);
-		contentPane.add(lblSifre);
-
-		JLabel lblTelefon = new JLabel("Telefon");
-		lblTelefon.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblTelefon.setBounds(10, 175, 75, 25);
-		contentPane.add(lblTelefon);
-
-		JLabel lblMailAdresi = new JLabel("e-Mail");
-		lblMailAdresi.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblMailAdresi.setBounds(10, 211, 75, 25);
-		contentPane.add(lblMailAdresi);
-
-		txtUserFirstName = new JTextField();
-		txtUserFirstName.setBounds(95, 69, 120, 25);
+		txtUserFirstName = createInput.generateTextField(false, 95, 69, 120);
 		contentPane.add(txtUserFirstName);
-		txtUserFirstName.setColumns(10);
 
-		txtUserLastName = new JTextField();
-		txtUserLastName.setBounds(319, 69, 120, 25);
+		txtUserLastName = createInput.generateTextField(false, 319, 69, 120);
 		contentPane.add(txtUserLastName);
-		txtUserLastName.setColumns(10);
 
-		txtLoginName = new JTextField();
+		txtLoginName = createInput.generateTextField(false, 95, 105, 120);
 		txtLoginName.setEditable(false);
-		txtLoginName.setBounds(95, 105, 120, 25);
 		contentPane.add(txtLoginName);
-		txtLoginName.setColumns(10);
 
 		String[] yetkiler = {"", "Sistem kaydedici", "Administrator", "Mali sorumlu", "Teknik sorumlu", "Yetiştirici", "İzleyici", "Misafir"};
 		comboBox = new JComboBox<String>(yetkiler);
 		comboBox.setBounds(319, 105, 120, 25);
 		contentPane.add(comboBox);
 
-		pswUserPass = new JTextField();
-		pswUserPass.setBounds(95, 139, 120, 25);
+		pswUserPass = createInput.generateTextField(false, 95, 139, 120);
 		contentPane.add(pswUserPass);
 
-		txtPhone1 = new JTextField();
-		txtPhone1.setBounds(106, 176, 30, 25);
+		txtPhone1 = createInput.generateTextField(false, 106, 176, 30);
 		contentPane.add(txtPhone1);
-		txtPhone1.setColumns(10);
 
-		JLabel label_2 = new JLabel("0");
-		label_2.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_2.setBounds(95, 177, 10, 25);
-		contentPane.add(label_2);
-
-		JLabel label_3 = new JLabel("-");
-		label_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_3.setBounds(140, 175, 5, 25);
-		contentPane.add(label_3);
-
-		txtPhone2 = new JTextField();
-		txtPhone2.setBounds(150, 176, 30, 25);
+		txtPhone2 = createInput.generateTextField(false, 150, 176, 30);
 		contentPane.add(txtPhone2);
-		txtPhone2.setColumns(10);
 
-		JLabel label_4 = new JLabel("-");
-		label_4.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		label_4.setBounds(185, 175, 5, 25);
-		contentPane.add(label_4);
-
-		txtPhone3 = new JTextField();
-		txtPhone3.setBounds(196, 175, 75, 25);
+		txtPhone3 = createInput.generateTextField(false, 196, 175, 75);
 		contentPane.add(txtPhone3);
-		txtPhone3.setColumns(10);
 
-		userEMail = new JTextField();
-		userEMail.setBounds(95, 211, 344, 25);
+		userEMail = createInput.generateTextField(false, 95, 211, 344);
 		contentPane.add(userEMail);
-		userEMail.setColumns(10);
 
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(10, 247, 429, 2);
-		contentPane.add(separator_1);
-
-		JButton btnNewButton = new JButton("DUZENLE");
+		JButton btnNewButton = createButton.generateButton("Düzenle", 320, 260);
 		btnNewButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -224,15 +167,14 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 				int userAuthentication = AuthConverter.convertReadableAuthToId(comboBox.getSelectedItem().toString());
 
 				String userPassword = pswUserPass.getText().toString();
-				String userPhone = txtPhone1.getText().toString() + "-" +  txtPhone2.getText().toString() + "-" + txtPhone3.getText().toString();
+				String userPhone = txtPhone1.getText().toString() + "-" + txtPhone2.getText().toString() + "-" + txtPhone3.getText().toString();
 				String userMail = userEMail.getText().toString();
 
 				// Sifrenin degisip degismedigini kontrol et.
 				boolean passChanged = false;
 				if (pswUserPass.getText().toString().length() > 4)
 				{
-					int x = JOptionPane.showConfirmDialog(contentPane, "Şifre değişti. Yeni şifreyi kayıt etmek istiyormusunuz?", "Uyarı",
-							JOptionPane.YES_NO_OPTION);
+					int x = displayError.showConfirmDialog("Şifre değişti. Yeni şifreyi kayıt etmek istiyormusunuz?", "Uyarı", JOptionPane.YES_NO_OPTION);
 
 					if (x == JOptionPane.YES_OPTION)
 						passChanged = true;
@@ -248,22 +190,20 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 						+ "LIMIT 1";
 
 				// Kullanici giris log kayit
+				Connection connection = connectDatabase.getMysqlConnection();
 				WriteDatabase writeLog = new WriteDatabase(connection);
 				writeLog.executeQuery(registerQuery);
 
-				String userLogEntry = "INSERT INTO user_log(user_id, login_time, user_process) "
-						+ "VALUES('" + _id + "', '" + CreateTime.getCurrentTime() + "', '" + userFirstAndLastName + " isimli kullanıcının bilgilerini güncelledi.')";
+				String userLogEntry = "INSERT INTO user_log(user_id, login_time, user_process) " + "VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
+						+ "', '" + userFirstAndLastName + " isimli kullanıcının bilgilerini güncelledi.')";
 				writeLog.executeQuery(userLogEntry);
 
 				dispose();
 			}
 		});
-		btnNewButton.setFont(new Font(ButtonArgs._FONT, Font.PLAIN, ButtonArgs._SIZE));
-		btnNewButton.setBounds(320, 260, ButtonArgs._WIDTH, ButtonArgs._HEIGHT);
 		contentPane.add(btnNewButton);
 
-		JButton btnIptal = new JButton("IPTAL");
-		btnIptal.setFont(new Font(ButtonArgs._FONT, Font.PLAIN, ButtonArgs._SIZE));
+		JButton btnIptal = createButton.generateButton("İptal", 10, 260);
 		btnIptal.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -271,24 +211,7 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 				dispose();
 			}
 		});
-		btnIptal.setBounds(10, 260, ButtonArgs._WIDTH, ButtonArgs._HEIGHT);
 		contentPane.add(btnIptal);
-
-		JLabel lblKayitTarihi = new JLabel("Kayit Tarihi : ");
-		lblKayitTarihi.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblKayitTarihi.setBounds(10, 11, 80, 25);
-		contentPane.add(lblKayitTarihi);
-
-		lblNewLabel = new JLabel("New label");
-		lblNewLabel.setForeground(Color.RED);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		lblNewLabel.setBounds(90, 11, 121, 25);
-		contentPane.add(lblNewLabel);
-
-		JLabel lblfreyiDeitirmeyeceksenizBo = new JLabel("Şifreyi değişmeyecekse boş bırakın");
-		lblfreyiDeitirmeyeceksenizBo.setForeground(Color.RED);
-		lblfreyiDeitirmeyeceksenizBo.setBounds(224, 146, 216, 14);
-		contentPane.add(lblfreyiDeitirmeyeceksenizBo);
 	}
 
 	public void setUserIdForEdit(Object str)
@@ -297,6 +220,7 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 
 		String query = "SELECT auth_id, user_name, user_id, user_mail, user_phone, user_register FROM user WHERE _id = '" + userIDForEdit + "' LIMIT 1";
 
+		Connection connection = connectDatabase.getMysqlConnection();
 		ReadDatabase getUser = new ReadDatabase(connection);
 		ResultSet rs = null;
 
@@ -338,7 +262,6 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 	@Override
 	public void setUserName(String user_name)
 	{
-		this.user_name = user_name;
 		this.lblUsername.setText(user_name);
 	}
 

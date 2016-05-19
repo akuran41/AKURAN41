@@ -43,9 +43,9 @@ import db_process.ReadDatabase;
 import db_process.WriteDatabase;
 import files.FilePath;
 
-public class PlantRegistration extends JFrame implements LoginDataDisplay
+public class PlantEdit extends JFrame implements LoginDataDisplay
 {
-	private static final long	serialVersionUID	= 5276473839635208953L;
+	private static final long	serialVersionUID	= -4622095388382931747L;
 	private JPanel				contentPane;
 
 	private JTextField			txtBitkiAdi;
@@ -98,6 +98,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private JLabel				lblUsername;
 	private JLabel				lblForImageHolder;
 
+	private ConnectDatabase		connectDatabase		= null;
 	private CreateLabel			createLabel;
 	private CreateInput			createInput;
 	private CreateButton		createButton;
@@ -110,6 +111,8 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private JDatePickerImpl		datePickerForHasat;
 
 	private int					_id;
+	private int					plantIdForEdit;
+	private String				originalFileName;
 
 	public static void main(String[] args)
 	{
@@ -119,7 +122,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 			{
 				try
 				{
-					PlantRegistration frame = new PlantRegistration();
+					PlantEdit frame = new PlantEdit();
 					frame.setVisible(true);
 				}
 				catch (Exception e)
@@ -130,8 +133,18 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		});
 	}
 
-	public PlantRegistration()
+	public PlantEdit()
 	{
+		try
+		{
+			// Create DB connection
+			connectDatabase = new ConnectDatabase(true);
+		}
+		catch (SQLException e2)
+		{
+			e2.printStackTrace();
+		}
+
 		setTitle("Yeni Bitki Ekle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1034, 805);
@@ -172,7 +185,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Image Files", "jpg", "png"));
 
 				// Get Integer type result from DialogPane
-				int option = fileChooser.showOpenDialog(PlantRegistration.this);
+				int option = fileChooser.showOpenDialog(PlantEdit.this);
 
 				// If Folder selected
 				if (option == JFileChooser.APPROVE_OPTION)
@@ -202,11 +215,6 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		comboBitkiUlke.setBounds(107, 127, 175, 25);
 		contentPane.add(comboBitkiUlke);
 
-		// Datepicker for Hasat zamani
-		myDatePickerForHasat();
-		// Datepicker for Ekim zamani
-		myDatePickerForEkim();
-
 		String[] dikimSekli = {"TOHUM", "FİDE", "SOĞAN"};
 		comboDikimSekli = new JComboBox<String>(dikimSekli);
 		comboDikimSekli.setBounds(107, 369, 175, 25);
@@ -217,7 +225,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		comboSatisSekli.setBounds(401, 369, 175, 25);
 		contentPane.add(comboSatisSekli);
 
-		JButton btnKayit = createButton.generateButton("Kayıt", 880, 727);
+		JButton btnKayit = createButton.generateButton("Düzenle", 880, 727);
 		btnKayit.addActionListener(new ActionListener()
 		{
 			@Override
@@ -420,44 +428,8 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(txtGeceGidaF);
 	}
 
-	private void myDatePickerForEkim()
-	{
-		UtilDateModel model = new UtilDateModel();
-
-		Properties p = new Properties();
-		p.put("text.today", "Today");
-		p.put("text.month", "Month");
-		p.put("text.year", "Year");
-
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		datePickerForEkim = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		datePickerForEkim.setBounds(107, 176, 175, 25);
-		contentPane.add(datePickerForEkim);
-
-		contentPane.validate();
-	}
-
-	private void myDatePickerForHasat()
-	{
-		UtilDateModel model = new UtilDateModel();
-
-		Properties p = new Properties();
-		p.put("text.today", "Bugün");
-		p.put("text.month", "Ay");
-		p.put("text.year", "Yıl");
-
-		JDatePanelImpl datePanel = new JDatePanelImpl(model, p);
-		datePickerForHasat = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		datePickerForHasat.setBounds(107, 212, 175, 25);
-		contentPane.add(datePickerForHasat);
-
-		contentPane.validate();
-	}
-
 	private void registerMyPlant() throws SQLException, IOException
 	{
-		// Bitki SQL sorgusu
-
 		txtEkimZamani = (Date) datePickerForEkim.getModel().getValue();
 		txtHasatZamani = (Date) datePickerForHasat.getModel().getValue();
 
@@ -465,46 +437,46 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		String ekim = df.format(txtEkimZamani);
 		String hasat = df.format(txtHasatZamani);
 
-		String query = "INSERT INTO bitki(bitki_adi, bitki_cinsi, bitki_turu, bitki_resim, bitki_ulke, bitki_yore, bitki_ekme_zamani, bitki_yetisme_suresi, bitki_hasat_zamani, "
-				+ "bitki_tohum_satici, bitki_tohum_fiyat, bitki_fide_satici, bitki_fide_fiyat, bitki_hasat_boy, bitki_hasat_agirlik, bitki_hasat_fiyat, bitki_satis_tip, bitki_dikim_tip, "
-				+ "bitki_isik_siddet, bitki_isik_dalgaboy, bitki_gunduz_isik_sure, bitki_gece_isik_sure, bitki_gunduz_ortam_isi, bitki_gece_ortam_isi, bitki_gunduz_nem, bitki_gece_nem, "
-				+ "bitki_gunduz_o2, bitki_gece_o2, bitki_gunduz_c2o, bitki_gece_c2o, bitki_gunduz_cansuyu_isi, bitki_gece_cansuyu_isi, bitki_cansuyu_ph, bitki_gunduz_gida_a, "
-				+ "bitki_gunduz_gida_b, bitki_gunduz_gida_c, bitki_gunduz_gida_d, bitki_gunduz_gida_e, bitki_gunduz_gida_f, bitki_gece_gida_a, bitki_gece_gida_b, bitki_gece_gida_c, "
-				+ "bitki_gece_gida_d, bitki_gece_gida_e, bitki_gece_gida_f) "
-				+ "VALUES ('"
-				+ txtBitkiAdi.getText()
-				+ "', '"
-				+ txtBitkiCinsi.getText()
-				+ "', '"
-				+ comboBitkiTuru.getSelectedItem() + "', '";
+		String query = "UPDATE bitki SET " + "bitki_adi = '" + txtBitkiAdi.getText() + "', " + "bitki_cinsi = '" + txtBitkiCinsi.getText() + "', "
+				+ "bitki_turu = '" + comboBitkiTuru.getSelectedItem() + "', ";
 
 		if (fileChooser.getSelectedFile() != null)
-			query += file.getName();
-		else
-			query += "";
+			query += "bitki_resim = '" + file.getName() + "', ";
 
-		query += "', '" + comboBitkiUlke.getSelectedItem() + "', " + "'" + txtBitkiYore.getText() + "', '" + ekim + "', '" + txtYetismeSuresi.getText()
-				+ "', '" + hasat + "', '" + txtTohumSatici.getText() + "', " + "'" + txtTohumFiyat.getText() + "', '" + txtFideSatici.getText() + "', '"
-				+ txtFideFiyat.getText() + "', '" + txtHasatBoy.getText() + "', '" + txtHasatAgirlik.getText() + "', '" + txtHasatSatisFiyati.getText()
-				+ "', '" + comboSatisSekli.getSelectedItem() + "', '" + comboDikimSekli.getSelectedItem() + "', " + "'" + txtIsikSiddeti.getText() + "', '"
-				+ txtIsikDalgaboyu.getText() + "', '" + txtGunduzIsikSure.getText() + "', '" + txtGeceIsikSure.getText() + "', '" + txtGunduzOrtamIsi.getText()
-				+ "', '" + txtGeceOrtamIsi.getText() + "', '" + txtGunduzNemOran.getText() + "', '" + txtGeceNemOran.getText() + "', " + "'"
-				+ txtGunduzO2Oran.getText() + "', '" + txtGeceO2Oran.getText() + "', '" + txtGunCO2Oran.getText() + "', '" + txtGeceCO2Oran.getText() + "', '"
-				+ txtGunCansuyuIsi.getText() + "', '" + txtGeceCansuyuIsi.getText() + "', '" + txtCansuyuPh.getText() + "', '" + txtGunduzGidaA.getText()
-				+ "', " + "'" + txtGunduzGidaB.getText() + "', '" + txtGunduzGidaC.getText() + "', '" + txtGunduzGidaD.getText() + "', '"
-				+ txtGunduzGidaE.getText() + "', '" + txtGunduzGidaF.getText() + "', '" + txtGeceGidaA.getText() + "', '" + txtGeceGidaB.getText() + "', '"
-				+ txtGeceGidaC.getText() + "', " + "'" + txtGeceGidaD.getText() + "', '" + txtGeceGidaE.getText() + "', '" + txtGeceGidaF.getText() + "')";
+		query += "bitki_ulke = '" + comboBitkiUlke.getSelectedItem() + "', " + "bitki_yore = '" + txtBitkiYore.getText() + "', " + "bitki_ekme_zamani = '"
+				+ ekim + "', " + "bitki_yetisme_suresi = '" + txtYetismeSuresi.getText() + "', " + "bitki_hasat_zamani = '" + hasat + "', "
+				+ "bitki_tohum_satici = '" + txtTohumSatici.getText() + "', " + "bitki_tohum_fiyat = '" + txtTohumFiyat.getText() + "', "
+				+ "bitki_fide_satici = '" + txtFideSatici.getText() + "', " + "bitki_fide_fiyat = '" + txtFideFiyat.getText() + "', " + "bitki_hasat_boy = '"
+				+ txtHasatBoy.getText() + "', " + "bitki_hasat_agirlik = '" + txtHasatAgirlik.getText() + "', " + "bitki_hasat_fiyat = '"
+				+ txtHasatSatisFiyati.getText() + "', " + "bitki_satis_tip = '" + comboSatisSekli.getSelectedItem() + "', " + "bitki_dikim_tip = '"
+				+ comboDikimSekli.getSelectedItem() + "', " + "bitki_isik_siddet = '" + txtIsikSiddeti.getText() + "', " + "bitki_isik_dalgaboy = '"
+				+ txtIsikDalgaboyu.getText() + "', " + "bitki_gunduz_isik_sure = '" + txtGunduzIsikSure.getText() + "', " + "bitki_gece_isik_sure = '"
+				+ txtGeceIsikSure.getText() + "', " + "bitki_gunduz_ortam_isi = '" + txtGunduzOrtamIsi.getText() + "', " + "bitki_gece_ortam_isi = '"
+				+ txtGeceOrtamIsi.getText() + "', " + "bitki_gunduz_nem = '" + txtGunduzNemOran.getText() + "', " + "bitki_gece_nem = '"
+				+ txtGeceNemOran.getText() + "', " + "bitki_gunduz_o2 = '" + txtGunduzO2Oran.getText() + "', " + "bitki_gece_o2 = '" + txtGeceO2Oran.getText()
+				+ "', " + "bitki_gunduz_c2o = '" + txtGunCO2Oran.getText() + "', " + "bitki_gece_c2o = '" + txtGeceCO2Oran.getText() + "', "
+				+ "bitki_gunduz_cansuyu_isi = '" + txtGunCansuyuIsi.getText() + "', " + "bitki_gece_cansuyu_isi = '" + txtGeceCansuyuIsi.getText() + "', "
+				+ "bitki_cansuyu_ph = '" + txtCansuyuPh.getText() + "', " + "bitki_gunduz_gida_a = '" + txtGunduzGidaA.getText() + "', "
+				+ "bitki_gunduz_gida_b = '" + txtGunduzGidaB.getText() + "', " + "bitki_gunduz_gida_c = '" + txtGunduzGidaC.getText() + "', "
+				+ "bitki_gunduz_gida_d = '" + txtGunduzGidaD.getText() + "', " + "bitki_gunduz_gida_e = '" + txtGunduzGidaE.getText() + "', "
+				+ "bitki_gunduz_gida_f = '" + txtGunduzGidaF.getText() + "', " + "bitki_gece_gida_a = '" + txtGeceGidaA.getText() + "', "
+				+ "bitki_gece_gida_b = '" + txtGeceGidaB.getText() + "', " + "bitki_gece_gida_c = '" + txtGeceGidaC.getText() + "', " + "bitki_gece_gida_d = '"
+				+ txtGeceGidaD.getText() + "', " + "bitki_gece_gida_e = '" + txtGeceGidaE.getText() + "', " + "bitki_gece_gida_f =  '" + txtGeceGidaF.getText()
+				+ "'" + "WHERE _id = '" + plantIdForEdit + "'";
 
-		ConnectDatabase connectDatabase = new ConnectDatabase(true);
 		Connection connection = connectDatabase.getMysqlConnection();
 		WriteDatabase writeLog = new WriteDatabase(connection);
 
 		writeLog.executeQuery(query);
 		writeLog.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) " + "VALUES('" + _id + "', '" + CreateTime.getCurrentTime() + "', '"
-				+ txtBitkiAdi.getText() + " isimli bitkinin giriş kaydını oluşturdu.')");
+				+ txtBitkiAdi.getText() + " isimli bitkinin bigilerini düzenledi.')");
 
 		if (fileChooser.getSelectedFile() != null)
 		{
+			//	Delete original file first
+			File fileForDelete = new File(FilePath.getImageFolder() + "\\" + originalFileName);
+			fileForDelete.delete();
+			
 			// Secilen resmi C:\sera\resimler dizini altina kopyala
 			File destLocation = new File(FilePath.getImageFolder() + "\\" + file.getName());
 			FileUtils.moveFile(file, destLocation);
@@ -515,7 +487,6 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	{
 		String[] countryList = new String[246];
 
-		ConnectDatabase connectDatabase = new ConnectDatabase(true);
 		Connection connection = connectDatabase.getMysqlConnection();
 
 		ReadDatabase readDatabase = new ReadDatabase(connection);
@@ -548,5 +519,125 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	public void setAuthID(int auth_id)
 	{
 		// Auto-generated method stub
+	}
+
+	public void setPlantIdForEdit(Object str)
+	{
+		this.plantIdForEdit = (int) str;
+
+		String query = "SELECT _id, bitki_adi, bitki_cinsi, bitki_turu, bitki_resim, bitki_ulke, bitki_yore, bitki_ekme_zamani, bitki_yetisme_suresi, bitki_hasat_zamani, "
+				+ "bitki_tohum_satici, bitki_tohum_fiyat, bitki_fide_satici, bitki_fide_fiyat, bitki_hasat_boy, bitki_hasat_agirlik, bitki_hasat_fiyat, bitki_satis_tip, bitki_dikim_tip, bitki_isik_siddet, "
+				+ "bitki_isik_dalgaboy, bitki_gunduz_isik_sure, bitki_gece_isik_sure, bitki_gunduz_ortam_isi, bitki_gece_ortam_isi, bitki_gunduz_nem, bitki_gece_nem, bitki_gunduz_o2, bitki_gece_o2, bitki_gunduz_c2o, "
+				+ "bitki_gece_c2o, bitki_gunduz_cansuyu_isi, bitki_gece_cansuyu_isi, bitki_cansuyu_ph, "
+				+ "bitki_gunduz_gida_a, bitki_gunduz_gida_b, bitki_gunduz_gida_c, bitki_gunduz_gida_d, bitki_gunduz_gida_e, bitki_gunduz_gida_f, "
+				+ "bitki_gece_gida_a, bitki_gece_gida_b, bitki_gece_gida_c, bitki_gece_gida_d, bitki_gece_gida_e, bitki_gece_gida_f "
+				+ "FROM bitki WHERE _id = '" + plantIdForEdit + "' LIMIT 1";
+
+		Connection connection = connectDatabase.getMysqlConnection();
+		ReadDatabase readDatabase = new ReadDatabase(connection);
+
+		ResultSet rs;
+		try
+		{
+			rs = readDatabase.getData(query);
+
+			while (rs.next())
+			{
+				txtBitkiAdi.setText(rs.getString(2));
+				txtBitkiCinsi.setText(rs.getString(3));
+				txtBitkiYore.setText(rs.getString(7));
+				txtYetismeSuresi.setText(rs.getString(9));
+				txtHasatBoy.setText(rs.getString(15));
+				txtHasatAgirlik.setText(rs.getString(16));
+				txtHasatSatisFiyati.setText(rs.getString(17));
+				txtTohumSatici.setText(rs.getString(11));
+				txtTohumFiyat.setText(rs.getString(12));
+				txtFideSatici.setText(rs.getString(13));
+				txtFideFiyat.setText(rs.getString(14));
+
+				txtIsikSiddeti.setText(rs.getString(20));
+				txtIsikDalgaboyu.setText(rs.getString(21));
+				txtGunduzIsikSure.setText(rs.getString(22));
+				txtGeceIsikSure.setText(rs.getString(23));
+				txtGunduzOrtamIsi.setText(rs.getString(24));
+				txtGeceOrtamIsi.setText(rs.getString(25));
+				txtGunduzNemOran.setText(rs.getString(26));
+				txtGeceNemOran.setText(rs.getString(27));
+				txtGunduzO2Oran.setText(rs.getString(28));
+				txtGeceO2Oran.setText(rs.getString(29));
+				txtGunCO2Oran.setText(rs.getString(30));
+				txtGeceCO2Oran.setText(rs.getString(31));
+				txtGunCansuyuIsi.setText(rs.getString(32));
+				txtGeceCansuyuIsi.setText(rs.getString(33));
+				txtCansuyuPh.setText(rs.getString(34));
+				txtGunduzGidaA.setText(rs.getString(35));
+				txtGunduzGidaB.setText(rs.getString(36));
+				txtGunduzGidaC.setText(rs.getString(37));
+				txtGunduzGidaD.setText(rs.getString(38));
+				txtGunduzGidaE.setText(rs.getString(39));
+				txtGunduzGidaF.setText(rs.getString(40));
+				txtGeceGidaA.setText(rs.getString(41));
+				txtGeceGidaB.setText(rs.getString(42));
+				txtGeceGidaC.setText(rs.getString(43));
+				txtGeceGidaD.setText(rs.getString(44));
+				txtGeceGidaE.setText(rs.getString(45));
+				txtGeceGidaF.setText(rs.getString(46));
+
+				comboBitkiUlke.setSelectedItem(rs.getString(6));
+				comboDikimSekli.setSelectedItem(rs.getString(19));
+				comboSatisSekli.setSelectedItem(rs.getString(18));
+				comboBitkiTuru.setSelectedItem(rs.getString(4));
+
+				String[] hasat = rs.getDate(10).toString().split("-");
+				String[] ekim = rs.getDate(8).toString().split("-");
+
+				UtilDateModel modelForEkim = new UtilDateModel();
+				modelForEkim.setDate(Integer.parseInt(ekim[0]), Integer.parseInt(ekim[1]), Integer.parseInt(ekim[2]));
+				modelForEkim.setSelected(true);
+
+				Properties pForEkim = new Properties();
+				pForEkim.put("text.today", "Today");
+				pForEkim.put("text.month", "Month");
+				pForEkim.put("text.year", "Year");
+
+				JDatePanelImpl datePanelForEkim = new JDatePanelImpl(modelForEkim, pForEkim);
+				datePickerForEkim = new JDatePickerImpl(datePanelForEkim, new DateLabelFormatter());
+				datePickerForEkim.setBounds(107, 176, 175, 25);
+				contentPane.add(datePickerForEkim);
+
+				UtilDateModel modelForHasat = new UtilDateModel();
+				modelForHasat.setDate(Integer.parseInt(hasat[0]), Integer.parseInt(hasat[1]), Integer.parseInt(hasat[2]));
+				modelForHasat.setSelected(true);
+
+				Properties pForHasat = new Properties();
+				pForHasat.put("text.today", "Today");
+				pForHasat.put("text.month", "Month");
+				pForHasat.put("text.year", "Year");
+
+				JDatePanelImpl datePanelForHasat = new JDatePanelImpl(modelForHasat, pForHasat);
+				datePickerForHasat = new JDatePickerImpl(datePanelForHasat, new DateLabelFormatter());
+				datePickerForHasat.setBounds(107, 212, 175, 25);
+				contentPane.add(datePickerForHasat);
+
+				// Resim
+				if(rs.getString(5).length() > 4)
+				{
+					this.originalFileName = rs.getString(5);
+					File registeredFile = new File(FilePath.getImageFolder() + "\\" + rs.getString(5));
+					ImageIcon imageIcon = new ImageIcon(registeredFile.toString());
+					lblForImageHolder.setIcon(imageIcon);
+				}
+				else
+				{
+					lblForImageHolder.setIcon(new ImageIcon(PlantRegistration.class.getResource("/main_app/no_pic.png")));
+				}
+
+				contentPane.validate();
+			}
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
 }

@@ -137,7 +137,7 @@ public class UserRegistration extends JFrame implements LoginDataDisplay
 		userEMail = createInput.generateTextField(false, 95, 211, 344);
 		contentPane.add(userEMail);
 
-		JButton btnNewButton = createButton.generateButton("EKLE", 320, 260);
+		JButton btnNewButton = createButton.generateButton("Ekle", 320, 260);
 		btnNewButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -212,7 +212,7 @@ public class UserRegistration extends JFrame implements LoginDataDisplay
 		});
 		contentPane.add(btnNewButton);
 
-		JButton btnIptal = createButton.generateButton("İPTAL", 10, 260);
+		JButton btnIptal = createButton.generateButton("İptal", 10, 260);
 		btnIptal.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

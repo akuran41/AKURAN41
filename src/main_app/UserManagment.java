@@ -69,6 +69,7 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 	{
 		try
 		{
+			//	Create DB connection
 			connection = new ConnectDatabase(true);
 		}
 		catch (SQLException e)
@@ -129,6 +130,8 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 					editUser.setUserName(user_name);
 					editUser.setUserIdForEdit(str);
 					editUser.setVisible(true);
+					// Pencereyi kapat
+					dispose();
 				}
 			}
 		});
