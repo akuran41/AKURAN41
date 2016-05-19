@@ -16,7 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class AddNewPicCard extends JFrame
+import utils.LoginDataDisplay;
+
+public class AddNewPicCard extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= 2494461427189987440L;
 	private JPanel				contentPane;
@@ -24,7 +26,6 @@ public class AddNewPicCard extends JFrame
 	private JLabel				lblUsername;
 
 	private int					_id;
-	private String				user_name;
 	private JTextField textField;
 
 	public static void main(String[] args)
@@ -61,7 +62,6 @@ public class AddNewPicCard extends JFrame
 		lblUsername.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblUsername.setBounds(224, 11, 200, 20);
-		lblUsername.setText(user_name);
 		contentPane.add(lblUsername);
 
 		JLabel label = new JLabel("2016/05/02 18:18");
@@ -108,5 +108,23 @@ public class AddNewPicCard extends JFrame
 
 		contentPane.revalidate();
 		contentPane.repaint();
+	}
+
+	@Override
+	public void setUserID(int _id)
+	{
+		this._id = _id;
+	}
+
+	@Override
+	public void setUserName(String user_name)
+	{
+		lblUsername.setText(user_name);
+	}
+
+	@Override
+	public void setAuthID(int auth_id)
+	{
+		// Auto-generated method stub
 	}
 }
