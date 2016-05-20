@@ -30,7 +30,7 @@ import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
 
-public class AddNewPicCard extends JFrame implements LoginDataDisplay
+public class PicCardRegistration extends JFrame implements LoginDataDisplay
 {
 	private static final long		serialVersionUID	= 2494461427189987440L;
 	private JPanel					contentPane;
@@ -56,7 +56,7 @@ public class AddNewPicCard extends JFrame implements LoginDataDisplay
 			{
 				try
 				{
-					AddNewPicCard frame = new AddNewPicCard();
+					PicCardRegistration frame = new PicCardRegistration();
 					frame.setVisible(true);
 				}
 				catch (Exception e)
@@ -67,7 +67,7 @@ public class AddNewPicCard extends JFrame implements LoginDataDisplay
 		});
 	}
 
-	public AddNewPicCard()
+	public PicCardRegistration()
 	{
 		try
 		{
@@ -178,8 +178,8 @@ public class AddNewPicCard extends JFrame implements LoginDataDisplay
 							else
 							{
 								WriteDatabase writeDatabase = new WriteDatabase(connect);
-								writeDatabase.executeQuery("INSERT INTO pic_cards(pic_id, bitki_id) VALUES('" + textField.getText().toLowerCase() + "', '"
-										+ x.get_id() + "')");
+								writeDatabase.executeQuery("INSERT INTO pic_cards(pic_id, bitki_id, addDate) VALUES('" + textField.getText().toLowerCase() + "', '"
+										+ x.get_id() + "', '"+ CreateTime.getCurrentTime() +"')");
 								writeDatabase.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '"
 										+ CreateTime.getCurrentTime() + "', '" + x.getBitki_adi() + " isimli bitkinin " + textField.getText().toLowerCase()
 										+ " numaralı karta kayıt işlemini yaptı.')");
