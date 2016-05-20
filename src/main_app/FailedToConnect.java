@@ -74,7 +74,7 @@ public class FailedToConnect extends JFrame
 		contentPane.add(createLabel.generateLabel("<html>Eğer sisteminizde MySQL kurulu ise <b>ÇALIŞTIR</b>, değil ise <b>KUR</b> düğmesine basınız.", false, 1, 1, 15, 10, 125, 519, 40));
 		contentPane.add(createLabel.generateLabel("<html>Kurulum tamamlandıktan sonra, <b><i><u>Sadece</u></i></b> MySQL <b>Kullanıcı adı</b> ve <b>Şifre</b> sini<br><font color='red'><u><i><b>\"C:\\Windows\\sera\\mysera.ini\"</b></i></u></font> dosyasının içine yazınız.</html>", false, 1, 1, 13, 10, 192, 512, 35));
 
-		btnCancel = createButton.generateButton("İPTAL", 402, 255);
+		btnCancel = createButton.generateButton("İptal", 402, 255);
 		btnCancel.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -87,7 +87,7 @@ public class FailedToConnect extends JFrame
 		});
 		contentPane.add(btnCancel);
 
-		btnRun = createButton.generateButton("ÇALIŞTIR", 205, 255);
+		btnRun = createButton.generateButton("Çalıştır", 205, 255);
 		btnRun.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -102,7 +102,7 @@ public class FailedToConnect extends JFrame
 		});
 		contentPane.add(btnRun);
 
-		btnSetup = createButton.generateButton("KUR", 10, 255);
+		btnSetup = createButton.generateButton("Kur", 10, 255);
 		btnSetup.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -118,7 +118,7 @@ public class FailedToConnect extends JFrame
 
 				btnRun.setVisible(false);
 				btnSetup.setVisible(false);
-				btnCancel.setText("KAPAT");
+				btnCancel.setText("Kapat");
 			}
 		});
 		contentPane.add(btnSetup);

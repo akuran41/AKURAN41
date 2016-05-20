@@ -91,7 +91,7 @@ public class KullaniciGiris extends JFrame
 
 		contentPane.add(createSeparator.generateSeparator(10, 140, 336));
 
-		JButton btnIptal = createButton.generateButton("İPTAL", 10, 153);
+		JButton btnIptal = createButton.generateButton("İptal", 10, 153);
 		btnIptal.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -104,7 +104,7 @@ public class KullaniciGiris extends JFrame
 		});
 		contentPane.add(btnIptal);
 
-		JButton btnGiris = createButton.generateButton("GİRİŞ", 226, 153);
+		JButton btnGiris = createButton.generateButton("Giriş", 226, 153);
 		btnGiris.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

@@ -73,7 +73,7 @@ public class DatabaseErrorScreen extends JFrame
 		contentPane.add(createSeparator.generateSeparator(10, 174, 512));
 		
 
-		btnCancel = createButton.generateButton("İPTAL", 402, 187);
+		btnCancel = createButton.generateButton("İptal", 402, 187);
 		btnCancel.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -86,7 +86,7 @@ public class DatabaseErrorScreen extends JFrame
 		});
 		contentPane.add(btnCancel);
 
-		btnSetup = createButton.generateButton("OLUŞTUR", 10, 187);
+		btnSetup = createButton.generateButton("Oluştur", 10, 187);
 		btnSetup.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)

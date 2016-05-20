@@ -129,6 +129,8 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				{
 					// Yeni PIC karti ekleme
 					AddNewPicCard addNew = new AddNewPicCard();
+					addNew.setUserID(_id);
+					addNew.setUserName(user_name);
 					addNew.setVisible(true);
 				}
 				else
