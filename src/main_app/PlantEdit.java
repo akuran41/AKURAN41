@@ -145,7 +145,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 			e2.printStackTrace();
 		}
 
-		setTitle("Yeni Bitki Ekle");
+		setTitle("Bitki Düzenle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1034, 805);
 		contentPane = new JPanel();
@@ -199,7 +199,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnGozAt.setBounds(401, 91, 89, 23);
+		btnGozAt.setBounds(410, 91, 89, 23);
 		contentPane.add(btnGozAt);
 
 		try
@@ -222,7 +222,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 
 		String[] satisSekli = {"ADET", "DEMET", "KASA", "KG"};
 		comboSatisSekli = new JComboBox<String>(satisSekli);
-		comboSatisSekli.setBounds(401, 369, 175, 25);
+		comboSatisSekli.setBounds(410, 369, 175, 25);
 		contentPane.add(comboSatisSekli);
 
 		JButton btnKayit = createButton.generateButton("Düzenle", 880, 727);
@@ -260,7 +260,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 
 	private void createLabelArea()
 	{
-		contentPane.add(createLabel.generateLabel("Bu ekrandan yeni bitki ekleyebilirsiniz", false, 1, 1, 15, 10, 11, 553, 20));
+		contentPane.add(createLabel.generateLabel("Kırmızı ile işaretli alanların doldurulması zorunludur.", false, 1, 1, 15, 10, 11, 553, 20));
 
 		lblUsername = createLabel.generateLabel("", true, 1, 3, 15, 803, 4, 200, 20);
 		contentPane.add(lblUsername);
@@ -277,9 +277,9 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		contentPane.add(createSeparator.generateSeparator(10, 163, 993));
 		contentPane.add(createLabel.generateLabel("Ekme Zamanı", false, 1, 1, 13, 10, 176, 85, 25));
 		contentPane.add(createLabel.generateLabel("Yetişme Süresi", false, 1, 1, 13, 306, 182, 85, 25));
-		contentPane.add(createLabel.generateLabel("gün", false, 1, 1, 11, 479, 182, 46, 25));
+		contentPane.add(createLabel.generateLabel("gün", false, 1, 1, 11, 489, 182, 46, 25));
 		contentPane.add(createLabel.generateLabel("Hasat Zamanı", false, 1, 1, 13, 10, 212, 85, 25));
-		contentPane.add(createLabel.generateLabel("cm", false, 1, 1, 11, 479, 212, 75, 25));
+		contentPane.add(createLabel.generateLabel("cm", false, 1, 1, 11, 489, 212, 75, 25));
 		contentPane.add(createLabel.generateLabel("Hasat Ağırlığı", false, 1, 1, 13, 10, 248, 85, 25));
 		contentPane.add(createLabel.generateLabel("gr", false, 1, 1, 11, 185, 248, 46, 25));
 		contentPane.add(createLabel.generateLabel("Hasat Satış Fiyatı", false, 1, 1, 12, 306, 248, 110, 25));
@@ -299,27 +299,27 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		contentPane.add(createLabel.generateLabel("Gün Işık Süre", false, 1, 1, 13, 10, 454, 105, 25));
 		contentPane.add(createLabel.generateLabel("saat", false, 1, 1, 11, 185, 454, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gece Işık Süresi", false, 1, 1, 13, 306, 454, 105, 25));
-		contentPane.add(createLabel.generateLabel("saat", false, 1, 1, 11, 479, 454, 46, 25));
+		contentPane.add(createLabel.generateLabel("saat", false, 1, 1, 11, 489, 454, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gün Ortam Isı", false, 1, 1, 13, 10, 490, 85, 25));
 		contentPane.add(createLabel.generateLabel("C°", false, 1, 1, 11, 185, 490, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gece Ortam Isı", false, 1, 1, 13, 306, 490, 85, 25));
-		contentPane.add(createLabel.generateLabel("C°", false, 1, 1, 11, 479, 490, 46, 25));
+		contentPane.add(createLabel.generateLabel("C°", false, 1, 1, 11, 489, 490, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gün Nem Oranı", false, 1, 1, 13, 10, 526, 95, 25));
 		contentPane.add(createLabel.generateLabel("RH", false, 1, 1, 11, 185, 526, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gece Nem Oranı", false, 1, 1, 13, 306, 526, 95, 25));
-		contentPane.add(createLabel.generateLabel("RH", false, 1, 1, 11, 479, 526, 46, 25));
+		contentPane.add(createLabel.generateLabel("RH", false, 1, 1, 11, 489, 526, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gün O2 Oranı", false, 1, 1, 13, 10, 562, 85, 25));
 		contentPane.add(createLabel.generateLabel("%", false, 1, 1, 11, 185, 562, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gece O2 Oranı", false, 1, 1, 13, 306, 562, 85, 25));
-		contentPane.add(createLabel.generateLabel("%", false, 1, 1, 11, 479, 562, 46, 25));
+		contentPane.add(createLabel.generateLabel("%", false, 1, 1, 11, 489, 562, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gün CO2 Oranı", false, 1, 1, 13, 10, 598, 95, 25));
 		contentPane.add(createLabel.generateLabel("%", false, 1, 1, 11, 185, 598, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gece CO2 Oranı", false, 1, 1, 13, 306, 598, 95, 25));
-		contentPane.add(createLabel.generateLabel("%", false, 1, 1, 11, 479, 598, 46, 25));
+		contentPane.add(createLabel.generateLabel("%", false, 1, 1, 11, 489, 598, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gün Cansuyu Isı", false, 1, 1, 13, 10, 634, 95, 25));
 		contentPane.add(createLabel.generateLabel("C°", false, 1, 1, 11, 185, 634, 46, 25));
 		contentPane.add(createLabel.generateLabel("Gece Cansuyu Isı", false, 1, 1, 12, 306, 634, 105, 25));
-		contentPane.add(createLabel.generateLabel("C°", false, 1, 1, 11, 479, 634, 46, 25));
+		contentPane.add(createLabel.generateLabel("C°", false, 1, 1, 11, 489, 634, 46, 25));
 		contentPane.add(createLabel.generateLabel("Cansuyu PH", false, 1, 1, 13, 10, 670, 85, 25));
 
 		contentPane.add(createSeparator.generateSeparator(10, 706, 993));
@@ -346,85 +346,110 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		lblForImageHolder.setIcon(new ImageIcon(PlantRegistration.class.getResource("/main_app/no_pic.png")));
 		lblForImageHolder.setBounds(621, 297, 382, 398);
 		contentPane.add(lblForImageHolder);
+
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 91, 58, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 395, 58, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 395, 128, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 91, 178, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 91, 214, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 91, 93, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 91, 127, 15, 25));
+		contentPane.add(createLabel.generateLabel("*", true, 2, 2, 14, 395, 183, 15, 25));
+
+		contentPane.add(createLabel.generateLabel("nm", false, 1, 2, 11, 483, 420, 26, 25));
+		contentPane.add(createLabel.generateLabel("C°", false, 1, 2, 11, 182, 670, 20, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 785, 55, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 785, 91, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 785, 127, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 785, 176, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 785, 212, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 785, 248, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 988, 55, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 988, 91, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 988, 127, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 988, 176, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 988, 212, 25, 25));
+		contentPane.add(createLabel.generateLabel("ppm", false, 1, 2, 11, 988, 248, 25, 25));
 	}
 
 	private void createInputArea()
 	{
 		txtBitkiAdi = createInput.generateTextField(false, 107, 56, 175);
 		contentPane.add(txtBitkiAdi);
-		txtBitkiCinsi = createInput.generateTextField(false, 401, 56, 175);
+		txtBitkiCinsi = createInput.generateTextField(false, 410, 56, 175);
 		contentPane.add(txtBitkiCinsi);
-		txtBitkiYore = createInput.generateTextField(false, 401, 127, 175);
+		txtBitkiYore = createInput.generateTextField(false, 410, 127, 175);
 		contentPane.add(txtBitkiYore);
-		txtYetismeSuresi = createInput.generateTextField(true, 401, 182, 75);
+		txtYetismeSuresi = createInput.generateTextField(true, 410, 182, 75);
 		contentPane.add(txtYetismeSuresi);
-		txtHasatBoy = createInput.generateTextField(true, 401, 212, 75);
+		txtHasatBoy = createInput.generateTextField(true, 410, 212, 75);
 		contentPane.add(txtHasatBoy);
 		txtHasatAgirlik = createInput.generateTextField(true, 107, 248, 75);
 		contentPane.add(txtHasatAgirlik);
-		txtHasatSatisFiyati = createInput.generateTextField(true, 401, 248, 75);
+		txtHasatSatisFiyati = createInput.generateTextField(true, 410, 248, 75);
 		contentPane.add(txtHasatSatisFiyati);
 		txtTohumSatici = createInput.generateTextField(false, 107, 297, 175);
 		contentPane.add(txtTohumSatici);
-		txtTohumFiyat = createInput.generateTextField(false, 401, 297, 75);
+		txtTohumFiyat = createInput.generateTextField(false, 410, 297, 75);
 		contentPane.add(txtTohumFiyat);
 		txtFideSatici = createInput.generateTextField(false, 107, 333, 175);
 		contentPane.add(txtFideSatici);
-		txtFideFiyat = createInput.generateTextField(false, 401, 333, 75);
+		txtFideFiyat = createInput.generateTextField(false, 410, 333, 75);
 		contentPane.add(txtFideFiyat);
 		txtIsikSiddeti = createInput.generateTextField(true, 107, 418, 75);
 		contentPane.add(txtIsikSiddeti);
-		txtIsikDalgaboyu = createInput.generateTextField(true, 401, 418, 75);
+		txtIsikDalgaboyu = createInput.generateTextField(true, 410, 418, 75);
 		contentPane.add(txtIsikDalgaboyu);
 		txtGunduzIsikSure = createInput.generateTextField(true, 107, 454, 75);
 		contentPane.add(txtGunduzIsikSure);
-		txtGeceIsikSure = createInput.generateTextField(true, 401, 454, 75);
+		txtGeceIsikSure = createInput.generateTextField(true, 410, 454, 75);
 		contentPane.add(txtGeceIsikSure);
 		txtGunduzOrtamIsi = createInput.generateTextField(true, 107, 490, 75);
 		contentPane.add(txtGunduzOrtamIsi);
-		txtGeceOrtamIsi = createInput.generateTextField(true, 401, 490, 75);
+		txtGeceOrtamIsi = createInput.generateTextField(true, 410, 490, 75);
 		contentPane.add(txtGeceOrtamIsi);
 		txtGunduzNemOran = createInput.generateTextField(true, 107, 526, 75);
 		contentPane.add(txtGunduzNemOran);
-		txtGeceNemOran = createInput.generateTextField(true, 401, 526, 75);
+		txtGeceNemOran = createInput.generateTextField(true, 410, 526, 75);
 		contentPane.add(txtGeceNemOran);
 		txtGunduzO2Oran = createInput.generateTextField(true, 107, 562, 75);
 		contentPane.add(txtGunduzO2Oran);
-		txtGeceO2Oran = createInput.generateTextField(true, 401, 562, 75);
+		txtGeceO2Oran = createInput.generateTextField(true, 410, 562, 75);
 		contentPane.add(txtGeceO2Oran);
 		txtGunCO2Oran = createInput.generateTextField(true, 107, 598, 75);
 		contentPane.add(txtGunCO2Oran);
-		txtGeceCO2Oran = createInput.generateTextField(true, 401, 598, 75);
+		txtGeceCO2Oran = createInput.generateTextField(true, 410, 598, 75);
 		contentPane.add(txtGeceCO2Oran);
 		txtGunCansuyuIsi = createInput.generateTextField(true, 107, 634, 75);
 		contentPane.add(txtGunCansuyuIsi);
-		txtGeceCansuyuIsi = createInput.generateTextField(true, 401, 634, 75);
+		txtGeceCansuyuIsi = createInput.generateTextField(true, 410, 634, 75);
 		contentPane.add(txtGeceCansuyuIsi);
 		txtCansuyuPh = createInput.generateTextField(true, 107, 670, 75);
 		contentPane.add(txtCansuyuPh);
-		txtGunduzGidaA = createInput.generateTextField(false, 716, 55, 75);
+		
+		txtGunduzGidaA = createInput.generateTextField(false, 706, 55, 75);
 		contentPane.add(txtGunduzGidaA);
-		txtGunduzGidaB = createInput.generateTextField(false, 929, 55, 75);
+		txtGunduzGidaB = createInput.generateTextField(false, 909, 55, 75);
 		contentPane.add(txtGunduzGidaB);
-		txtGunduzGidaC = createInput.generateTextField(false, 716, 91, 75);
+		txtGunduzGidaC = createInput.generateTextField(false, 706, 91, 75);
 		contentPane.add(txtGunduzGidaC);
-		txtGunduzGidaD = createInput.generateTextField(false, 929, 91, 75);
+		txtGunduzGidaD = createInput.generateTextField(false, 909, 91, 75);
 		contentPane.add(txtGunduzGidaD);
-		txtGunduzGidaE = createInput.generateTextField(false, 716, 127, 75);
+		txtGunduzGidaE = createInput.generateTextField(false, 706, 127, 75);
 		contentPane.add(txtGunduzGidaE);
-		txtGunduzGidaF = createInput.generateTextField(false, 929, 127, 75);
+		txtGunduzGidaF = createInput.generateTextField(false, 909, 127, 75);
 		contentPane.add(txtGunduzGidaF);
-		txtGeceGidaA = createInput.generateTextField(false, 716, 176, 75);
+		txtGeceGidaA = createInput.generateTextField(false, 706, 176, 75);
 		contentPane.add(txtGeceGidaA);
-		txtGeceGidaB = createInput.generateTextField(false, 929, 176, 75);
+		txtGeceGidaB = createInput.generateTextField(false, 909, 176, 75);
 		contentPane.add(txtGeceGidaB);
-		txtGeceGidaC = createInput.generateTextField(false, 716, 212, 75);
+		txtGeceGidaC = createInput.generateTextField(false, 706, 212, 75);
 		contentPane.add(txtGeceGidaC);
-		txtGeceGidaD = createInput.generateTextField(false, 929, 212, 75);
+		txtGeceGidaD = createInput.generateTextField(false, 909, 212, 75);
 		contentPane.add(txtGeceGidaD);
-		txtGeceGidaE = createInput.generateTextField(false, 716, 248, 75);
+		txtGeceGidaE = createInput.generateTextField(false, 706, 248, 75);
 		contentPane.add(txtGeceGidaE);
-		txtGeceGidaF = createInput.generateTextField(false, 929, 248, 75);
+		txtGeceGidaF = createInput.generateTextField(false, 909, 248, 75);
 		contentPane.add(txtGeceGidaF);
 	}
 
