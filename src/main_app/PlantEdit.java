@@ -19,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -37,6 +38,7 @@ import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DateLabelFormatter;
+import utils.DisplayError;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -103,6 +105,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 	private CreateInput			createInput;
 	private CreateButton		createButton;
 	private CreateSeparator		createSeparator;
+	private DisplayError		displayError;
 
 	private File				file;
 	private JFileChooser		fileChooser;
@@ -161,6 +164,8 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		createButton = new CreateButton();
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
+		// Error message
+		displayError = new DisplayError(contentPane);
 
 		// Label olustur
 		createLabelArea();
@@ -234,15 +239,31 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 				// Bitki kayit et.
 				try
 				{
-					registerMyPlant();
+					boolean isNull = false;
+
+					// Check for mandatory fields
+					if (txtBitkiAdi.getText().toString().equals("") || txtBitkiCinsi.getText().toString().equals("")
+							|| txtBitkiYore.getText().toString().equals("") || txtYetismeSuresi.getText().toString().equals(""))
+						isNull = true;
+
+					// If everything is fine then execute
+					if (!isNull)
+					{
+						registerMyPlant();
+
+						// Pencereyi kapat
+						dispose();
+					}
+					else
+					{
+						// If not then display error message
+						displayError.showMessageDialog("Kırmızı ile işaretli alanların doldurulması zorunludur.", "HATA", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				catch (SQLException | IOException e1)
 				{
 					e1.printStackTrace();
 				}
-
-				// Pencereyi kapat
-				dispose();
 			}
 		});
 		contentPane.add(btnKayit);
@@ -426,7 +447,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		contentPane.add(txtGeceCansuyuIsi);
 		txtCansuyuPh = createInput.generateTextField(true, 107, 670, 75);
 		contentPane.add(txtCansuyuPh);
-		
+
 		txtGunduzGidaA = createInput.generateTextField(false, 706, 55, 75);
 		contentPane.add(txtGunduzGidaA);
 		txtGunduzGidaB = createInput.generateTextField(false, 909, 55, 75);
@@ -498,10 +519,10 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 
 		if (fileChooser.getSelectedFile() != null)
 		{
-			//	Delete original file first
+			// Delete original file first
 			File fileForDelete = new File(FilePath.getImageFolder() + "\\" + originalFileName);
 			fileForDelete.delete();
-			
+
 			// Secilen resmi C:\sera\resimler dizini altina kopyala
 			File destLocation = new File(FilePath.getImageFolder() + "\\" + file.getName());
 			FileUtils.moveFile(file, destLocation);
@@ -645,7 +666,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 				contentPane.add(datePickerForHasat);
 
 				// Resim
-				if(rs.getString(5).length() > 4)
+				if (rs.getString(5).length() > 4)
 				{
 					this.originalFileName = rs.getString(5);
 					File registeredFile = new File(FilePath.getImageFolder() + "\\" + rs.getString(5));

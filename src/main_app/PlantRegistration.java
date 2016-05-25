@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.ImageIcon;
@@ -19,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
@@ -37,7 +40,9 @@ import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DateLabelFormatter;
+import utils.DisplayError;
 import utils.LoginDataDisplay;
+import utils.MonthConverter;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
@@ -102,6 +107,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	private CreateInput			createInput;
 	private CreateButton		createButton;
 	private CreateSeparator		createSeparator;
+	private DisplayError		displayError;
 
 	private File				file;
 	private JFileChooser		fileChooser;
@@ -148,6 +154,8 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		createButton = new CreateButton();
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
+		// Error message
+		displayError = new DisplayError(contentPane);
 
 		// Label olustur
 		createLabelArea();
@@ -226,15 +234,31 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 				// Bitki kayit et.
 				try
 				{
-					registerMyPlant();
+					boolean isNull = false;
+
+					// Check for mandatory fields
+					if (txtBitkiAdi.getText().toString().equals("") || txtBitkiCinsi.getText().toString().equals("")
+							|| txtBitkiYore.getText().toString().equals("") || txtYetismeSuresi.getText().toString().equals(""))
+						isNull = true;
+
+					// If everything is fine then execute
+					if (!isNull)
+					{
+						registerMyPlant();
+
+						// Pencereyi kapat
+						dispose();
+					}
+					else
+					{
+						// If not then display error message
+						displayError.showMessageDialog("Kırmızı ile işaretli alanların doldurulması zorunludur.", "HATA", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 				catch (SQLException | IOException e1)
 				{
 					e1.printStackTrace();
 				}
-
-				// Pencereyi kapat
-				dispose();
 			}
 		});
 		contentPane.add(btnKayit);
@@ -418,7 +442,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(txtGeceCansuyuIsi);
 		txtCansuyuPh = createInput.generateTextField(true, 107, 670, 75);
 		contentPane.add(txtCansuyuPh);
-		
+
 		txtGunduzGidaA = createInput.generateTextField(false, 706, 55, 75);
 		contentPane.add(txtGunduzGidaA);
 		txtGunduzGidaB = createInput.generateTextField(false, 909, 55, 75);
@@ -447,7 +471,11 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 
 	private void myDatePickerForEkim()
 	{
+		Calendar calendar = Calendar.getInstance(Locale.getDefault());
+
 		UtilDateModel model = new UtilDateModel();
+		model.setDate(calendar.get(Calendar.YEAR), MonthConverter.convertMonth(calendar.get(Calendar.MONTH)), calendar.get(Calendar.DAY_OF_MONTH));
+		model.setSelected(true);
 
 		Properties p = new Properties();
 		p.put("text.today", "Today");
@@ -464,7 +492,11 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 
 	private void myDatePickerForHasat()
 	{
+		Calendar calendar = Calendar.getInstance(Locale.getDefault());
+
 		UtilDateModel model = new UtilDateModel();
+		model.setDate(calendar.get(Calendar.YEAR), MonthConverter.convertMonth(calendar.get(Calendar.MONTH)), calendar.get(Calendar.DAY_OF_MONTH));
+		model.setSelected(true);
 
 		Properties p = new Properties();
 		p.put("text.today", "Bugün");
@@ -475,7 +507,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		datePickerForHasat = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 		datePickerForHasat.setBounds(107, 212, 175, 25);
 		contentPane.add(datePickerForHasat);
-		
+
 		JLabel label = new JLabel("New label");
 		datePickerForHasat.add(label);
 
