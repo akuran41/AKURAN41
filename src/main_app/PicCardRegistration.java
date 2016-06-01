@@ -73,15 +73,17 @@ public class PicCardRegistration extends JFrame implements LoginDataDisplay
 		{
 			// Create DB connection
 			connection = new ConnectDatabase(true);
+			//	Get plant list
+			getPlantList();
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
 
-		setTitle("Yeni Kart Ekle");
+		setTitle("Yeni Panel Ekle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(300, 300, 450, 252);
+		setBounds(300, 300, 450, 312);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -102,7 +104,7 @@ public class PicCardRegistration extends JFrame implements LoginDataDisplay
 		contentPane.add(createLabel.generateLabel("<html><font color='red'>Uyarı</font>: Bitki ID pic kartı ile <u>aynı</u> olmak zorundadır.</html>", true, 1,
 				1, 12, 145, 76, 279, 14));
 		contentPane.add(createLabel.generateLabel("Bitki Adı", false, 1, 1, 13, 10, 108, 75, 25));
-		contentPane.add(createSeparator.generateSeparator(10, 156, 414));
+		contentPane.add(createSeparator.generateSeparator(10, 216, 414));
 
 		textField = new JTextField();
 		textField.setBounds(75, 72, 60, 25);
@@ -130,16 +132,7 @@ public class PicCardRegistration extends JFrame implements LoginDataDisplay
 		});
 		contentPane.add(textField);
 
-		try
-		{
-			getPlantList();
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-
-		btnNewButton = createButton.generateButton("Kayıt", 304, 169);
+		btnNewButton = createButton.generateButton("Kayıt", 304, 229);
 		btnNewButton.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -204,7 +197,7 @@ public class PicCardRegistration extends JFrame implements LoginDataDisplay
 		});
 		contentPane.add(btnNewButton);
 
-		JButton btnIptal = createButton.generateButton("İptal", 10, 169);
+		JButton btnIptal = createButton.generateButton("İptal", 10, 229);
 		btnIptal.addActionListener(new ActionListener()
 		{
 			@Override
@@ -218,11 +211,12 @@ public class PicCardRegistration extends JFrame implements LoginDataDisplay
 		contentPane.revalidate();
 		contentPane.repaint();
 	}
+	
 	@SuppressWarnings("unchecked")
 	private void getPlantList() throws SQLException
 	{
 		bitkiList = new JComboBox<ComboBoxItem>();
-		bitkiList.setRenderer(new ItemRenderer());
+		//bitkiList.setRenderer(new ItemRenderer());
 		bitkiList.setBounds(75, 108, 175, 25);
 
 		Connection connect = connection.getMysqlConnection();

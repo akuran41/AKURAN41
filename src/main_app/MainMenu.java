@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import logs.LogPlant;
+import logs.LogSystem;
+import logs.LogUser;
 import project_const.WindowArgs;
 import ui.CreateLabel;
 import ui.CreateSeparator;
@@ -62,7 +65,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		setResizable(WindowArgs._ISRESIZE);
 		setTitle("Ana Menü");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 408, 497);
+		setBounds(WindowArgs._WINDOWX, WindowArgs._WINDOWY, 526, 489);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -98,8 +101,8 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		btnBitkiEkle.setBounds(10, 69, 120, 120);
 		contentPane.add(btnBitkiEkle);
 
-		JButton btnNewButton_4 = new JButton("<html>BİTKİ<br>DÜZENLE</html>");
-		btnNewButton_4.addActionListener(new ActionListener()
+		JButton btnBitkiDuzenle = new JButton("<html>BİTKİ<br>DÜZENLE</html>");
+		btnBitkiDuzenle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -116,12 +119,12 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_4.setBounds(140, 69, 120, 120);
-		contentPane.add(btnNewButton_4);
+		btnBitkiDuzenle.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnBitkiDuzenle.setBounds(140, 69, 120, 120);
+		contentPane.add(btnBitkiDuzenle);
 
-		JButton btnYeniKartEkle = new JButton("<html>KART<br>EKLE</html>");
-		btnYeniKartEkle.addActionListener(new ActionListener()
+		JButton btnPanelEkle = new JButton("<html>PANEL<br>EKLE</html>");
+		btnPanelEkle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -139,18 +142,21 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnYeniKartEkle.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnYeniKartEkle.setBounds(10, 200, 120, 120);
-		contentPane.add(btnYeniKartEkle);
+		btnPanelEkle.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnPanelEkle.setBounds(10, 200, 120, 120);
+		contentPane.add(btnPanelEkle);
 
-		JButton btnNewButton_5 = new JButton("<html>KART<br>DÜZENLE</html>");
-		btnNewButton_5.addActionListener(new ActionListener()
+		JButton btnPanelDuzenle = new JButton("<html>PANEL<br>DÜZENLE</html>");
+		btnPanelDuzenle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
 				{
-					
+					PicCardManagment cardManagment = new PicCardManagment();
+					cardManagment.setUserID(_id);
+					cardManagment.setUserName(user_name);
+					cardManagment.setVisible(true);
 				}
 				else
 				{
@@ -158,12 +164,12 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnNewButton_5.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_5.setBounds(140, 200, 120, 120);
-		contentPane.add(btnNewButton_5);
+		btnPanelDuzenle.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnPanelDuzenle.setBounds(140, 200, 120, 120);
+		contentPane.add(btnPanelDuzenle);
 
-		JButton btnNewButton_1 = new JButton("<html>KULLANICI<br>EKLE</html>");
-		btnNewButton_1.addActionListener(new ActionListener()
+		JButton btnKullaniciEkle = new JButton("<html>KULLANICI<br>EKLE</html>");
+		btnKullaniciEkle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -180,12 +186,12 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_1.setBounds(10, 328, 120, 120);
-		contentPane.add(btnNewButton_1);
+		btnKullaniciEkle.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnKullaniciEkle.setBounds(10, 328, 120, 120);
+		contentPane.add(btnKullaniciEkle);
 
-		JButton btnNewButton_6 = new JButton("<html>KULLANICI<br>DÜZENLE</html>");
-		btnNewButton_6.addActionListener(new ActionListener()
+		JButton btnKullaniciDuzenle = new JButton("<html>KULLANICI<br>DÜZENLE</html>");
+		btnKullaniciDuzenle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
@@ -202,19 +208,80 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnNewButton_6.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_6.setBounds(140, 328, 120, 120);
-		contentPane.add(btnNewButton_6);
+		btnKullaniciDuzenle.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnKullaniciDuzenle.setBounds(140, 328, 120, 120);
+		contentPane.add(btnKullaniciDuzenle);
 
-		JButton btnNewButton_2 = new JButton("<html>LOG<br>YÖNETİMİ</html>");
-		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 17));
-		btnNewButton_2.setBounds(270, 200, 120, 120);
-		contentPane.add(btnNewButton_2);
+		JButton btnBitkiLog = new JButton("<html>BİTKİ<br>LOG</html>");
+		btnBitkiLog.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
+				{
+					LogPlant logPlant = new LogPlant();
+					logPlant.setUserID(_id);
+					logPlant.setUserName(user_name);
+					logPlant.setVisible(true);
+				}
+				else
+				{
+					displayNoAuth();
+				}
+			}
+		});
+		btnBitkiLog.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnBitkiLog.setBounds(270, 69, 120, 120);
+		contentPane.add(btnBitkiLog);
 
-		lblUsername = createLabel.generateLabel("", true, 1, 3, 15, 190, 11, 200, 20);
+		JButton btnSistemLog = new JButton("<html>SİSTEM<br>LOG</html>");
+		btnSistemLog.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
+				{
+					LogSystem logSystem = new LogSystem();
+					logSystem.setUserID(_id);
+					logSystem.setUserName(user_name);
+					logSystem.setVisible(true);
+				}
+				else
+				{
+					displayNoAuth();
+				}
+			}
+		});
+		btnSistemLog.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnSistemLog.setBounds(270, 200, 120, 120);
+		contentPane.add(btnSistemLog);
+
+		JButton btnKullaniciLog = new JButton("<html>KULLANICI<br>LOG</html>");
+		btnKullaniciLog.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
+				{
+					LogUser logUser = new LogUser();
+					logUser.setUserID(_id);
+					logUser.setUserName(user_name);
+					logUser.setVisible(true);
+				}
+				else
+				{
+					displayNoAuth();
+				}
+			}
+		});
+		btnKullaniciLog.setFont(new Font("Tahoma", Font.BOLD, 17));
+		btnKullaniciLog.setBounds(270, 328, 120, 120);
+		contentPane.add(btnKullaniciLog);
+
+		lblUsername = createLabel.generateLabel("", true, 1, 3, 15, 190, 11, 323, 20);
 		contentPane.add(lblUsername);
-		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 190, 31, 200, 20));
-		contentPane.add(createSeparator.generateSeparator(10, 56, 390));
+		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 190, 31, 323, 20));
+		contentPane.add(createSeparator.generateSeparator(10, 56, 503));
 
 		JButton btnCikis = new JButton("ÇIKIŞ");
 		btnCikis.setForeground(Color.RED);
@@ -250,7 +317,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				}
 			}
 		});
-		btnCikis.setBounds(300, 358, 90, 90);
+		btnCikis.setBounds(411, 358, 90, 90);
 		contentPane.add(btnCikis);
 
 		contentPane.revalidate();

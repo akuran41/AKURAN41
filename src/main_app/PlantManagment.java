@@ -28,7 +28,7 @@ import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
-import files.FilePath;
+import files.FileUtility;
 
 public class PlantManagment extends JFrame implements LoginDataDisplay
 {
@@ -173,7 +173,7 @@ public class PlantManagment extends JFrame implements LoginDataDisplay
 						//	Sonra varsa dosyayi sil
 						if(fileName.length() > 4)
 						{
-							File fileToDelete = new File(FilePath.getImageFolder() + "\\" + fileName);
+							File fileToDelete = new File(FileUtility.getImageFolder() + "\\" + fileName);
 							fileToDelete.delete();
 						}
 

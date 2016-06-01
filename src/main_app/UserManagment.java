@@ -191,7 +191,7 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 	{
 		int counter = 0;
 
-		Object[] tableHeader = new String[]{"ID", "Ad Soyad", "Yetki", "Login ID", "Mail Adresi", "Telefon", "Kay\u0131t Tarihi"};
+		Object[] tableHeader = new String[]{"ID", "Ad Soyad", "Yetki", "Login ID", "Mail Adresi", "Telefon", "Kayıt Tarihi"};
 
 		ReadDatabase getUserList = new ReadDatabase(connection.getMysqlConnection());
 		ResultSet rsCounter = getUserList.getData("SELECT COUNT(_id) FROM user");
@@ -220,6 +220,16 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		}
 
 		table = new JTable(data, tableHeader);
+		//	Tablodaki basliklari duzenle
+		
+		table.getColumnModel().getColumn(0).setPreferredWidth(35);
+		table.getColumnModel().getColumn(1).setPreferredWidth(172);
+		table.getColumnModel().getColumn(2).setPreferredWidth(130);
+		table.getColumnModel().getColumn(3).setPreferredWidth(130);
+		table.getColumnModel().getColumn(4).setPreferredWidth(275);
+		table.getColumnModel().getColumn(5).setPreferredWidth(150);
+		table.getColumnModel().getColumn(6).setPreferredWidth(126);
+		
 		//	Tablodaki verileri secilebilir yap
 		table.setEnabled(true);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));

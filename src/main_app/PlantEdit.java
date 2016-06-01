@@ -27,7 +27,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import org.apache.commons.io.FileUtils;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -43,7 +42,7 @@ import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
-import files.FilePath;
+import files.FileUtility;
 
 public class PlantEdit extends JFrame implements LoginDataDisplay
 {
@@ -520,12 +519,10 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		if (fileChooser.getSelectedFile() != null)
 		{
 			// Delete original file first
-			File fileForDelete = new File(FilePath.getImageFolder() + "\\" + originalFileName);
-			fileForDelete.delete();
+			FileUtility.deleteMyFile(originalFileName);
 
 			// Secilen resmi C:\sera\resimler dizini altina kopyala
-			File destLocation = new File(FilePath.getImageFolder() + "\\" + file.getName());
-			FileUtils.moveFile(file, destLocation);
+			FileUtility.copyMyFile(file);
 		}
 	}
 
@@ -669,7 +666,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 				if (rs.getString(5).length() > 4)
 				{
 					this.originalFileName = rs.getString(5);
-					File registeredFile = new File(FilePath.getImageFolder() + "\\" + rs.getString(5));
+					File registeredFile = new File(FileUtility.getImageFolder() + "\\" + rs.getString(5));
 					ImageIcon imageIcon = new ImageIcon(registeredFile.toString());
 					lblForImageHolder.setIcon(imageIcon);
 				}

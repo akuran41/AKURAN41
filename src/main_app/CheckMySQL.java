@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 import net_process.PingToMySQL;
 import db_process.ConnectDatabase;
-import files.FilePath;
+import files.FileUtility;
 import files.ReadMyIniFile;
 
 public class CheckMySQL
@@ -99,18 +99,18 @@ public class CheckMySQL
 
 	private void checkIniFile()
 	{
-		File file = new File(FilePath.getPath());
+		File file = new File(FileUtility.getPath());
 
-		if (!Files.isDirectory(Paths.get(FilePath.getPath())))
+		if (!Files.isDirectory(Paths.get(FileUtility.getPath())))
 		{
 			file.mkdirs();
 
-			File iniFile = new File(FilePath.getPath() + FilePath.getFileName());
+			File iniFile = new File(FileUtility.getPath() + FileUtility.getFileName());
 			try
 			{
 				iniFile.createNewFile();
 
-				OutputStream output = new FileOutputStream(FilePath.getPath() + FilePath.getFileName());
+				OutputStream output = new FileOutputStream(FileUtility.getPath() + FileUtility.getFileName());
 				Writer writer = new OutputStreamWriter(output);
 
 				writer.write("[Database]\nveritabani=sera\n[User name]\nkullanici=null\n[Password]\nsifre=null");
@@ -125,7 +125,7 @@ public class CheckMySQL
 
 	private void checkPictureFolder()
 	{
-		File file = new File(FilePath.getImageFolder());
+		File file = new File(FileUtility.getImageFolder());
 		// Eger sistem uzerinde C:\sera\resimler klasoru yoksa yeni klasor
 		// olustur.
 		if (!file.exists())

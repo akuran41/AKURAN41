@@ -1,29 +1,26 @@
 package main_app;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
-import utils.CreateTime;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
-import javax.swing.JSeparator;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JButton;
-import javax.swing.JScrollPane;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 //import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
 
 public class PicCardManagment extends JFrame implements LoginDataDisplay
 {
@@ -61,7 +58,7 @@ public class PicCardManagment extends JFrame implements LoginDataDisplay
 	public PicCardManagment()
 	{
 		setResizable(false);
-		setTitle("Kart Düzenle");
+		setTitle("Panel Düzenle");
 		try
 		{
 			// Create DB connection
@@ -86,6 +83,7 @@ public class PicCardManagment extends JFrame implements LoginDataDisplay
 		contentPane.add(lblNewLabel);
 
 		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblNewLabel_1.setBounds(567, 30, 200, 20);
 		contentPane.add(lblNewLabel_1);
 

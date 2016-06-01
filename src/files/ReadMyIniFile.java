@@ -14,7 +14,7 @@ public class ReadMyIniFile
 
 	public ReadMyIniFile() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader(FilePath.getPath() + FilePath.getFileName()));
+		BufferedReader br = new BufferedReader(new FileReader(FileUtility.getPath() + FileUtility.getFileName()));
 
 		String line;
 		while ((line = br.readLine()) != null)

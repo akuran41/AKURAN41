@@ -1,6 +1,6 @@
 package comm_socket;
 
-public class ReadFromPic
+public class PortListener
 {
 
 }

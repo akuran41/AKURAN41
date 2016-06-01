@@ -128,7 +128,7 @@ public class KullaniciGiris extends JFrame
 							// Kullanici giris log kayit
 							WriteDatabase writeLog = new WriteDatabase(connection);
 							writeLog.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + rs.getInt(2) + "', '"
-									+ CreateTime.getCurrentTime() + "', 'Kullanici giris yapti.')");
+									+ CreateTime.getCurrentTime() + "', 'Kullanıcı sisteme giriş yaptı.')");
 
 							// Kullanici adi veya sifresi dogru ise
 							MainMenu mainMenu = new MainMenu();
