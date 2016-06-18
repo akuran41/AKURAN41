@@ -139,7 +139,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 	{
 		setTitle("Yeni Bitki Ekle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1034, 805);
+		setBounds(200, 200, 1034, 805);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

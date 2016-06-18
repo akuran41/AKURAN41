@@ -123,7 +123,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		btnBitkiDuzenle.setBounds(140, 69, 120, 120);
 		contentPane.add(btnBitkiDuzenle);
 
-		JButton btnPanelEkle = new JButton("<html>PANEL<br>EKLE</html>");
+		JButton btnPanelEkle = new JButton("<html>BÖLÜM<br>YÖNETİMİ</html>");
 		btnPanelEkle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0)
@@ -131,7 +131,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
 				{
 					// Yeni PIC karti ekleme
-					PicCardRegistration addNew = new PicCardRegistration();
+					HallManagment addNew = new HallManagment();
 					addNew.setUserID(_id);
 					addNew.setUserName(user_name);
 					addNew.setVisible(true);
@@ -146,14 +146,14 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 		btnPanelEkle.setBounds(10, 200, 120, 120);
 		contentPane.add(btnPanelEkle);
 
-		JButton btnPanelDuzenle = new JButton("<html>PANEL<br>DÜZENLE</html>");
+		JButton btnPanelDuzenle = new JButton("<html>PANEL<br>YÖNETİMİ</html>");
 		btnPanelDuzenle.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				if (auth_id == 2 || auth_id == 4 || auth_id == 5)
 				{
-					PicCardManagment cardManagment = new PicCardManagment();
+					PanelManagment cardManagment = new PanelManagment();
 					cardManagment.setUserID(_id);
 					cardManagment.setUserName(user_name);
 					cardManagment.setVisible(true);

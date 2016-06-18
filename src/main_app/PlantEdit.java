@@ -149,7 +149,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 
 		setTitle("Bitki Düzenle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1034, 805);
+		setBounds(200, 200, 1034, 805);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -61,7 +61,7 @@ public class LogUser extends JFrame implements LoginDataDisplay
 		setTitle("Kullanıcı Log");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 788, 572);
+		setBounds(300, 300, 788, 572);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
