@@ -70,8 +70,10 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 
 	public HallDetail()
 	{
+		setResizable(false);
+		setTitle("Bölüm Yönetimi");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(10, 10, 857, 1023);
+		setBounds(10, 10, 1600, 827);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -92,7 +94,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		standardDataPanel = new JPanel();
 		standardDataPanel.setBackground(Color.WHITE);
 		standardDataPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
-		standardDataPanel.setBounds(10, 11, 817, 531);
+		standardDataPanel.setBounds(10, 11, 817, 685);
 		standardDataPanel.setLayout(null);
 		contentPane.add(standardDataPanel);
 
@@ -328,7 +330,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new LineBorder(new Color(0, 0, 0)));
 		panel_1.setBackground(Color.WHITE);
-		panel_1.setBounds(10, 553, 817, 376);
+		panel_1.setBounds(837, 11, 737, 685);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 	}

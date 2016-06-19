@@ -65,6 +65,7 @@ public class LogUser extends JFrame implements LoginDataDisplay
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
 		try
 		{
@@ -90,7 +91,6 @@ public class LogUser extends JFrame implements LoginDataDisplay
 		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 190, 31, 580, 20));
 		contentPane.add(createSeparator.generateSeparator(10, 56, 762));
 		contentPane.add(createSeparator.generateSeparator(10, 488, 762));
-		contentPane.setLayout(null);
 
 		JButton btnNewButton = createButton.generateButton("İptal", 653, 500);
 		btnNewButton.addActionListener(new ActionListener()
