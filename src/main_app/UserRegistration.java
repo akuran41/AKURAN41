@@ -23,6 +23,7 @@ import ui.CreateSeparator;
 import utils.AuthConverter;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -31,6 +32,9 @@ import db_process.WriteDatabase;
 public class UserRegistration extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= 8308062062681951772L;
+	
+	private ErrorLog			errorLog			= null;
+	
 	private JPanel				contentPane;
 
 	private JTextField			txtUserFirstName;
@@ -74,6 +78,8 @@ public class UserRegistration extends JFrame implements LoginDataDisplay
 
 	public UserRegistration()
 	{
+		errorLog = new ErrorLog();
+		
 		setTitle("Yeni Kullanıcı Ekle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 300, 466, 337);
@@ -206,7 +212,7 @@ public class UserRegistration extends JFrame implements LoginDataDisplay
 				}
 				catch (SQLException e)
 				{
-					e.printStackTrace();
+					errorLog.generateLog(e);
 				}
 			}
 		});

@@ -40,6 +40,7 @@ import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DateLabelFormatter;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import utils.MonthConverter;
 import db_process.ConnectDatabase;
@@ -50,6 +51,9 @@ import files.FileUtility;
 public class PlantRegistration extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= 5276473839635208953L;
+
+	private ErrorLog			errorLog			= null;
+
 	private JPanel				contentPane;
 
 	private JTextField			txtBitkiAdi;
@@ -137,6 +141,8 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 
 	public PlantRegistration()
 	{
+		errorLog = new ErrorLog();
+
 		setTitle("Yeni Bitki Ekle");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(200, 200, 1034, 805);
@@ -203,7 +209,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		comboBitkiUlke.setBounds(107, 127, 175, 25);
@@ -254,9 +260,9 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 						displayError.showMessageDialog("Kırmızı ile işaretli alanların doldurulması zorunludur.", "HATA", JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				catch (SQLException | IOException e1)
+				catch (Exception e1)
 				{
-					e1.printStackTrace();
+					errorLog.generateLog(e1);
 				}
 			}
 		});

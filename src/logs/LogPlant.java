@@ -1,6 +1,5 @@
 package logs;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,12 +12,9 @@ import utils.LoginDataDisplay;
 public class LogPlant extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= 6443780679131676046L;
+
 	private JPanel				contentPane;
-
 	private JLabel				lblUsername;
-
-	private int					_id;
-	private String				user_name;
 
 	public static void main(String[] args)
 	{
@@ -54,19 +50,18 @@ public class LogPlant extends JFrame implements LoginDataDisplay
 	@Override
 	public void setUserID(int _id)
 	{
-		this._id = _id;
+		// Unused implements
 	}
 
 	@Override
 	public void setUserName(String user_name)
 	{
-		this.user_name = user_name;
 		this.lblUsername.setText(user_name);
 	}
 
 	@Override
 	public void setAuthID(int auth_id)
 	{
-		//	Unused implements
+		// Unused implements
 	}
 }

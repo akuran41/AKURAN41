@@ -5,10 +5,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import utils.ErrorLog;
 import files.ReadMyIniFile;
 
 public class ConnectDatabase
 {
+	private ErrorLog	errorLog	= null;
 	private Connection	connection	= null;
 	private boolean		isConnected	= false;
 
@@ -18,6 +20,8 @@ public class ConnectDatabase
 
 	public ConnectDatabase() throws SQLException
 	{
+		errorLog = new ErrorLog();
+		
 		String driverName = "org.gjt.mm.mysql.Driver";
 		try
 		{
@@ -25,7 +29,7 @@ public class ConnectDatabase
 		}
 		catch (ClassNotFoundException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		// Get database params
@@ -39,6 +43,9 @@ public class ConnectDatabase
 
 	public ConnectDatabase(boolean createForConnection) throws SQLException
 	{
+		if(errorLog == null)
+			errorLog = new ErrorLog();
+		
 		String driverName = "org.gjt.mm.mysql.Driver";
 		try
 		{
@@ -46,7 +53,7 @@ public class ConnectDatabase
 		}
 		catch (ClassNotFoundException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		// Get database params
@@ -83,7 +90,7 @@ public class ConnectDatabase
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 		
 		data = readMyIniFile.getMyDatabaseName();

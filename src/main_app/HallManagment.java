@@ -21,6 +21,7 @@ import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -32,19 +33,22 @@ import javax.swing.JSeparator;
 
 public class HallManagment extends JFrame implements LoginDataDisplay
 {
-	private static final long		serialVersionUID	= 2494461427189987440L;
-	private JPanel					contentPane;
-	private JTable					table;
+	private static final long	serialVersionUID	= 2494461427189987440L;
 
-	private JLabel					lblUsername;
+	private ErrorLog			errorLog			= null;
 
-	private ConnectDatabase			connection;
-	private CreateLabel				createLabel;
-	private CreateButton			createButton;
-	private DisplayError			displayError;
-	private CreateSeparator			createSeparator;
+	private JPanel				contentPane;
+	private JTable				table;
 
-	private int						_id;
+	private JLabel				lblUsername;
+
+	private ConnectDatabase		connection;
+	private CreateLabel			createLabel;
+	private CreateButton		createButton;
+	private DisplayError		displayError;
+	private CreateSeparator		createSeparator;
+
+	private int					_id;
 
 	public static void main(String[] args)
 	{
@@ -67,6 +71,8 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 
 	public HallManagment()
 	{
+		errorLog = new ErrorLog();
+		
 		setTitle("Bölüm Yönetimi");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 300, 450, 312);
@@ -84,7 +90,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		// Etiket nesnesi olustur
@@ -117,7 +123,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 				}
 				catch (SQLException e1)
 				{
-					e1.printStackTrace();
+					errorLog.generateLog(e1);
 				}
 			}
 
@@ -129,9 +135,9 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 				// Create USERLOG
 				write.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
 						+ "', 'Yeni bölüm olusturdu.')");
-				
-				//	populate Table
-				//createTable();
+
+				// populate Table
+				// createTable();
 				dispose();
 			}
 		});
@@ -184,15 +190,15 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 						// Create USERLOG
 						deleteHall.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
 								+ "', '" + hallID + " numaralı bölümü sildi.')");
-						
-						//	populate Table
-						//createTable();
+
+						// populate Table
+						// createTable();
 						dispose();
 					}
 				}
 				catch (SQLException e1)
 				{
-					e1.printStackTrace();
+					errorLog.generateLog(e1);
 				}
 			}
 		});
@@ -209,12 +215,12 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 		});
 		contentPane.add(btnIptal);
 	}
-	
+
 	private void createTable() throws SQLException
 	{
 		int counter = 0;
 		Object[] tableHeader = new String[]{"ID", "Kayıt Tarihi"};
-		
+
 		ReadDatabase getHallList = new ReadDatabase(connection.getMysqlConnection());
 		ResultSet rsCounter = getHallList.getData("SELECT COUNT(_id) FROM hall");
 
@@ -226,7 +232,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 		Object[][] data = new Object[counter][2];
 
 		counter = 0;
-		
+
 		ResultSet rs = getHallList.getData("SELECT _id, add_date FROM hall ORDER BY _id ASC");
 		while (rs.next())
 		{
@@ -237,26 +243,26 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 		}
 
 		table = new JTable(data, tableHeader);
-		//	Tablodaki basliklari duzenle
-		
+		// Tablodaki basliklari duzenle
+
 		table.getColumnModel().getColumn(0).setPreferredWidth(35);
 		table.getColumnModel().getColumn(1).setPreferredWidth(172);
-		
-		//	Tablodaki verileri secilebilir yap
+
+		// Tablodaki verileri secilebilir yap
 		table.setEnabled(true);
 		table.setBorder(new LineBorder(new Color(0, 0, 0)));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		//	Sadece her seferinde tek bir kayit secilmesine izin ver
+		// Sadece her seferinde tek bir kayit secilmesine izin ver
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		//	Sort
+		// Sort
 		table.setAutoCreateRowSorter(true);
 		table.setBounds(10, 69, 414, 151);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		//	ScrollPane olculeri table ile ayni olmak zorunda
+		// ScrollPane olculeri table ile ayni olmak zorunda
 		scrollPane.setBounds(10, 69, 414, 151);
 		contentPane.add(scrollPane);
-		//	Ekrani guncelle
+		// Ekrani guncelle
 		validate();
 	}
 

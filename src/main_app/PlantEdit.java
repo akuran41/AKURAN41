@@ -38,6 +38,7 @@ import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DateLabelFormatter;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -47,6 +48,9 @@ import files.FileUtility;
 public class PlantEdit extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= -4622095388382931747L;
+	
+	private ErrorLog			errorLog			= null;
+
 	private JPanel				contentPane;
 
 	private JTextField			txtBitkiAdi;
@@ -137,6 +141,8 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 
 	public PlantEdit()
 	{
+		errorLog = new ErrorLog();
+		
 		try
 		{
 			// Create DB connection
@@ -144,7 +150,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e2)
 		{
-			e2.printStackTrace();
+			errorLog.generateLog(e2);
 		}
 
 		setTitle("Bitki Düzenle");
@@ -213,7 +219,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		comboBitkiUlke.setBounds(107, 127, 175, 25);
@@ -259,9 +265,9 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 						displayError.showMessageDialog("Kırmızı ile işaretli alanların doldurulması zorunludur.", "HATA", JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				catch (SQLException | IOException e1)
+				catch (Exception e1)
 				{
-					e1.printStackTrace();
+					errorLog.generateLog(e1);
 				}
 			}
 		});
@@ -680,7 +686,7 @@ public class PlantEdit extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 	}
 }

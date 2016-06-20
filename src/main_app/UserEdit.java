@@ -23,6 +23,7 @@ import ui.CreateSeparator;
 import utils.AuthConverter;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -31,6 +32,9 @@ import db_process.WriteDatabase;
 public class UserEdit extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= -3210363336601295928L;
+	
+	private ErrorLog			errorLog			= null;
+	
 	private JPanel				contentPane;
 
 	private JTextField			txtUserFirstName;
@@ -77,6 +81,8 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 
 	public UserEdit()
 	{
+		errorLog = new ErrorLog();
+		
 		// Veritabani baglantisi yap
 		try
 		{
@@ -84,7 +90,7 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e1)
 		{
-			e1.printStackTrace();
+			errorLog.generateLog(e1);
 		}
 
 		setTitle("Kullanıcı Düzenle");
@@ -249,7 +255,7 @@ public class UserEdit extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 	}
 

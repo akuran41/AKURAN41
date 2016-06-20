@@ -24,6 +24,7 @@ import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -33,6 +34,9 @@ import files.FileUtility;
 public class PlantManagment extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= -3598167150109127981L;
+	
+	private ErrorLog					errorLog			= null;
+	
 	private JPanel				contentPane;
 
 	private JLabel				lblUsername;
@@ -68,6 +72,8 @@ public class PlantManagment extends JFrame implements LoginDataDisplay
 
 	public PlantManagment()
 	{
+		errorLog = new ErrorLog();
+		
 		try
 		{
 			// Create DB connection
@@ -163,7 +169,7 @@ public class PlantManagment extends JFrame implements LoginDataDisplay
 						}
 						catch (SQLException e1)
 						{
-							e1.printStackTrace();
+							errorLog.generateLog(e1);
 						}
 
 						// Once bitkiyi sil
@@ -196,7 +202,7 @@ public class PlantManagment extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		JButton btnNewButton = createButton.generateButton("İptal", 736, 363);

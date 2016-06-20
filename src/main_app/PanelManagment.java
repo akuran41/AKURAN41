@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -23,6 +24,9 @@ import db_process.ReadDatabase;
 public class PanelManagment extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= 7163907576378064509L;
+
+	private ErrorLog			errorLog			= null;
+
 	private JPanel				contentPane;
 	private JComboBox<Integer>	comboBox;
 
@@ -54,6 +58,8 @@ public class PanelManagment extends JFrame implements LoginDataDisplay
 
 	public PanelManagment()
 	{
+		errorLog = new ErrorLog();
+		
 		setResizable(false);
 		setTitle("Panel Yönetimi");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -114,7 +120,7 @@ public class PanelManagment extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 	}
 

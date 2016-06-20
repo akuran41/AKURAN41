@@ -15,10 +15,13 @@ import project_const.WindowArgs;
 import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
+import utils.ErrorLog;
 
 public class FailedToConnect extends JFrame
 {
 	private static final long	serialVersionUID	= 2051907402208490919L;
+
+	private ErrorLog			errorLog			= null;
 
 	private JPanel				contentPane;
 	private JButton				btnCancel;
@@ -50,6 +53,8 @@ public class FailedToConnect extends JFrame
 
 	public FailedToConnect()
 	{
+		errorLog = new ErrorLog();
+		
 		setTitle("Bağlantı Hatası");
 		setResizable(WindowArgs._ISRESIZE);
 		setAlwaysOnTop(WindowArgs._ONTOP);
@@ -67,12 +72,18 @@ public class FailedToConnect extends JFrame
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
 
-		contentPane.add(createLabel.generateLabel("<html>MySQL veritabanına bağlanmaya çalışılırken hata oluştu.<br>Bu durumun olası sebepleri :</html>", false, 1, 1, 15, 10, 11, 424, 70));
+		contentPane.add(createLabel.generateLabel("<html>MySQL veritabanına bağlanmaya çalışılırken hata oluştu.<br>Bu durumun olası sebepleri :</html>",
+				false, 1, 1, 15, 10, 11, 424, 70));
 		contentPane.add(createLabel.generateLabel("1 - Sisteminizde MySQL veritabanı kurulu olmayabilir.", false, 1, 1, 15, 10, 70, 424, 30));
 		contentPane.add(createLabel.generateLabel("2 - MySQL veritabanı şuan için çalışmıyor olabilir.", false, 1, 1, 15, 10, 93, 424, 30));
 		contentPane.add(createSeparator.generateSeparator(10, 242, 512));
-		contentPane.add(createLabel.generateLabel("<html>Eğer sisteminizde MySQL kurulu ise <b>ÇALIŞTIR</b>, değil ise <b>KUR</b> düğmesine basınız.", false, 1, 1, 15, 10, 125, 519, 40));
-		contentPane.add(createLabel.generateLabel("<html>Kurulum tamamlandıktan sonra, <b><i><u>Sadece</u></i></b> MySQL <b>Kullanıcı adı</b> ve <b>Şifre</b> sini<br><font color='red'><u><i><b>\"C:\\Windows\\sera\\mysera.ini\"</b></i></u></font> dosyasının içine yazınız.</html>", false, 1, 1, 13, 10, 192, 512, 35));
+		contentPane.add(createLabel.generateLabel("<html>Eğer sisteminizde MySQL kurulu ise <b>ÇALIŞTIR</b>, değil ise <b>KUR</b> düğmesine basınız.", false,
+				1, 1, 15, 10, 125, 519, 40));
+		contentPane
+				.add(createLabel
+						.generateLabel(
+								"<html>Kurulum tamamlandıktan sonra, <b><i><u>Sadece</u></i></b> MySQL <b>Kullanıcı adı</b> ve <b>Şifre</b> sini<br><font color='red'><u><i><b>\"C:\\Windows\\sera\\mysera.ini\"</b></i></u></font> dosyasının içine yazınız.</html>",
+								false, 1, 1, 13, 10, 192, 512, 35));
 
 		btnCancel = createButton.generateButton("İptal", 402, 255);
 		btnCancel.addActionListener(new ActionListener()
@@ -113,7 +124,7 @@ public class FailedToConnect extends JFrame
 				}
 				catch (IOException e)
 				{
-					e.printStackTrace();
+					errorLog.generateLog(e);
 				}
 
 				btnRun.setVisible(false);
@@ -136,7 +147,7 @@ public class FailedToConnect extends JFrame
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 	}
 }

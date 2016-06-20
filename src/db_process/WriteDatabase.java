@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import utils.ErrorLog;
+
 public class WriteDatabase
 {
+	private ErrorLog	errorLog	= null;
 	private Connection	connection	= null;
 	
 	public WriteDatabase(Connection connection)
 	{
+		errorLog = new ErrorLog();
+		
 		this.connection = connection;
 	}
 	
@@ -23,7 +28,7 @@ public class WriteDatabase
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 		finally
 		{
@@ -34,7 +39,7 @@ public class WriteDatabase
 				}
 				catch (SQLException e)
 				{
-					e.printStackTrace();
+					errorLog.generateLog(e);
 				}
 		}
 	}

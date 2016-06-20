@@ -19,6 +19,7 @@ import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -33,6 +34,7 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 
 	private JLabel				lblUsername;
 
+	private ErrorLog			errorLog			= null;
 	private ConnectDatabase		connection;
 	private CreateLabel			createLabel;
 	private CreateButton		createButton;
@@ -59,6 +61,8 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 
 	public LogSystem()
 	{
+		errorLog = new ErrorLog();
+
 		setTitle("Sistem Log");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -77,7 +81,7 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		// Etiket nesnesi olustur
@@ -129,16 +133,16 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 				+ "heat_pump_valve, log_time " + "FROM sys_log " + "ORDER BY log_time DESC");
 		while (rs.next())
 		{
-			data[counter][0]  = number;
-			data[counter][1]  = rs.getString(1);
-			data[counter][2]  = rs.getString(2);
-			data[counter][3]  = rs.getString(3);
-			data[counter][4]  = rs.getString(4);
-			data[counter][5]  = rs.getString(5);
-			data[counter][6]  = rs.getString(6);
-			data[counter][7]  = rs.getString(7);
-			data[counter][8]  = rs.getString(8);
-			data[counter][9]  = rs.getString(9);
+			data[counter][0] = number;
+			data[counter][1] = rs.getString(1);
+			data[counter][2] = rs.getString(2);
+			data[counter][3] = rs.getString(3);
+			data[counter][4] = rs.getString(4);
+			data[counter][5] = rs.getString(5);
+			data[counter][6] = rs.getString(6);
+			data[counter][7] = rs.getString(7);
+			data[counter][8] = rs.getString(8);
+			data[counter][9] = rs.getString(9);
 			data[counter][10] = rs.getString(10);
 			data[counter][11] = rs.getString(11);
 			data[counter][12] = rs.getString(12);

@@ -21,6 +21,7 @@ import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
@@ -28,7 +29,11 @@ import db_process.WriteDatabase;
 public class KullaniciGiris extends JFrame
 {
 	private static final long		serialVersionUID	= 427129700743249907L;
+
+	private ErrorLog				errorLog			= null;
+
 	private JPanel					contentPane;
+	
 	private static KullaniciGiris	frame;
 	private JTextField				textField;
 	private JPasswordField			passwordField;
@@ -58,6 +63,8 @@ public class KullaniciGiris extends JFrame
 
 	public KullaniciGiris()
 	{
+		errorLog = new ErrorLog();
+		
 		setResizable(WindowArgs._ISRESIZE);
 		setAlwaysOnTop(WindowArgs._ONTOP);
 		setTitle("Kullanıcı Girişi");
@@ -150,7 +157,7 @@ public class KullaniciGiris extends JFrame
 				}
 				catch (SQLException e1)
 				{
-					e1.printStackTrace();
+					errorLog.generateLog(e1);
 				}
 			}
 		});

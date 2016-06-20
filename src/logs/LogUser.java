@@ -21,6 +21,7 @@ import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -32,6 +33,7 @@ public class LogUser extends JFrame implements LoginDataDisplay
 
 	private JLabel				lblUsername;
 
+	private ErrorLog			errorLog			= null;
 	private ConnectDatabase		connection;
 	private CreateLabel			createLabel;
 	private CreateButton		createButton;
@@ -58,6 +60,8 @@ public class LogUser extends JFrame implements LoginDataDisplay
 
 	public LogUser()
 	{
+		errorLog = new ErrorLog();
+		
 		setTitle("Kullanıcı Log");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -76,7 +80,7 @@ public class LogUser extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		// Etiket nesnesi olustur
@@ -123,7 +127,7 @@ public class LogUser extends JFrame implements LoginDataDisplay
 		Object[][] data = new Object[counter][5];
 
 		counter = 0;
-		
+
 		ResultSet rs = getUserList
 				.getData("SELECT u.user_name, u.user_id, l.login_time, l.user_process FROM user_log l LEFT JOIN user u ON l.user_id = u._id ORDER BY l.login_time DESC");
 		while (rs.next())

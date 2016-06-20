@@ -6,9 +6,7 @@ import java.io.IOException;
 
 public class ReadMyIniFile
 {
-	// TODO Veri tabani ismini null yap
 	private String		data		= null;
-	// TODO Kullanici adini null yap
 	private String		user		= null;
 	private String		pass		= "";
 

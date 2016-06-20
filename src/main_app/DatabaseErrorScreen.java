@@ -15,21 +15,25 @@ import project_const.WindowArgs;
 import ui.CreateButton;
 import ui.CreateLabel;
 import ui.CreateSeparator;
+import utils.ErrorLog;
 import db_process.CreateDatabase;
 
 public class DatabaseErrorScreen extends JFrame
 {
-	private static final long	serialVersionUID	= -2785046605912548643L;
-	private JPanel				contentPane;
+	private static final long			serialVersionUID	= -2785046605912548643L;
+
 	private static DatabaseErrorScreen	frame;
+	private ErrorLog					errorLog			= null;
 
-	private JButton				btnCancel;
-	private JButton				btnSetup;
-	private JLabel				lblNewLabel;
+	private JPanel						contentPane;
 
-	private CreateLabel			createLabel;
-	private CreateButton		createButton;
-	private CreateSeparator		createSeparator;
+	private JButton						btnCancel;
+	private JButton						btnSetup;
+	private JLabel						lblNewLabel;
+
+	private CreateLabel					createLabel;
+	private CreateButton				createButton;
+	private CreateSeparator				createSeparator;
 
 	public static void main(String[] args)
 	{
@@ -52,6 +56,8 @@ public class DatabaseErrorScreen extends JFrame
 
 	public DatabaseErrorScreen()
 	{
+		errorLog = new ErrorLog();
+		
 		setTitle("Veritabanı Hatası");
 		setResizable(WindowArgs._ISRESIZE);
 		setAlwaysOnTop(WindowArgs._ONTOP);
@@ -69,9 +75,12 @@ public class DatabaseErrorScreen extends JFrame
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
 
-		contentPane.add(createLabel.generateLabel("<html>Veritabanı bulunamadı.<br>Veritabanı oluşturmak için <b>OLUŞTUR</b> düğmesine, programı sonlandırmak için <b>İPTAL</b> düğmesine basınız.</html>", false, 1, 1, 15, 10, 11, 530, 70));
+		contentPane
+				.add(createLabel
+						.generateLabel(
+								"<html>Veritabanı bulunamadı.<br>Veritabanı oluşturmak için <b>OLUŞTUR</b> düğmesine, programı sonlandırmak için <b>İPTAL</b> düğmesine basınız.</html>",
+								false, 1, 1, 15, 10, 11, 530, 70));
 		contentPane.add(createSeparator.generateSeparator(10, 174, 512));
-		
 
 		btnCancel = createButton.generateButton("İptal", 402, 187);
 		btnCancel.addActionListener(new ActionListener()
@@ -99,7 +108,7 @@ public class DatabaseErrorScreen extends JFrame
 				}
 				catch (SQLException e1)
 				{
-					e1.printStackTrace();
+					errorLog.generateLog(e1);
 				}
 
 				// Display Message
@@ -112,7 +121,8 @@ public class DatabaseErrorScreen extends JFrame
 		});
 		contentPane.add(btnSetup);
 
-		lblNewLabel = createLabel.generateLabel("<html>Veritabanı oluşturuldu. <b>KAPAT</b> düğmesine basarak sistemi kapatıp, yeniden başlatın.</html>", true, 2, 1, 15, 10, 110, 512, 40);
+		lblNewLabel = createLabel.generateLabel("<html>Veritabanı oluşturuldu. <b>KAPAT</b> düğmesine basarak sistemi kapatıp, yeniden başlatın.</html>", true,
+				2, 1, 15, 10, 110, 512, 40);
 		lblNewLabel.setVisible(false);
 		contentPane.add(lblNewLabel);
 	}

@@ -22,6 +22,7 @@ import ui.CreateLabel;
 import ui.CreateSeparator;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.WriteDatabase;
@@ -29,6 +30,9 @@ import db_process.WriteDatabase;
 public class MainMenu extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= -4644347830137344798L;
+
+	private ErrorLog			errorLog			= null;
+
 	private JPanel				contentPane;
 
 	private JLabel				lblUsername;
@@ -62,6 +66,8 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 
 	public MainMenu()
 	{
+		errorLog = new ErrorLog();
+		
 		setResizable(WindowArgs._ISRESIZE);
 		setTitle("Ana Menü");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -303,7 +309,7 @@ public class MainMenu extends JFrame implements LoginDataDisplay
 					}
 					catch (SQLException e)
 					{
-						e.printStackTrace();
+						errorLog.generateLog(e);
 					}
 
 					String queryForLog = "INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()

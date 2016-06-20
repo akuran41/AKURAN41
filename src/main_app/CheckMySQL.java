@@ -11,6 +11,7 @@ import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import utils.ErrorLog;
 import net_process.PingToMySQL;
 import db_process.ConnectDatabase;
 import files.FileUtility;
@@ -18,6 +19,8 @@ import files.ReadMyIniFile;
 
 public class CheckMySQL
 {
+	private ErrorLog		errorLog	= null;
+
 	private ConnectDatabase	connectDatabase;
 	private boolean			mySqlExists	= false;
 
@@ -38,6 +41,8 @@ public class CheckMySQL
 
 	public void sqlConnection()
 	{
+		errorLog = new ErrorLog();
+		
 		// Ping to MySQL
 		mySqlExists = PingToMySQL.checkMySql();
 
@@ -118,7 +123,7 @@ public class CheckMySQL
 			}
 			catch (IOException e)
 			{
-				e.printStackTrace();
+				errorLog.generateLog(e);
 			}
 		}
 	}

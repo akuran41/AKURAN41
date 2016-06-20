@@ -25,6 +25,7 @@ import ui.CreateButton;
 import ui.CreateInput;
 import ui.CreateLabel;
 import ui.CreateSeparator;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -32,6 +33,9 @@ import db_process.ReadDatabase;
 public class HallDetail extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= 5386948261042263411L;
+
+	private ErrorLog			errorLog			= null;
+
 	private JPanel				contentPane;
 	private JPanel				standardDataPanel;
 	private JComboBox<String>	comboBox;
@@ -70,6 +74,8 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 
 	public HallDetail()
 	{
+		errorLog = new ErrorLog();
+		
 		setResizable(false);
 		setTitle("Bölüm Yönetimi");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -100,14 +106,14 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 
 		tableHeaders();
 		tableCells();
-		
+
 		try
 		{
 			connection = new ConnectDatabase(true);
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		JLabel label = new JLabel("0");
@@ -334,7 +340,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 	}
-	
+
 	public void setHallID(Object hallID)
 	{
 		try
@@ -343,7 +349,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 	}
 
@@ -511,10 +517,10 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		comboBox = new JComboBox<String>();
 		comboBox.setBounds(169, 10, 206, 35);
 		standardDataPanel.add(comboBox);
-		
+
 		ReadDatabase getPlants = new ReadDatabase(connection.getMysqlConnection());
 		ResultSet rs = getPlants.getData("SELECT bitki_adi FROM bitki ORDER BY bitki_adi ASC");
-		while(rs.next())
+		while (rs.next())
 		{
 			comboBox.addItem(rs.getString(1));
 		}

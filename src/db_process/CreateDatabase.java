@@ -6,10 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import utils.ErrorLog;
 import files.ReadMyIniFile;
 
 public class CreateDatabase
 {
+	private ErrorLog		errorLog	= null;
 	private ConnectDatabase	connectDatabase;
 	private Connection		connection	= null;
 
@@ -17,6 +19,8 @@ public class CreateDatabase
 
 	public CreateDatabase() throws SQLException
 	{
+		errorLog = new ErrorLog();
+
 		readIniFile();
 
 		connectDatabase = new ConnectDatabase();
@@ -124,7 +128,7 @@ public class CreateDatabase
 		}
 		catch (IOException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		data = readMyIniFile.getMyDatabaseName();

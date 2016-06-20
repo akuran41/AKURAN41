@@ -24,6 +24,7 @@ import ui.CreateSeparator;
 import utils.AuthConverter;
 import utils.CreateTime;
 import utils.DisplayError;
+import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
@@ -32,6 +33,9 @@ import db_process.WriteDatabase;
 public class UserManagment extends JFrame implements LoginDataDisplay
 {
 	private static final long	serialVersionUID	= -3892496455332751876L;
+	
+	private ErrorLog			errorLog			= null;
+	
 	private JPanel				contentPane;
 	private JTable				table;
 
@@ -67,6 +71,8 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 
 	public UserManagment()
 	{
+		errorLog = new ErrorLog();
+		
 		try
 		{
 			//	Create DB connection
@@ -74,7 +80,7 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e)
 		{
-			e.printStackTrace();
+			errorLog.generateLog(e);
 		}
 
 		setTitle("Kullanıcı Düzenle");
@@ -101,7 +107,7 @@ public class UserManagment extends JFrame implements LoginDataDisplay
 		}
 		catch (SQLException e1)
 		{
-			e1.printStackTrace();
+			errorLog.generateLog(e1);
 		}
 
 		contentPane.add(createLabel.generateLabel(CreateTime.getCurrentTime(), true, 1, 3, 13, 655, 33, 200, 20));
