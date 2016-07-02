@@ -129,7 +129,7 @@ public class LogUser extends JFrame implements LoginDataDisplay
 		counter = 0;
 
 		ResultSet rs = getUserList
-				.getData("SELECT u.user_name, u.user_id, l.login_time, l.user_process FROM user_log l LEFT JOIN user u ON l.user_id = u._id ORDER BY l.login_time DESC");
+				.getData("SELECT u.user_name, u.user_id, l.login_time, l.user_process FROM user_log l LEFT JOIN user u ON l.user_id = u._id ORDER BY l._id DESC");
 		while (rs.next())
 		{
 			data[counter][0] = number;

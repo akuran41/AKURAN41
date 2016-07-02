@@ -130,7 +130,7 @@ public class PanelManagment extends JFrame implements LoginDataDisplay
 		Connection connection = connectDatabase.getMysqlConnection();
 
 		ReadDatabase readDatabase = new ReadDatabase(connection);
-		ResultSet rs = readDatabase.getData("SELECT _id FROM hall ORDER BY _id ASC");
+		ResultSet rs = readDatabase.getData("SELECT _id FROM bolum ORDER BY _id ASC");
 
 		// Add null Value to ComboBox
 		comboBox.addItem(null);

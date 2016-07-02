@@ -113,24 +113,24 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 		int number = 1;
 		int counter = 0;
 
-		Object[] tableHeader = new String[]{"No", "Hall ID", "Panel ID", "Ortam Isı", "Ortam Nem", "Ortam O2", "Ortam CO2", "Ortam Işık", "Ortam Bar",
-				"C.suyu PH", "C.suyu Isı", "A Gıda", "B Gıda", "C Gıda", "X Gıda", "Soğ. Vana", "Isı Vana", "Tarih"};
+		Object[] tableHeader = new String[]{"No", "Bölüm ID", "Ortam Isı", "Ortam Nem", "Ortam O2", "Ortam CO2", "Ortam Işık", "Ortam Bar",
+				"C.suyu PH", "C.suyu Isı", "A Gıda", "B Gıda", "C Gıda", "D Gıda", "Soğ. Vana", "Isı Vana", "Tarih"};
 
 		ReadDatabase getSysLog = new ReadDatabase(connection.getMysqlConnection());
 
-		ResultSet rsCounter = getSysLog.getData("SELECT COUNT(_id) FROM sys_log");
+		ResultSet rsCounter = getSysLog.getData("SELECT COUNT(_id) FROM product_log");
 		while (rsCounter.next())
 		{
 			counter = rsCounter.getInt(1);
 		}
 
-		Object[][] data = new Object[counter][18];
+		Object[][] data = new Object[counter][17];
 
 		counter = 0;
 
-		ResultSet rs = getSysLog.getData("SELECT hall_id, panel_id, env_temp, env_humid, env_oxigen, "
-				+ "env_co2, env_light, env_bar, env_water_ph, env_water_temp, a_ingredient, b_ingredient, c_ingredient, x_ingredient, cool_pump_valve, "
-				+ "heat_pump_valve, log_time " + "FROM sys_log " + "ORDER BY log_time DESC");
+		ResultSet rs = getSysLog.getData("SELECT bolum_id, env_temp, env_humid, env_02, "
+				+ "env_co2, env_light, env_pressure, env_water_ph, env_water_temp, a_gida, b_gida, c_gida, d_gida, env_cool_valve, "
+				+ "env_heat_valve, log_time " + "FROM product_log " + "ORDER BY log_time DESC");
 		while (rs.next())
 		{
 			data[counter][0] = number;
@@ -150,7 +150,6 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 			data[counter][14] = rs.getString(14);
 			data[counter][15] = rs.getString(15);
 			data[counter][16] = rs.getString(16);
-			data[counter][17] = rs.getString(17);
 
 			number++;
 			counter++;
@@ -162,22 +161,21 @@ public class LogSystem extends JFrame implements LoginDataDisplay
 		// Tablodaki basliklari duzenle
 		table.getColumnModel().getColumn(0).setPreferredWidth(60);
 		table.getColumnModel().getColumn(1).setPreferredWidth(110);
-		table.getColumnModel().getColumn(2).setPreferredWidth(130);
-		table.getColumnModel().getColumn(3).setPreferredWidth(180);
-		table.getColumnModel().getColumn(4).setPreferredWidth(190);
+		table.getColumnModel().getColumn(2).setPreferredWidth(180);
+		table.getColumnModel().getColumn(3).setPreferredWidth(190);
+		table.getColumnModel().getColumn(4).setPreferredWidth(180);
 		table.getColumnModel().getColumn(5).setPreferredWidth(180);
-		table.getColumnModel().getColumn(6).setPreferredWidth(180);
+		table.getColumnModel().getColumn(6).setPreferredWidth(190);
 		table.getColumnModel().getColumn(7).setPreferredWidth(190);
-		table.getColumnModel().getColumn(8).setPreferredWidth(190);
-		table.getColumnModel().getColumn(9).setPreferredWidth(180);
-		table.getColumnModel().getColumn(10).setPreferredWidth(190);
+		table.getColumnModel().getColumn(8).setPreferredWidth(180);
+		table.getColumnModel().getColumn(9).setPreferredWidth(190);
+		table.getColumnModel().getColumn(10).setPreferredWidth(140);
 		table.getColumnModel().getColumn(11).setPreferredWidth(140);
 		table.getColumnModel().getColumn(12).setPreferredWidth(140);
 		table.getColumnModel().getColumn(13).setPreferredWidth(140);
-		table.getColumnModel().getColumn(14).setPreferredWidth(140);
-		table.getColumnModel().getColumn(15).setPreferredWidth(150);
-		table.getColumnModel().getColumn(16).setPreferredWidth(140);
-		table.getColumnModel().getColumn(17).setPreferredWidth(380);
+		table.getColumnModel().getColumn(14).setPreferredWidth(150);
+		table.getColumnModel().getColumn(15).setPreferredWidth(140);
+		table.getColumnModel().getColumn(16).setPreferredWidth(380);
 
 		// Tablodaki verileri secilebilir yap
 		table.setEnabled(true);

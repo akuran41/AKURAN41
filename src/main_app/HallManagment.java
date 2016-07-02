@@ -130,7 +130,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 			private void addNewHall() throws SQLException
 			{
 				WriteDatabase write = new WriteDatabase(connection.getMysqlConnection());
-				write.executeQuery("INSERT INTO hall(add_date) VALUES('" + CreateTime.getCurrentTime() + "')");
+				write.executeQuery("INSERT INTO bolum(add_date) VALUES('" + CreateTime.getCurrentTime() + "')");
 
 				// Create USERLOG
 				write.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
@@ -138,6 +138,47 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 
 				// populate Table
 				// createTable();
+				
+				//	Get insertID
+				int insertID = 0;
+				
+				ReadDatabase getInsertId = new ReadDatabase(connection.getMysqlConnection());
+				ResultSet rs = getInsertId.getData("SELECT _id FROM bolum ORDER BY _id DESC LIMIT 1");
+				
+				while(rs.next())
+				{
+					insertID = rs.getInt(1);
+				}
+				
+				//	Generate 24 HALLS
+				String hallGenerator = "INSERT INTO hall (bolum_id, bitki_id) VALUES";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0'),";
+				hallGenerator += "('" + insertID + "', '0');";
+				
+				write.executeQuery(hallGenerator);
+				
 				dispose();
 			}
 		});
@@ -164,17 +205,20 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 
 			private void removeHall(Object selected)
 			{
-				int hallID = (int) selected;
+				int bolumID = (int) selected;
 				boolean isCardEmpty = true;
 
 				try
 				{
 					ReadDatabase checkBeforeDelete = new ReadDatabase(connection.getMysqlConnection());
-					ResultSet rs = checkBeforeDelete.getData("SELECT _id FROM pic_cards WHERE hall_id = '" + hallID + "'");
+					ResultSet rs = checkBeforeDelete.getData("SELECT bitki_id FROM hall WHERE bolum_id = '" + bolumID + "'");
 					while (rs.next())
 					{
-						isCardEmpty = false;
-						break;
+						if(rs.getInt(1) > 0)
+						{
+							isCardEmpty = false;
+							break;
+						}
 					}
 
 					if (!isCardEmpty)
@@ -185,11 +229,12 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 					else
 					{
 						WriteDatabase deleteHall = new WriteDatabase(connection.getMysqlConnection());
-						deleteHall.executeQuery("DELETE FROM hall WHERE _id = '" + hallID + "' LIMIT 1");
+						deleteHall.executeQuery("DELETE FROM hall WHERE bolum_id = '" + bolumID + "'");
+						deleteHall.executeQuery("DELETE FROM bolum WHERE _id = '" + bolumID + "' LIMIT 1");
 
 						// Create USERLOG
 						deleteHall.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
-								+ "', '" + hallID + " numaralı bölümü sildi.')");
+								+ "', '" + bolumID + " numaralı bölümü sildi.')");
 
 						// populate Table
 						// createTable();
@@ -222,7 +267,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 		Object[] tableHeader = new String[]{"ID", "Kayıt Tarihi"};
 
 		ReadDatabase getHallList = new ReadDatabase(connection.getMysqlConnection());
-		ResultSet rsCounter = getHallList.getData("SELECT COUNT(_id) FROM hall");
+		ResultSet rsCounter = getHallList.getData("SELECT COUNT(_id) FROM bolum");
 
 		while (rsCounter.next())
 		{
@@ -233,7 +278,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 
 		counter = 0;
 
-		ResultSet rs = getHallList.getData("SELECT _id, add_date FROM hall ORDER BY _id ASC");
+		ResultSet rs = getHallList.getData("SELECT _id, add_date FROM bolum ORDER BY _id ASC");
 		while (rs.next())
 		{
 			data[counter][0] = rs.getInt(1);

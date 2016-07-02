@@ -549,7 +549,7 @@ public class PlantRegistration extends JFrame implements LoginDataDisplay
 			query += "";
 
 		query += "', '" + comboBitkiUlke.getSelectedItem() + "', " + "'" + txtBitkiYore.getText() + "', '" + ekim + "', '" + txtYetismeSuresi.getText()
-				+ "', '" + hasat + "', '" + txtTohumSatici.getText() + "', " + "'" + txtTohumFiyat.getText() + "', '" + txtFideSatici.getText() + "', '"
+				+ "', '" + hasat + "', '" + txtTohumSatici.getText() + "', " + "'" + txtTohumFiyat.getText().toString() + "', '" + txtFideSatici.getText() + "', '"
 				+ txtFideFiyat.getText() + "', '" + txtHasatBoy.getText() + "', '" + txtHasatAgirlik.getText() + "', '" + txtHasatSatisFiyati.getText()
 				+ "', '" + comboSatisSekli.getSelectedItem() + "', '" + comboDikimSekli.getSelectedItem() + "', " + "'" + txtIsikSiddeti.getText() + "', '"
 				+ txtIsikDalgaboyu.getText() + "', '" + txtGunduzIsikSure.getText() + "', '" + txtGeceIsikSure.getText() + "', '" + txtGunduzOrtamIsi.getText()
