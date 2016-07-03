@@ -51,6 +51,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 	private HallList			hallList;
 
 	private int					_id;
+	private int					bolumID;
 	private boolean				isVisible			= false;
 
 	private JLabel				ortamIsiSet;
@@ -532,6 +533,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 				if (!isVisible)
 				{
 					btnDetayGoster.setText("Detay Gizle");
+					hallList.setBolumID(bolumID, _id);
 					hallList.setVisible(true);
 				}
 				else
@@ -943,6 +945,8 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 
 	private void setStaticCells(Object hallID) throws SQLException
 	{
+		bolumID = Integer.parseInt("" + hallID);
+		
 		JLabel lblHallid = createLabel.generateLabel("" + hallID, false, 2, 2, 13, 84, 10, 75, 35);
 		lblHallid.setBorder(compoundBorder);
 		standardDataPanel.add(lblHallid);
