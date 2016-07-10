@@ -8,12 +8,14 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -25,10 +27,14 @@ import javax.swing.border.LineBorder;
 import project_const.ButtonArgs;
 import ui.CreateLabel;
 import ui.CreateSeparator;
+import utils.CheckHallAddingItem;
+import utils.CreateTime;
+import utils.DisplayError;
 import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
 import db_process.ReadDatabase;
+import db_process.WriteDatabase;
 
 public class HallDetail extends JFrame implements LoginDataDisplay
 {
@@ -49,6 +55,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 	private CreateLabel			createLabel;
 	private CreateSeparator		createSeparator;
 	private HallList			hallList;
+	private DisplayError		displayError;
 
 	private int					_id;
 	private int					bolumID;
@@ -135,6 +142,8 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 
 	private JButton				btnDetayGoster;
 
+	private ArrayList<Object>	firstHallValues		= new ArrayList<Object>();
+
 	public static void main(String[] args)
 	{
 		EventQueue.invokeLater(new Runnable()
@@ -171,6 +180,8 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		createLabel = new CreateLabel();
 		// Separator nesnesi olustur
 		createSeparator = new CreateSeparator();
+		// Warning nesnesi olustur
+		displayError = new DisplayError(contentPane);
 
 		// Border for Label
 		compoundBorder = new CompoundBorder(new LineBorder(new Color(0, 0, 0)), new EmptyBorder(10, 5, 10, 0));
@@ -567,7 +578,57 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				
+				String selectedPlant = comboBox.getSelectedItem().toString();
+
+				System.out.println(selectedPlant);
+
+				CheckHallAddingItem checkHallItem = new CheckHallAddingItem(firstHallValues, selectedPlant);
+
+				if (!checkHallItem.isPlantableHall())
+				{
+					displayError.showMessageDialog("Eklemek istediğiniz bitki, seçtiğiniz bölüm ile uyuşmuyor. Lütfen başka bitki seçiniz.", "UYARI",
+							JOptionPane.WARNING_MESSAGE);
+				}
+				else
+				{
+					int hallID = 0;
+
+					// First we find hall ID
+					ReadDatabase getHallID = new ReadDatabase(connection.getMysqlConnection());
+					try
+					{
+						ResultSet rs = getHallID.getData("SELECT _id FROM hall WHERE bolum_id = '" + bolumID
+								+ "' AND add_date = '0000-00-00' ORDER BY _id ASC LIMIT 1");
+						while (rs.next())
+						{
+							hallID = rs.getInt(1);
+						}
+
+						//	If there is no empty hall in selected DIV then display warning message
+						if (hallID == 0)
+						{
+							displayError.showMessageDialog("Eklemek istediğiniz bölümde boş yer yok.. Lütfen başka bölüm seçiniz.", "UYARI",
+									JOptionPane.WARNING_MESSAGE);
+						}
+						else
+						{
+							WriteDatabase writeDatabase = new WriteDatabase(connection.getMysqlConnection());
+							writeDatabase.executeQuery("UPDATE hall SET bitki_id = '" + checkHallItem.getBitkiID() + "', add_date = '"
+									+ CreateTime.getCurrentDateOnly() + "' WHERE _id = '" + hallID + "'");
+
+							writeDatabase.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '"
+									+ CreateTime.getCurrentTime() + "', '" + bolumID + " numaralı bölüme " + selectedPlant + " ekti.')");
+
+							displayError.showMessageDialog(
+									"<html>Seçtiğiniz bitki " + bolumID + " numaralı bölüme eklendi.<br><br>Aşağıdaki <b>DETAY GÖSTER</b> düğmesine basarak bölüm detayını görebilirsiniz.</html>",
+									"İşleminiz Tamamlandı.", JOptionPane.INFORMATION_MESSAGE);
+						}
+					}
+					catch (SQLException e1)
+					{
+						errorLog.generateLog(e1);
+					}
+				}
 			}
 		});
 		btnEkle.setFont(new Font(ButtonArgs._FONT, Font.PLAIN, ButtonArgs._SIZE));
@@ -946,7 +1007,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 	private void setStaticCells(Object hallID) throws SQLException
 	{
 		bolumID = Integer.parseInt("" + hallID);
-		
+
 		JLabel lblHallid = createLabel.generateLabel("" + hallID, false, 2, 2, 13, 84, 10, 75, 35);
 		lblHallid.setBorder(compoundBorder);
 		standardDataPanel.add(lblHallid);
@@ -991,17 +1052,26 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		{
 			comboBox.addItem(rs.getString(1));
 		}
-		
-		//	Get Setted values from DB
-		rs = getPlants.getData("SELECT bitki_isik_siddet, bitki_gunduz_isik_sure, bitki_gunduz_ortam_isi, bitki_gunduz_nem, bitki_gunduz_o2, bitki_gunduz_c2o, "
-				+ "bitki_gunduz_cansuyu_isi, bitki_cansuyu_ph, bitki_gunduz_gida_a, bitki_gunduz_gida_b, bitki_gunduz_gida_c "
-				+ "FROM bitki b "
-				+ "LEFT JOIN hall h ON b._id = h.bitki_id "
-				+ "WHERE h.bolum_id = '" + hallID + "' "
-				+ "ORDER BY h.bolum_id ASC "
-				+ "LIMIT 1");
-		while(rs.next())
+
+		// Get Set values from DB
+		rs = getPlants
+				.getData("SELECT bitki_isik_siddet, bitki_gunduz_isik_sure, bitki_gunduz_ortam_isi, bitki_gunduz_nem, bitki_gunduz_o2, bitki_gunduz_c2o, "
+						+ "bitki_gunduz_cansuyu_isi, bitki_cansuyu_ph, bitki_gunduz_gida_a, bitki_gunduz_gida_b, bitki_gunduz_gida_c " + "FROM bitki b "
+						+ "LEFT JOIN hall h ON b._id = h.bitki_id " + "WHERE h.bolum_id = '" + hallID + "' " + "ORDER BY h.bolum_id ASC " + "LIMIT 1");
+		while (rs.next())
 		{
+			firstHallValues.add(rs.getString(3));
+			firstHallValues.add(rs.getString(4));
+			firstHallValues.add(rs.getString(7));
+			firstHallValues.add(rs.getString(5));
+			firstHallValues.add(rs.getString(6));
+			firstHallValues.add(rs.getString(1));
+			firstHallValues.add(rs.getString(8));
+			firstHallValues.add(rs.getString(9));
+			firstHallValues.add(rs.getString(10));
+			firstHallValues.add(rs.getString(11));
+			firstHallValues.add(rs.getString(2));
+
 			ortamIsiSet.setText(rs.getString(3) + " °C");
 			ortamNemSet.setText(rs.getString(4) + " %");
 			canSuyuSet.setText(rs.getString(7) + " °C");
@@ -1018,16 +1088,12 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 			isikMavi.setText("0");
 			dayLight.setText(rs.getString(2));
 		}
-		
-		//	Get Values from Sensor
-		rs = getPlants.getData("SELECT env_temp, env_humid, env_02, env_co2, env_light, "
-				+ "env_pressure, env_water_temp, env_water_ph, a_gida, "
-				+ "b_gida, c_gida, env_heat_valve, env_cool_valve "
-				+ "FROM product_log "
-				+ "WHERE bolum_id = '" + hallID + "' "
-				+ "ORDER BY _id DESC "
+
+		// Get Values from Sensor
+		rs = getPlants.getData("SELECT env_temp, env_humid, env_02, env_co2, env_light, " + "env_pressure, env_water_temp, env_water_ph, a_gida, "
+				+ "b_gida, c_gida, env_heat_valve, env_cool_valve " + "FROM product_log " + "WHERE bolum_id = '" + hallID + "' " + "ORDER BY _id DESC "
 				+ "LIMIT 1");
-		while(rs.next())
+		while (rs.next())
 		{
 			ortamIsiOkunan.setText(rs.getString(1) + " °C");
 			ortamNemOkunan.setText(rs.getString(2) + " %");
@@ -1053,7 +1119,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 	@Override
 	public void setUserName(String user_name)
 	{
-		//	Unused implementation
+		// Unused implementation
 	}
 
 	@Override

@@ -13,4 +13,12 @@ public class CreateTime
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault());
 		return simpleDateFormat.format(date);
 	}
+
+	public static String getCurrentDateOnly()
+	{
+		// Tarih ve Zaman olustur
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+		return simpleDateFormat.format(date);
+	}
 }
