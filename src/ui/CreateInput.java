@@ -9,10 +9,10 @@ public class CreateInput
 	{
 		JTextField myTextField = new JTextField();
 		myTextField.setBounds(x, y, w, 25);
-		
-		if(isRight)
+
+		if (isRight)
 			myTextField.setHorizontalAlignment(SwingConstants.RIGHT);
-		
+
 		return myTextField;
 	}
 }

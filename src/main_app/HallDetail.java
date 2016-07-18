@@ -33,6 +33,7 @@ import utils.DisplayError;
 import utils.ErrorLog;
 import utils.LoginDataDisplay;
 import db_process.ConnectDatabase;
+import db_process.CreateDivValues;
 import db_process.ReadDatabase;
 import db_process.WriteDatabase;
 
@@ -90,55 +91,109 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 	private JLabel				dayLight;
 
 	private JTextField			canSuyuBaslaSaat1;
+	private JTextField			canSuyuBaslaSaat2;
+	private JTextField			canSuyuBaslaSaat3;
+	private JTextField			canSuyuBaslaSaat4;
+	private JTextField			canSuyuBaslaSaat5;
+	private JTextField			canSuyuBitisSaat1;
+	private JTextField			canSuyuBitisSaat2;
+	private JTextField			canSuyuBitisSaat3;
+	private JTextField			canSuyuBitisSaat4;
+	private JTextField			canSuyuBitisSaat5;
 	private JTextField			canSuyuBaslaDakika1;
-	private JTextField			textField;
-	private JTextField			textField_1;
-	private JTextField			textField_2;
-	private JTextField			textField_3;
-	private JTextField			textField_4;
-	private JTextField			textField_5;
-	private JTextField			textField_6;
-	private JTextField			textField_7;
-	private JTextField			textField_8;
-	private JTextField			textField_9;
-	private JTextField			textField_10;
-	private JTextField			textField_11;
-	private JTextField			textField_12;
-	private JTextField			textField_13;
-	private JTextField			textField_14;
-	private JTextField			textField_15;
-	private JTextField			textField_16;
-	private JTextField			textField_17;
-	private JTextField			textField_18;
-	private JTextField			textField_19;
-	private JTextField			textField_20;
-	private JTextField			textField_21;
-	private JTextField			textField_22;
-	private JTextField			textField_23;
-	private JTextField			textField_24;
-	private JTextField			textField_25;
-	private JTextField			textField_26;
-	private JTextField			textField_27;
-	private JTextField			textField_28;
-	private JTextField			textField_29;
-	private JTextField			textField_30;
-	private JTextField			textField_31;
-	private JTextField			textField_32;
-	private JTextField			textField_33;
-	private JTextField			textField_34;
-	private JTextField			textField_35;
-	private JTextField			textField_36;
-	private JTextField			textField_37;
-	private JTextField			textField_38;
-	private JTextField			textField_39;
-	private JTextField			textField_40;
-	private JTextField			textField_41;
-	private JTextField			textField_42;
-	private JTextField			textField_43;
-	private JTextField			textField_44;
-	private JTextField			textField_45;
-	private JTextField			textField_46;
-	private JTextField			textField_47;
+	private JTextField			canSuyuBaslaDakika2;
+	private JTextField			canSuyuBaslaDakika3;
+	private JTextField			canSuyuBaslaDakika4;
+	private JTextField			canSuyuBaslaDakika5;
+	private JTextField			canSuyuBitisDakika1;
+	private JTextField			canSuyuBitisDakika2;
+	private JTextField			canSuyuBitisDakika3;
+	private JTextField			canSuyuBitisDakika4;
+	private JTextField			canSuyuBitisDakika5;
+
+	private JTextField			isikBaslaSaat1;
+	private JTextField			isikBaslaSaat2;
+	private JTextField			isikBaslaSaat3;
+	private JTextField			isikBaslaSaat4;
+	private JTextField			isikBaslaSaat5;
+	private JTextField			isikBitisSaat1;
+	private JTextField			isikBitisSaat2;
+	private JTextField			isikBitisSaat3;
+	private JTextField			isikBitisSaat4;
+	private JTextField			isikBitisSaat5;
+	private JTextField			isikBaslaDakika1;
+	private JTextField			isikBaslaDakika2;
+	private JTextField			isikBaslaDakika3;
+	private JTextField			isikBaslaDakika4;
+	private JTextField			isikBaslaDakika5;
+	private JTextField			isikBitisDakika1;
+	private JTextField			isikBitisDakika2;
+	private JTextField			isikBitisDakika3;
+	private JTextField			isikBitisDakika4;
+	private JTextField			isikBitisDakika5;
+
+	private JTextField			suBaslaSaat1;
+	private JTextField			suBaslaSaat2;
+	private JTextField			suBaslaSaat3;
+	private JTextField			suBaslaSaat4;
+	private JTextField			suBaslaSaat5;
+	private JTextField			suBitisSaat1;
+	private JTextField			suBitisSaat2;
+	private JTextField			suBitisSaat3;
+	private JTextField			suBitisSaat4;
+	private JTextField			suBitisSaat5;
+	private JTextField			suBaslaDakika1;
+	private JTextField			suBaslaDakika2;
+	private JTextField			suBaslaDakika3;
+	private JTextField			suBaslaDakika4;
+	private JTextField			suBaslaDakika5;
+	private JTextField			suBitisDakika1;
+	private JTextField			suBitisDakika2;
+	private JTextField			suBitisDakika3;
+	private JTextField			suBitisDakika4;
+	private JTextField			suBitisDakika5;
+
+	private JTextField			coBaslaSaat1;
+	private JTextField			coBaslaSaat2;
+	private JTextField			coBaslaSaat3;
+	private JTextField			coBaslaSaat4;
+	private JTextField			coBaslaSaat5;
+	private JTextField			coBitisSaat1;
+	private JTextField			coBitisSaat2;
+	private JTextField			coBitisSaat3;
+	private JTextField			coBitisSaat4;
+	private JTextField			coBitisSaat5;
+	private JTextField			coBaslaDakika1;
+	private JTextField			coBaslaDakika2;
+	private JTextField			coBaslaDakika3;
+	private JTextField			coBaslaDakika4;
+	private JTextField			coBaslaDakika5;
+	private JTextField			oBaslaDakika5;
+	private JTextField			coBitisDakika1;
+	private JTextField			coBitisDakika2;
+	private JTextField			coBitisDakika3;
+	private JTextField			coBitisDakika4;
+	private JTextField			coBitisDakika5;
+
+	private JTextField			oBaslaSaat1;
+	private JTextField			oBaslaSaat2;
+	private JTextField			oBaslaSaat3;
+	private JTextField			oBaslaSaat4;
+	private JTextField			oBaslaSaat5;
+	private JTextField			oBitisSaat1;
+	private JTextField			oBitisSaat2;
+	private JTextField			oBitisSaat3;
+	private JTextField			oBitisSaat4;
+	private JTextField			oBitisSaat5;
+	private JTextField			oBaslaDakika1;
+	private JTextField			oBaslaDakika2;
+	private JTextField			oBaslaDakika3;
+	private JTextField			oBaslaDakika4;
+	private JTextField			oBitisDakika1;
+	private JTextField			oBitisDakika2;
+	private JTextField			oBitisDakika3;
+	private JTextField			oBitisDakika4;
+	private JTextField			oBitisDakika5;
 
 	private JButton				btnDetayGoster;
 
@@ -207,340 +262,19 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 			errorLog.generateLog(e);
 		}
 
-		// Detail Pane
-		hallList = new HallList();
-		hallList.setUserID(_id);
-
-		canSuyuBaslaSaat1 = new JTextField();
-		canSuyuBaslaSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
-		canSuyuBaslaSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		canSuyuBaslaSaat1.setBounds(10, 359, 75, 30);
-		canSuyuBaslaSaat1.setBorder(compoundBorderForInput);
-		standardDataPanel.add(canSuyuBaslaSaat1);
-
-		canSuyuBaslaDakika1 = new JTextField();
-		canSuyuBaslaDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
-		canSuyuBaslaDakika1.setBounds(84, 359, 76, 30);
-		canSuyuBaslaDakika1.setBorder(compoundBorderForInput);
-		standardDataPanel.add(canSuyuBaslaDakika1);
-
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField.setBorder(compoundBorderForInput);
-		textField.setBounds(10, 388, 75, 30);
-		standardDataPanel.add(textField);
-
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_1.setBorder(compoundBorderForInput);
-		textField_1.setBounds(84, 388, 76, 30);
-		standardDataPanel.add(textField_1);
-
-		textField_2 = new JTextField();
-		textField_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_2.setBorder(compoundBorderForInput);
-		textField_2.setBounds(10, 417, 75, 30);
-		standardDataPanel.add(textField_2);
-
-		textField_3 = new JTextField();
-		textField_3.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_3.setBorder(compoundBorderForInput);
-		textField_3.setBounds(84, 417, 76, 30);
-		standardDataPanel.add(textField_3);
-
-		textField_4 = new JTextField();
-		textField_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_4.setBorder(compoundBorderForInput);
-		textField_4.setBounds(10, 446, 75, 30);
-		standardDataPanel.add(textField_4);
-
-		textField_5 = new JTextField();
-		textField_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_5.setBorder(compoundBorderForInput);
-		textField_5.setBounds(84, 446, 76, 30);
-		standardDataPanel.add(textField_5);
-
-		textField_6 = new JTextField();
-		textField_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_6.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_6.setBorder(compoundBorderForInput);
-		textField_6.setBounds(10, 475, 75, 30);
-		standardDataPanel.add(textField_6);
-
-		textField_7 = new JTextField();
-		textField_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_7.setBorder(compoundBorderForInput);
-		textField_7.setBounds(84, 475, 76, 30);
-		standardDataPanel.add(textField_7);
-
-		textField_8 = new JTextField();
-		textField_8.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_8.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_8.setBorder(compoundBorderForInput);
-		textField_8.setBounds(170, 359, 75, 30);
-		standardDataPanel.add(textField_8);
-
-		textField_9 = new JTextField();
-		textField_9.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_9.setBorder(compoundBorderForInput);
-		textField_9.setBounds(244, 359, 76, 30);
-		standardDataPanel.add(textField_9);
-
-		textField_10 = new JTextField();
-		textField_10.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_10.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_10.setBorder(compoundBorderForInput);
-		textField_10.setBounds(170, 388, 75, 30);
-		standardDataPanel.add(textField_10);
-
-		textField_11 = new JTextField();
-		textField_11.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_11.setBorder(compoundBorderForInput);
-		textField_11.setBounds(244, 388, 76, 30);
-		standardDataPanel.add(textField_11);
-
-		textField_12 = new JTextField();
-		textField_12.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_12.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_12.setBorder(compoundBorderForInput);
-		textField_12.setBounds(170, 417, 75, 30);
-		standardDataPanel.add(textField_12);
-
-		textField_13 = new JTextField();
-		textField_13.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_13.setBorder(compoundBorderForInput);
-		textField_13.setBounds(244, 417, 76, 30);
-		standardDataPanel.add(textField_13);
-
-		textField_14 = new JTextField();
-		textField_14.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_14.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_14.setBorder(compoundBorderForInput);
-		textField_14.setBounds(170, 446, 75, 30);
-		standardDataPanel.add(textField_14);
-
-		textField_15 = new JTextField();
-		textField_15.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_15.setBorder(compoundBorderForInput);
-		textField_15.setBounds(244, 446, 76, 30);
-		standardDataPanel.add(textField_15);
-
-		textField_16 = new JTextField();
-		textField_16.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_16.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_16.setBorder(compoundBorderForInput);
-		textField_16.setBounds(170, 475, 75, 30);
-		standardDataPanel.add(textField_16);
-
-		textField_17 = new JTextField();
-		textField_17.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_17.setBorder(compoundBorderForInput);
-		textField_17.setBounds(244, 475, 76, 30);
-		standardDataPanel.add(textField_17);
-
-		textField_18 = new JTextField();
-		textField_18.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_18.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_18.setBorder(compoundBorderForInput);
-		textField_18.setBounds(330, 359, 75, 30);
-		standardDataPanel.add(textField_18);
-
-		textField_19 = new JTextField();
-		textField_19.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_19.setBorder(compoundBorderForInput);
-		textField_19.setBounds(404, 359, 76, 30);
-		standardDataPanel.add(textField_19);
-
-		textField_20 = new JTextField();
-		textField_20.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_20.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_20.setBorder(compoundBorderForInput);
-		textField_20.setBounds(330, 388, 75, 30);
-		standardDataPanel.add(textField_20);
-
-		textField_21 = new JTextField();
-		textField_21.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_21.setBorder(compoundBorderForInput);
-		textField_21.setBounds(404, 388, 76, 30);
-		standardDataPanel.add(textField_21);
-
-		textField_22 = new JTextField();
-		textField_22.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_22.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_22.setBorder(compoundBorderForInput);
-		textField_22.setBounds(330, 417, 75, 30);
-		standardDataPanel.add(textField_22);
-
-		textField_23 = new JTextField();
-		textField_23.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_23.setBorder(compoundBorderForInput);
-		textField_23.setBounds(404, 417, 76, 30);
-		standardDataPanel.add(textField_23);
-
-		textField_24 = new JTextField();
-		textField_24.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_24.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_24.setBorder(compoundBorderForInput);
-		textField_24.setBounds(330, 446, 75, 30);
-		standardDataPanel.add(textField_24);
-
-		textField_25 = new JTextField();
-		textField_25.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_25.setBorder(compoundBorderForInput);
-		textField_25.setBounds(404, 446, 76, 30);
-		standardDataPanel.add(textField_25);
-
-		textField_26 = new JTextField();
-		textField_26.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_26.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_26.setBorder(compoundBorderForInput);
-		textField_26.setBounds(330, 475, 75, 30);
-		standardDataPanel.add(textField_26);
-
-		textField_27 = new JTextField();
-		textField_27.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_27.setBorder(compoundBorderForInput);
-		textField_27.setBounds(404, 475, 76, 30);
-		standardDataPanel.add(textField_27);
-
-		textField_28 = new JTextField();
-		textField_28.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_28.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_28.setBorder(compoundBorderForInput);
-		textField_28.setBounds(490, 359, 75, 30);
-		standardDataPanel.add(textField_28);
-
-		textField_29 = new JTextField();
-		textField_29.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_29.setBorder(compoundBorderForInput);
-		textField_29.setBounds(564, 359, 76, 30);
-		standardDataPanel.add(textField_29);
-
-		textField_30 = new JTextField();
-		textField_30.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_30.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_30.setBorder(compoundBorderForInput);
-		textField_30.setBounds(490, 388, 75, 30);
-		standardDataPanel.add(textField_30);
-
-		textField_31 = new JTextField();
-		textField_31.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_31.setBorder(compoundBorderForInput);
-		textField_31.setBounds(564, 388, 76, 30);
-		standardDataPanel.add(textField_31);
-
-		textField_32 = new JTextField();
-		textField_32.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_32.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_32.setBorder(compoundBorderForInput);
-		textField_32.setBounds(490, 417, 75, 30);
-		standardDataPanel.add(textField_32);
-
-		textField_33 = new JTextField();
-		textField_33.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_33.setBorder(compoundBorderForInput);
-		textField_33.setBounds(564, 417, 76, 30);
-		standardDataPanel.add(textField_33);
-
-		textField_34 = new JTextField();
-		textField_34.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_34.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_34.setBorder(compoundBorderForInput);
-		textField_34.setBounds(490, 446, 75, 30);
-		standardDataPanel.add(textField_34);
-
-		textField_35 = new JTextField();
-		textField_35.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_35.setBorder(compoundBorderForInput);
-		textField_35.setBounds(564, 446, 76, 30);
-		standardDataPanel.add(textField_35);
-
-		textField_36 = new JTextField();
-		textField_36.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_36.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_36.setBorder(compoundBorderForInput);
-		textField_36.setBounds(490, 475, 75, 30);
-		standardDataPanel.add(textField_36);
-
-		textField_37 = new JTextField();
-		textField_37.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_37.setBorder(compoundBorderForInput);
-		textField_37.setBounds(564, 475, 76, 30);
-		standardDataPanel.add(textField_37);
-
-		textField_38 = new JTextField();
-		textField_38.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_38.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_38.setBorder(compoundBorderForInput);
-		textField_38.setBounds(653, 359, 75, 30);
-		standardDataPanel.add(textField_38);
-
-		textField_39 = new JTextField();
-		textField_39.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_39.setBorder(compoundBorderForInput);
-		textField_39.setBounds(727, 359, 76, 30);
-		standardDataPanel.add(textField_39);
-
-		textField_40 = new JTextField();
-		textField_40.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_40.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_40.setBorder(compoundBorderForInput);
-		textField_40.setBounds(653, 388, 75, 30);
-		standardDataPanel.add(textField_40);
-
-		textField_41 = new JTextField();
-		textField_41.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_41.setBorder(compoundBorderForInput);
-		textField_41.setBounds(727, 388, 76, 30);
-		standardDataPanel.add(textField_41);
-
-		textField_42 = new JTextField();
-		textField_42.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_42.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_42.setBorder(compoundBorderForInput);
-		textField_42.setBounds(653, 417, 75, 30);
-		standardDataPanel.add(textField_42);
-
-		textField_43 = new JTextField();
-		textField_43.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_43.setBorder(compoundBorderForInput);
-		textField_43.setBounds(727, 417, 76, 30);
-		standardDataPanel.add(textField_43);
-
-		textField_44 = new JTextField();
-		textField_44.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_44.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_44.setBorder(compoundBorderForInput);
-		textField_44.setBounds(653, 446, 75, 30);
-		standardDataPanel.add(textField_44);
-
-		textField_45 = new JTextField();
-		textField_45.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_45.setBorder(compoundBorderForInput);
-		textField_45.setBounds(727, 446, 76, 30);
-		standardDataPanel.add(textField_45);
-
-		textField_46 = new JTextField();
-		textField_46.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_46.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		textField_46.setBorder(compoundBorderForInput);
-		textField_46.setBounds(653, 475, 75, 30);
-		standardDataPanel.add(textField_46);
-
-		textField_47 = new JTextField();
-		textField_47.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_47.setBorder(compoundBorderForInput);
-		textField_47.setBounds(727, 475, 76, 30);
-		standardDataPanel.add(textField_47);
 
 		btnDetayGoster = new JButton("Detay Göster");
 		btnDetayGoster.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				// Detail Pane
+				if(hallList == null)
+				{
+					hallList = new HallList();
+					hallList.setUserID(_id);
+				}
+				
 				if (!isVisible)
 				{
 					btnDetayGoster.setText("Detay Gizle");
@@ -551,6 +285,8 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 				{
 					btnDetayGoster.setText("Detay Göster");
 					hallList.dispose();
+					
+					hallList = null;
 				}
 
 				isVisible = !isVisible;
@@ -580,8 +316,6 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 			{
 				String selectedPlant = comboBox.getSelectedItem().toString();
 
-				System.out.println(selectedPlant);
-
 				CheckHallAddingItem checkHallItem = new CheckHallAddingItem(firstHallValues, selectedPlant);
 
 				if (!checkHallItem.isPlantableHall())
@@ -604,7 +338,7 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 							hallID = rs.getInt(1);
 						}
 
-						//	If there is no empty hall in selected DIV then display warning message
+						// If there is no empty hall in selected DIV then display warning message
 						if (hallID == 0)
 						{
 							displayError.showMessageDialog("Eklemek istediğiniz bölümde boş yer yok.. Lütfen başka bölüm seçiniz.", "UYARI",
@@ -612,16 +346,55 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 						}
 						else
 						{
+							CreateDivValues createDiv = new CreateDivValues(connection.getMysqlConnection(), bolumID);
+							
 							WriteDatabase writeDatabase = new WriteDatabase(connection.getMysqlConnection());
-							writeDatabase.executeQuery("UPDATE hall SET bitki_id = '" + checkHallItem.getBitkiID() + "', add_date = '"
-									+ CreateTime.getCurrentDateOnly() + "' WHERE _id = '" + hallID + "'");
+							writeDatabase.executeQuery("UPDATE hall SET bitki_id = '" + checkHallItem.getBitkiID() + "', add_date = '" + CreateTime.getCurrentDateOnly() + "' WHERE _id = '" + hallID
+									+ "'");
 
-							writeDatabase.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '"
-									+ CreateTime.getCurrentTime() + "', '" + bolumID + " numaralı bölüme " + selectedPlant + " ekti.')");
+							writeDatabase.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime() + "', '"
+									+ bolumID + " numaralı bölüme " + selectedPlant + " ekti.')");
+							
+							String[] cansuyu = {canSuyuBaslaSaat1.getText(), canSuyuBitisSaat1.getText(), canSuyuBaslaDakika1.getText(), canSuyuBitisDakika1.getText(), 
+									canSuyuBaslaSaat2.getText(), canSuyuBitisSaat2.getText(), canSuyuBaslaDakika2.getText(), canSuyuBitisDakika2.getText(), 
+									canSuyuBaslaSaat3.getText(), canSuyuBitisSaat3.getText(), canSuyuBaslaDakika3.getText(), canSuyuBitisDakika3.getText(), 
+									canSuyuBaslaSaat4.getText(), canSuyuBitisSaat4.getText(), canSuyuBaslaDakika4.getText(), canSuyuBitisDakika4.getText(), 
+									canSuyuBaslaSaat5.getText(), canSuyuBitisSaat5.getText(), canSuyuBaslaDakika5.getText(), canSuyuBitisDakika5.getText()};
+							
+							String[] isik = {isikBaslaSaat1.getText(), isikBitisSaat1.getText(), isikBaslaDakika1.getText(), isikBitisDakika1.getText(), 
+									isikBaslaSaat2.getText(), isikBitisSaat2.getText(), isikBaslaDakika2.getText(), isikBitisDakika2.getText(), 
+									isikBaslaSaat3.getText(), isikBitisSaat3.getText(), isikBaslaDakika3.getText(), isikBitisDakika3.getText(), 
+									isikBaslaSaat4.getText(), isikBitisSaat4.getText(), isikBaslaDakika4.getText(), isikBitisDakika4.getText(), 
+									isikBaslaSaat5.getText(), isikBitisSaat5.getText(), isikBaslaDakika5.getText(), isikBitisDakika5.getText()};
+							
+							String[] su = {suBaslaSaat1.getText(), suBitisSaat1.getText(), suBaslaDakika1.getText(), suBitisDakika1.getText(), 
+									suBaslaSaat2.getText(), suBitisSaat2.getText(), suBaslaDakika2.getText(), suBitisDakika2.getText(), 
+									suBaslaSaat3.getText(), suBitisSaat3.getText(), suBaslaDakika3.getText(), suBitisDakika3.getText(), 
+									suBaslaSaat4.getText(), suBitisSaat4.getText(), suBaslaDakika4.getText(), suBitisDakika4.getText(), 
+									suBaslaSaat5.getText(), suBitisSaat5.getText(), suBaslaDakika5.getText(), suBitisDakika5.getText()};
+							
+							String[] co = {coBaslaSaat1.getText(), coBitisSaat1.getText(), coBaslaDakika1.getText(), coBitisDakika1.getText(), 
+									coBaslaSaat2.getText(), coBitisSaat2.getText(), coBaslaDakika2.getText(), coBitisDakika2.getText(), 
+									coBaslaSaat3.getText(), coBitisSaat3.getText(), coBaslaDakika3.getText(), coBitisDakika3.getText(), 
+									coBaslaSaat4.getText(), coBitisSaat4.getText(), coBaslaDakika4.getText(), coBitisDakika4.getText(), 
+									coBaslaSaat5.getText(), coBitisSaat5.getText(), coBaslaDakika5.getText(), coBitisDakika5.getText()};
+							
+							String[] o = {oBaslaSaat1.getText(), oBitisSaat1.getText(), oBaslaDakika1.getText(), oBitisDakika1.getText(), 
+									oBaslaSaat2.getText(), oBitisSaat2.getText(), oBaslaDakika2.getText(), oBitisDakika2.getText(), 
+									oBaslaSaat3.getText(), oBitisSaat3.getText(), oBaslaDakika3.getText(), oBitisDakika3.getText(), 
+									oBaslaSaat4.getText(), oBitisSaat4.getText(), oBaslaDakika4.getText(), oBitisDakika4.getText(), 
+									oBaslaSaat5.getText(), oBitisSaat5.getText(), oBaslaDakika5.getText(), oBitisDakika5.getText()};
 
-							displayError.showMessageDialog(
-									"<html>Seçtiğiniz bitki " + bolumID + " numaralı bölüme eklendi.<br><br>Aşağıdaki <b>DETAY GÖSTER</b> düğmesine basarak bölüm detayını görebilirsiniz.</html>",
+							createDiv.createCansuyu(cansuyu);
+							createDiv.createIsik(isik);
+							createDiv.createSu(su);
+							createDiv.createCO(co);
+							createDiv.createO(o);
+							
+							displayError.showMessageDialog("<html>Seçtiğiniz bitki " + bolumID
+									+ " numaralı bölüme eklendi.<br><br>Aşağıdaki <b>DETAY GÖSTER</b> düğmesine basarak bölüm detayını görebilirsiniz.</html>",
 									"İşleminiz Tamamlandı.", JOptionPane.INFORMATION_MESSAGE);
+
 						}
 					}
 					catch (SQLException e1)
@@ -1052,6 +825,19 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 		{
 			comboBox.addItem(rs.getString(1));
 		}
+		
+		//	We initilaze default values
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
+		firstHallValues.add(0);
 
 		// Get Set values from DB
 		rs = getPlants
@@ -1060,6 +846,9 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 						+ "LEFT JOIN hall h ON b._id = h.bitki_id " + "WHERE h.bolum_id = '" + hallID + "' " + "ORDER BY h.bolum_id ASC " + "LIMIT 1");
 		while (rs.next())
 		{
+			//	If we have value then clear arraylist
+			firstHallValues.clear();
+			//	Re generate new values
 			firstHallValues.add(rs.getString(3));
 			firstHallValues.add(rs.getString(4));
 			firstHallValues.add(rs.getString(7));
@@ -1108,6 +897,817 @@ public class HallDetail extends JFrame implements LoginDataDisplay
 			isitmaVanaOkunan.setText(rs.getString(12));
 			sogutmaVanaOkunan.setText(rs.getString(13));
 		}
+
+		setDivCansuyu(bolumID);
+		setDivIsik(bolumID);
+		setDivSu(bolumID);
+		setDivCO(bolumID);
+		setDivO(bolumID);
+	}
+
+	private void setDivCansuyu(int divID) throws SQLException
+	{
+		int x = 0;
+		String[] data = new String[20];
+
+		ReadDatabase getDivVal = new ReadDatabase(connection.getMysqlConnection());
+		ResultSet rs = getDivVal.getData("SELECT basla_saat, bitis_saat, basla_dakika, bitis_dakika FROM bolum_cansuyu WHERE bolum_id = '" + divID
+				+ "' ORDER BY _id ASC");
+		while (rs.next())
+		{
+			data[x] = rs.getString(1);
+			x++;
+			data[x] = rs.getString(2);
+			x++;
+			data[x] = rs.getString(3);
+			x++;
+			data[x] = rs.getString(4);
+			x++;
+		}
+
+		// ROW 1
+		canSuyuBaslaSaat1 = new JTextField(data[0] == null ? "" : data[0]);
+		canSuyuBaslaSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBaslaSaat1.setBounds(10, 359, 38, 30);
+		canSuyuBaslaSaat1.setBorder(compoundBorderForInput);
+		standardDataPanel.add(canSuyuBaslaSaat1);
+
+		canSuyuBitisSaat1 = new JTextField(data[1] == null ? "" : data[1]);
+		canSuyuBitisSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisSaat1.setBorder(compoundBorderForInput);
+		canSuyuBitisSaat1.setBounds(47, 359, 38, 30);
+		standardDataPanel.add(canSuyuBitisSaat1);
+
+		canSuyuBaslaDakika1 = new JTextField(data[2] == null ? "" : data[2]);
+		canSuyuBaslaDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaDakika1.setBounds(84, 359, 38, 30);
+		canSuyuBaslaDakika1.setBorder(compoundBorderForInput);
+		standardDataPanel.add(canSuyuBaslaDakika1);
+
+		canSuyuBitisDakika1 = new JTextField(data[3] == null ? "" : data[3]);
+		canSuyuBitisDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisDakika1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisDakika1.setBorder(compoundBorderForInput);
+		canSuyuBitisDakika1.setBounds(121, 359, 38, 30);
+		standardDataPanel.add(canSuyuBitisDakika1);
+
+		// ROW 2
+		canSuyuBaslaSaat2 = new JTextField(data[4] == null ? "" : data[4]);
+		canSuyuBaslaSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBaslaSaat2.setBorder(compoundBorderForInput);
+		canSuyuBaslaSaat2.setBounds(10, 388, 38, 30);
+		standardDataPanel.add(canSuyuBaslaSaat2);
+
+		canSuyuBitisSaat2 = new JTextField(data[5] == null ? "" : data[5]);
+		canSuyuBitisSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisSaat2.setBorder(compoundBorderForInput);
+		canSuyuBitisSaat2.setBounds(47, 388, 38, 30);
+		standardDataPanel.add(canSuyuBitisSaat2);
+
+		canSuyuBaslaDakika2 = new JTextField(data[6] == null ? "" : data[6]);
+		canSuyuBaslaDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaDakika2.setBorder(compoundBorderForInput);
+		canSuyuBaslaDakika2.setBounds(84, 388, 38, 30);
+		standardDataPanel.add(canSuyuBaslaDakika2);
+
+		canSuyuBitisDakika2 = new JTextField(data[7] == null ? "" : data[7]);
+		canSuyuBitisDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisDakika2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisDakika2.setBorder(compoundBorderForInput);
+		canSuyuBitisDakika2.setBounds(121, 388, 38, 30);
+		standardDataPanel.add(canSuyuBitisDakika2);
+
+		// ROW 3
+		canSuyuBaslaSaat3 = new JTextField(data[8] == null ? "" : data[8]);
+		canSuyuBaslaSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBaslaSaat3.setBorder(compoundBorderForInput);
+		canSuyuBaslaSaat3.setBounds(10, 417, 38, 30);
+		standardDataPanel.add(canSuyuBaslaSaat3);
+
+		canSuyuBitisSaat3 = new JTextField(data[9] == null ? "" : data[9]);
+		canSuyuBitisSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisSaat3.setBorder(compoundBorderForInput);
+		canSuyuBitisSaat3.setBounds(47, 417, 38, 30);
+		standardDataPanel.add(canSuyuBitisSaat3);
+
+		canSuyuBaslaDakika3 = new JTextField(data[10] == null ? "" : data[10]);
+		canSuyuBaslaDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaDakika3.setBorder(compoundBorderForInput);
+		canSuyuBaslaDakika3.setBounds(84, 417, 38, 30);
+		standardDataPanel.add(canSuyuBaslaDakika3);
+
+		canSuyuBitisDakika3 = new JTextField(data[11] == null ? "" : data[11]);
+		canSuyuBitisDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisDakika3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisDakika3.setBorder(compoundBorderForInput);
+		canSuyuBitisDakika3.setBounds(121, 417, 38, 30);
+		standardDataPanel.add(canSuyuBitisDakika3);
+
+		// ROW 4
+		canSuyuBaslaSaat4 = new JTextField(data[12] == null ? "" : data[12]);
+		canSuyuBaslaSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBaslaSaat4.setBorder(compoundBorderForInput);
+		canSuyuBaslaSaat4.setBounds(10, 446, 38, 30);
+		standardDataPanel.add(canSuyuBaslaSaat4);
+
+		canSuyuBitisSaat4 = new JTextField(data[13] == null ? "" : data[13]);
+		canSuyuBitisSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisSaat4.setBorder(compoundBorderForInput);
+		canSuyuBitisSaat4.setBounds(47, 446, 38, 30);
+		standardDataPanel.add(canSuyuBitisSaat4);
+
+		canSuyuBaslaDakika4 = new JTextField(data[14] == null ? "" : data[14]);
+		canSuyuBaslaDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaDakika4.setBorder(compoundBorderForInput);
+		canSuyuBaslaDakika4.setBounds(84, 446, 38, 30);
+		standardDataPanel.add(canSuyuBaslaDakika4);
+
+		canSuyuBitisDakika4 = new JTextField(data[15] == null ? "" : data[15]);
+		canSuyuBitisDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisDakika4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisDakika4.setBorder(compoundBorderForInput);
+		canSuyuBitisDakika4.setBounds(121, 446, 38, 30);
+		standardDataPanel.add(canSuyuBitisDakika4);
+
+		// ROW 5
+		canSuyuBaslaSaat5 = new JTextField(data[16] == null ? "" : data[16]);
+		canSuyuBaslaSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBaslaSaat5.setBorder(compoundBorderForInput);
+		canSuyuBaslaSaat5.setBounds(10, 475, 38, 30);
+		standardDataPanel.add(canSuyuBaslaSaat5);
+
+		canSuyuBitisSaat5 = new JTextField(data[17] == null ? "" : data[17]);
+		canSuyuBitisSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisSaat5.setBorder(compoundBorderForInput);
+		canSuyuBitisSaat5.setBounds(47, 475, 38, 30);
+		standardDataPanel.add(canSuyuBitisSaat5);
+
+		canSuyuBaslaDakika5 = new JTextField(data[18] == null ? "" : data[18]);
+		canSuyuBaslaDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBaslaDakika5.setBorder(compoundBorderForInput);
+		canSuyuBaslaDakika5.setBounds(84, 475, 38, 30);
+		standardDataPanel.add(canSuyuBaslaDakika5);
+
+		canSuyuBitisDakika5 = new JTextField(data[19] == null ? "" : data[19]);
+		canSuyuBitisDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		canSuyuBitisDakika5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		canSuyuBitisDakika5.setBorder(compoundBorderForInput);
+		canSuyuBitisDakika5.setBounds(121, 475, 38, 30);
+		standardDataPanel.add(canSuyuBitisDakika5);
+	}
+
+	private void setDivIsik(int divID) throws SQLException
+	{
+		int x = 0;
+		String[] data = new String[20];
+
+		ReadDatabase getDivVal = new ReadDatabase(connection.getMysqlConnection());
+		ResultSet rs = getDivVal.getData("SELECT basla_saat, bitis_saat, basla_dakika, bitis_dakika FROM bolum_isik WHERE bolum_id = '" + divID
+				+ "' ORDER BY _id ASC");
+		while (rs.next())
+		{
+			data[x] = rs.getString(1);
+			x++;
+			data[x] = rs.getString(2);
+			x++;
+			data[x] = rs.getString(3);
+			x++;
+			data[x] = rs.getString(4);
+			x++;
+		}
+
+		// ROW 1
+		isikBaslaSaat1 = new JTextField(data[0] == null ? "" : data[0]);
+		isikBaslaSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBaslaSaat1.setBorder(compoundBorderForInput);
+		isikBaslaSaat1.setBounds(170, 359, 38, 30);
+		standardDataPanel.add(isikBaslaSaat1);
+
+		isikBitisSaat1 = new JTextField(data[1] == null ? "" : data[1]);
+		isikBitisSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisSaat1.setBorder(compoundBorderForInput);
+		isikBitisSaat1.setBounds(207, 359, 38, 30);
+		standardDataPanel.add(isikBitisSaat1);
+
+		isikBaslaDakika1 = new JTextField(data[2] == null ? "" : data[2]);
+		isikBaslaDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaDakika1.setBorder(compoundBorderForInput);
+		isikBaslaDakika1.setBounds(244, 359, 38, 30);
+		standardDataPanel.add(isikBaslaDakika1);
+
+		isikBitisDakika1 = new JTextField(data[3] == null ? "" : data[3]);
+		isikBitisDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisDakika1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisDakika1.setBorder(compoundBorderForInput);
+		isikBitisDakika1.setBounds(281, 359, 38, 30);
+		standardDataPanel.add(isikBitisDakika1);
+
+		// ROW 2
+		isikBaslaSaat2 = new JTextField(data[4] == null ? "" : data[4]);
+		isikBaslaSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBaslaSaat2.setBorder(compoundBorderForInput);
+		isikBaslaSaat2.setBounds(170, 388, 38, 30);
+		standardDataPanel.add(isikBaslaSaat2);
+
+		isikBitisSaat2 = new JTextField(data[5] == null ? "" : data[5]);
+		isikBitisSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisSaat2.setBorder(compoundBorderForInput);
+		isikBitisSaat2.setBounds(207, 388, 38, 30);
+		standardDataPanel.add(isikBitisSaat2);
+
+		isikBaslaDakika2 = new JTextField(data[6] == null ? "" : data[6]);
+		isikBaslaDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaDakika2.setBorder(compoundBorderForInput);
+		isikBaslaDakika2.setBounds(244, 388, 38, 30);
+		standardDataPanel.add(isikBaslaDakika2);
+
+		isikBitisDakika2 = new JTextField(data[7] == null ? "" : data[7]);
+		isikBitisDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisDakika2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisDakika2.setBorder(compoundBorderForInput);
+		isikBitisDakika2.setBounds(281, 388, 38, 30);
+		standardDataPanel.add(isikBitisDakika2);
+
+		// ROW 3
+		isikBaslaSaat3 = new JTextField(data[8] == null ? "" : data[8]);
+		isikBaslaSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBaslaSaat3.setBorder(compoundBorderForInput);
+		isikBaslaSaat3.setBounds(170, 417, 38, 30);
+		standardDataPanel.add(isikBaslaSaat3);
+
+		isikBitisSaat3 = new JTextField(data[9] == null ? "" : data[9]);
+		isikBitisSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisSaat3.setBorder(compoundBorderForInput);
+		isikBitisSaat3.setBounds(207, 417, 38, 30);
+		standardDataPanel.add(isikBitisSaat3);
+
+		isikBaslaDakika3 = new JTextField(data[10] == null ? "" : data[10]);
+		isikBaslaDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaDakika3.setBorder(compoundBorderForInput);
+		isikBaslaDakika3.setBounds(244, 417, 38, 30);
+		standardDataPanel.add(isikBaslaDakika3);
+
+		isikBitisDakika3 = new JTextField(data[11] == null ? "" : data[11]);
+		isikBitisDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisDakika3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisDakika3.setBorder(compoundBorderForInput);
+		isikBitisDakika3.setBounds(281, 417, 38, 30);
+		standardDataPanel.add(isikBitisDakika3);
+
+		// ROW 4
+		isikBaslaSaat4 = new JTextField(data[12] == null ? "" : data[12]);
+		isikBaslaSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBaslaSaat4.setBorder(compoundBorderForInput);
+		isikBaslaSaat4.setBounds(170, 446, 38, 30);
+		standardDataPanel.add(isikBaslaSaat4);
+
+		isikBitisSaat4 = new JTextField(data[13] == null ? "" : data[13]);
+		isikBitisSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisSaat4.setBorder(compoundBorderForInput);
+		isikBitisSaat4.setBounds(207, 446, 38, 30);
+		standardDataPanel.add(isikBitisSaat4);
+
+		isikBaslaDakika4 = new JTextField(data[14] == null ? "" : data[14]);
+		isikBaslaDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaDakika4.setBorder(compoundBorderForInput);
+		isikBaslaDakika4.setBounds(244, 446, 38, 30);
+		standardDataPanel.add(isikBaslaDakika4);
+
+		isikBitisDakika4 = new JTextField(data[15] == null ? "" : data[15]);
+		isikBitisDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisDakika4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisDakika4.setBorder(compoundBorderForInput);
+		isikBitisDakika4.setBounds(281, 446, 38, 30);
+		standardDataPanel.add(isikBitisDakika4);
+
+		// ROW 5
+		isikBaslaSaat5 = new JTextField(data[16] == null ? "" : data[16]);
+		isikBaslaSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBaslaSaat5.setBorder(compoundBorderForInput);
+		isikBaslaSaat5.setBounds(170, 475, 38, 30);
+		standardDataPanel.add(isikBaslaSaat5);
+
+		isikBitisSaat5 = new JTextField(data[17] == null ? "" : data[17]);
+		isikBitisSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisSaat5.setBorder(compoundBorderForInput);
+		isikBitisSaat5.setBounds(207, 475, 38, 30);
+		standardDataPanel.add(isikBitisSaat5);
+
+		isikBaslaDakika5 = new JTextField(data[18] == null ? "" : data[18]);
+		isikBaslaDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBaslaDakika5.setBorder(compoundBorderForInput);
+		isikBaslaDakika5.setBounds(244, 475, 38, 30);
+		standardDataPanel.add(isikBaslaDakika5);
+
+		isikBitisDakika5 = new JTextField(data[19] == null ? "" : data[19]);
+		isikBitisDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		isikBitisDakika5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		isikBitisDakika5.setBorder(compoundBorderForInput);
+		isikBitisDakika5.setBounds(281, 475, 38, 30);
+		standardDataPanel.add(isikBitisDakika5);
+	}
+
+	private void setDivSu(int divID) throws SQLException
+	{
+		int x = 0;
+		String[] data = new String[20];
+
+		ReadDatabase getDivVal = new ReadDatabase(connection.getMysqlConnection());
+		ResultSet rs = getDivVal.getData("SELECT basla_saat, bitis_saat, basla_dakika, bitis_dakika FROM bolum_su WHERE bolum_id = '" + divID
+				+ "' ORDER BY _id ASC");
+		while (rs.next())
+		{
+			data[x] = rs.getString(1);
+			x++;
+			data[x] = rs.getString(2);
+			x++;
+			data[x] = rs.getString(3);
+			x++;
+			data[x] = rs.getString(4);
+			x++;
+		}
+
+		// ROW 1
+		suBaslaSaat1 = new JTextField(data[0] == null ? "" : data[0]);
+		suBaslaSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBaslaSaat1.setBorder(compoundBorderForInput);
+		suBaslaSaat1.setBounds(330, 359, 38, 30);
+		standardDataPanel.add(suBaslaSaat1);
+
+		suBitisSaat1 = new JTextField(data[1] == null ? "" : data[1]);
+		suBitisSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisSaat1.setBorder(compoundBorderForInput);
+		suBitisSaat1.setBounds(367, 359, 38, 30);
+		standardDataPanel.add(suBitisSaat1);
+
+		suBaslaDakika1 = new JTextField(data[2] == null ? "" : data[2]);
+		suBaslaDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaDakika1.setBorder(compoundBorderForInput);
+		suBaslaDakika1.setBounds(404, 359, 38, 30);
+		standardDataPanel.add(suBaslaDakika1);
+
+		suBitisDakika1 = new JTextField(data[3] == null ? "" : data[3]);
+		suBitisDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisDakika1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisDakika1.setBorder(compoundBorderForInput);
+		suBitisDakika1.setBounds(441, 359, 38, 30);
+		standardDataPanel.add(suBitisDakika1);
+
+		// ROW 2
+		suBaslaSaat2 = new JTextField(data[4] == null ? "" : data[4]);
+		suBaslaSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBaslaSaat2.setBorder(compoundBorderForInput);
+		suBaslaSaat2.setBounds(330, 388, 38, 30);
+		standardDataPanel.add(suBaslaSaat2);
+
+		suBitisSaat2 = new JTextField(data[5] == null ? "" : data[5]);
+		suBitisSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisSaat2.setBorder(compoundBorderForInput);
+		suBitisSaat2.setBounds(367, 388, 38, 30);
+		standardDataPanel.add(suBitisSaat2);
+
+		suBaslaDakika2 = new JTextField(data[6] == null ? "" : data[6]);
+		suBaslaDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaDakika2.setBorder(compoundBorderForInput);
+		suBaslaDakika2.setBounds(404, 388, 38, 30);
+		standardDataPanel.add(suBaslaDakika2);
+
+		suBitisDakika2 = new JTextField(data[7] == null ? "" : data[7]);
+		suBitisDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisDakika2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisDakika2.setBorder(compoundBorderForInput);
+		suBitisDakika2.setBounds(441, 388, 38, 30);
+		standardDataPanel.add(suBitisDakika2);
+
+		// ROW 3
+		suBaslaSaat3 = new JTextField(data[8] == null ? "" : data[8]);
+		suBaslaSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBaslaSaat3.setBorder(compoundBorderForInput);
+		suBaslaSaat3.setBounds(330, 417, 38, 30);
+		standardDataPanel.add(suBaslaSaat3);
+
+		suBitisSaat3 = new JTextField(data[9] == null ? "" : data[9]);
+		suBitisSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisSaat3.setBorder(compoundBorderForInput);
+		suBitisSaat3.setBounds(367, 417, 38, 30);
+		standardDataPanel.add(suBitisSaat3);
+
+		suBaslaDakika3 = new JTextField(data[10] == null ? "" : data[10]);
+		suBaslaDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaDakika3.setBorder(compoundBorderForInput);
+		suBaslaDakika3.setBounds(404, 417, 38, 30);
+		standardDataPanel.add(suBaslaDakika3);
+
+		suBitisDakika3 = new JTextField(data[11] == null ? "" : data[11]);
+		suBitisDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisDakika3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisDakika3.setBorder(compoundBorderForInput);
+		suBitisDakika3.setBounds(441, 417, 38, 30);
+		standardDataPanel.add(suBitisDakika3);
+
+		// ROW 4
+		suBaslaSaat4 = new JTextField(data[12] == null ? "" : data[12]);
+		suBaslaSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBaslaSaat4.setBorder(compoundBorderForInput);
+		suBaslaSaat4.setBounds(330, 446, 38, 30);
+		standardDataPanel.add(suBaslaSaat4);
+
+		suBitisSaat4 = new JTextField(data[13] == null ? "" : data[13]);
+		suBitisSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisSaat4.setBorder(compoundBorderForInput);
+		suBitisSaat4.setBounds(367, 446, 38, 30);
+		standardDataPanel.add(suBitisSaat4);
+
+		suBaslaDakika4 = new JTextField(data[14] == null ? "" : data[14]);
+		suBaslaDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaDakika4.setBorder(compoundBorderForInput);
+		suBaslaDakika4.setBounds(404, 446, 38, 30);
+		standardDataPanel.add(suBaslaDakika4);
+
+		suBitisDakika4 = new JTextField(data[15] == null ? "" : data[15]);
+		suBitisDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisDakika4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisDakika4.setBorder(compoundBorderForInput);
+		suBitisDakika4.setBounds(441, 446, 38, 30);
+		standardDataPanel.add(suBitisDakika4);
+
+		// ROW 5
+		suBaslaSaat5 = new JTextField(data[16] == null ? "" : data[16]);
+		suBaslaSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBaslaSaat5.setBorder(compoundBorderForInput);
+		suBaslaSaat5.setBounds(330, 475, 38, 30);
+		standardDataPanel.add(suBaslaSaat5);
+
+		suBitisSaat5 = new JTextField(data[17] == null ? "" : data[17]);
+		suBitisSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisSaat5.setBorder(compoundBorderForInput);
+		suBitisSaat5.setBounds(367, 475, 38, 30);
+		standardDataPanel.add(suBitisSaat5);
+
+		suBaslaDakika5 = new JTextField(data[18] == null ? "" : data[18]);
+		suBaslaDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBaslaDakika5.setBorder(compoundBorderForInput);
+		suBaslaDakika5.setBounds(404, 475, 38, 30);
+		standardDataPanel.add(suBaslaDakika5);
+
+		suBitisDakika5 = new JTextField(data[19] == null ? "" : data[19]);
+		suBitisDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		suBitisDakika5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		suBitisDakika5.setBorder(compoundBorderForInput);
+		suBitisDakika5.setBounds(441, 475, 38, 30);
+		standardDataPanel.add(suBitisDakika5);
+	}
+
+	private void setDivCO(int divID) throws SQLException
+	{
+		int x = 0;
+		String[] data = new String[20];
+
+		ReadDatabase getDivVal = new ReadDatabase(connection.getMysqlConnection());
+		ResultSet rs = getDivVal.getData("SELECT basla_saat, bitis_saat, basla_dakika, bitis_dakika FROM bolum_co WHERE bolum_id = '" + divID
+				+ "' ORDER BY _id ASC");
+		while (rs.next())
+		{
+			data[x] = rs.getString(1);
+			x++;
+			data[x] = rs.getString(2);
+			x++;
+			data[x] = rs.getString(3);
+			x++;
+			data[x] = rs.getString(4);
+			x++;
+		}
+
+		// ROW 1
+		coBaslaSaat1 = new JTextField(data[0] == null ? "" : data[0]);
+		coBaslaSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBaslaSaat1.setBorder(compoundBorderForInput);
+		coBaslaSaat1.setBounds(490, 359, 38, 30);
+		standardDataPanel.add(coBaslaSaat1);
+
+		coBitisSaat1 = new JTextField(data[1] == null ? "" : data[1]);
+		coBitisSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisSaat1.setBorder(compoundBorderForInput);
+		coBitisSaat1.setBounds(527, 359, 38, 30);
+		standardDataPanel.add(coBitisSaat1);
+
+		coBaslaDakika1 = new JTextField(data[2] == null ? "" : data[2]);
+		coBaslaDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaDakika1.setBorder(compoundBorderForInput);
+		coBaslaDakika1.setBounds(564, 359, 38, 30);
+		standardDataPanel.add(coBaslaDakika1);
+
+		coBitisDakika1 = new JTextField(data[3] == null ? "" : data[3]);
+		coBitisDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisDakika1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisDakika1.setBorder(compoundBorderForInput);
+		coBitisDakika1.setBounds(601, 359, 38, 30);
+		standardDataPanel.add(coBitisDakika1);
+
+		// ROW 2
+		coBaslaSaat2 = new JTextField(data[4] == null ? "" : data[4]);
+		coBaslaSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBaslaSaat2.setBorder(compoundBorderForInput);
+		coBaslaSaat2.setBounds(490, 388, 38, 30);
+		standardDataPanel.add(coBaslaSaat2);
+
+		coBitisSaat2 = new JTextField(data[5] == null ? "" : data[5]);
+		coBitisSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisSaat2.setBorder(compoundBorderForInput);
+		coBitisSaat2.setBounds(527, 388, 38, 30);
+		standardDataPanel.add(coBitisSaat2);
+
+		coBaslaDakika2 = new JTextField(data[6] == null ? "" : data[6]);
+		coBaslaDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaDakika2.setBorder(compoundBorderForInput);
+		coBaslaDakika2.setBounds(564, 388, 38, 30);
+		standardDataPanel.add(coBaslaDakika2);
+
+		coBitisDakika2 = new JTextField(data[7] == null ? "" : data[7]);
+		coBitisDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisDakika2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisDakika2.setBorder(compoundBorderForInput);
+		coBitisDakika2.setBounds(601, 388, 38, 30);
+		standardDataPanel.add(coBitisDakika2);
+
+		// ROW 3
+		coBaslaSaat3 = new JTextField(data[8] == null ? "" : data[8]);
+		coBaslaSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBaslaSaat3.setBorder(compoundBorderForInput);
+		coBaslaSaat3.setBounds(490, 417, 38, 30);
+		standardDataPanel.add(coBaslaSaat3);
+
+		coBitisSaat3 = new JTextField(data[9] == null ? "" : data[9]);
+		coBitisSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisSaat3.setBorder(compoundBorderForInput);
+		coBitisSaat3.setBounds(527, 417, 38, 30);
+		standardDataPanel.add(coBitisSaat3);
+
+		coBaslaDakika3 = new JTextField(data[10] == null ? "" : data[10]);
+		coBaslaDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaDakika3.setBorder(compoundBorderForInput);
+		coBaslaDakika3.setBounds(564, 417, 38, 30);
+		standardDataPanel.add(coBaslaDakika3);
+
+		coBitisDakika3 = new JTextField(data[11] == null ? "" : data[11]);
+		coBitisDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisDakika3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisDakika3.setBorder(compoundBorderForInput);
+		coBitisDakika3.setBounds(601, 417, 38, 30);
+		standardDataPanel.add(coBitisDakika3);
+
+		// ROW 4
+		coBaslaSaat4 = new JTextField(data[12] == null ? "" : data[12]);
+		coBaslaSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBaslaSaat4.setBorder(compoundBorderForInput);
+		coBaslaSaat4.setBounds(490, 446, 38, 30);
+		standardDataPanel.add(coBaslaSaat4);
+
+		coBitisSaat4 = new JTextField(data[13] == null ? "" : data[13]);
+		coBitisSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisSaat4.setBorder(compoundBorderForInput);
+		coBitisSaat4.setBounds(527, 446, 38, 30);
+		standardDataPanel.add(coBitisSaat4);
+
+		coBaslaDakika4 = new JTextField(data[14] == null ? "" : data[14]);
+		coBaslaDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaDakika4.setBorder(compoundBorderForInput);
+		coBaslaDakika4.setBounds(564, 446, 38, 30);
+		standardDataPanel.add(coBaslaDakika4);
+
+		coBitisDakika4 = new JTextField(data[15] == null ? "" : data[15]);
+		coBitisDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisDakika4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisDakika4.setBorder(compoundBorderForInput);
+		coBitisDakika4.setBounds(601, 446, 38, 30);
+		standardDataPanel.add(coBitisDakika4);
+
+		// ROW 5
+		coBaslaSaat5 = new JTextField(data[16] == null ? "" : data[16]);
+		coBaslaSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBaslaSaat5.setBorder(compoundBorderForInput);
+		coBaslaSaat5.setBounds(490, 475, 38, 30);
+		standardDataPanel.add(coBaslaSaat5);
+
+		coBitisSaat5 = new JTextField(data[17] == null ? "" : data[17]);
+		coBitisSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisSaat5.setBorder(compoundBorderForInput);
+		coBitisSaat5.setBounds(527, 475, 38, 30);
+		standardDataPanel.add(coBitisSaat5);
+
+		coBaslaDakika5 = new JTextField(data[18] == null ? "" : data[18]);
+		coBaslaDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBaslaDakika5.setBorder(compoundBorderForInput);
+		coBaslaDakika5.setBounds(564, 475, 38, 30);
+		standardDataPanel.add(coBaslaDakika5);
+
+		coBitisDakika5 = new JTextField(data[19] == null ? "" : data[19]);
+		coBitisDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		coBitisDakika5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		coBitisDakika5.setBorder(compoundBorderForInput);
+		coBitisDakika5.setBounds(601, 475, 38, 30);
+		standardDataPanel.add(coBitisDakika5);
+	}
+
+	private void setDivO(int divID) throws SQLException
+	{
+		int x = 0;
+		String[] data = new String[20];
+
+		ReadDatabase getDivVal = new ReadDatabase(connection.getMysqlConnection());
+		ResultSet rs = getDivVal.getData("SELECT basla_saat, bitis_saat, basla_dakika, bitis_dakika FROM bolum_o WHERE bolum_id = '" + divID
+				+ "' ORDER BY _id ASC");
+		while (rs.next())
+		{
+			data[x] = rs.getString(1);
+			x++;
+			data[x] = rs.getString(2);
+			x++;
+			data[x] = rs.getString(3);
+			x++;
+			data[x] = rs.getString(4);
+			x++;
+		}
+
+		// ROW 1
+		oBaslaSaat1 = new JTextField(data[0] == null ? "" : data[0]);
+		oBaslaSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBaslaSaat1.setBorder(compoundBorderForInput);
+		oBaslaSaat1.setBounds(653, 359, 38, 30);
+		standardDataPanel.add(oBaslaSaat1);
+
+		oBitisSaat1 = new JTextField(data[1] == null ? "" : data[1]);
+		oBitisSaat1.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisSaat1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisSaat1.setBorder(compoundBorderForInput);
+		oBitisSaat1.setBounds(690, 359, 38, 30);
+		standardDataPanel.add(oBitisSaat1);
+
+		oBaslaDakika1 = new JTextField(data[2] == null ? "" : data[2]);
+		oBaslaDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaDakika1.setBorder(compoundBorderForInput);
+		oBaslaDakika1.setBounds(727, 359, 38, 30);
+		standardDataPanel.add(oBaslaDakika1);
+
+		oBitisDakika1 = new JTextField(data[3] == null ? "" : data[3]);
+		oBitisDakika1.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisDakika1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisDakika1.setBorder(compoundBorderForInput);
+		oBitisDakika1.setBounds(764, 359, 38, 30);
+		standardDataPanel.add(oBitisDakika1);
+
+		// ROW 2
+		oBaslaSaat2 = new JTextField(data[4] == null ? "" : data[4]);
+		oBaslaSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBaslaSaat2.setBorder(compoundBorderForInput);
+		oBaslaSaat2.setBounds(653, 388, 38, 30);
+		standardDataPanel.add(oBaslaSaat2);
+
+		oBitisSaat2 = new JTextField(data[5] == null ? "" : data[5]);
+		oBitisSaat2.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisSaat2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisSaat2.setBorder(compoundBorderForInput);
+		oBitisSaat2.setBounds(690, 388, 38, 30);
+		standardDataPanel.add(oBitisSaat2);
+
+		oBaslaDakika2 = new JTextField(data[6] == null ? "" : data[6]);
+		oBaslaDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaDakika2.setBorder(compoundBorderForInput);
+		oBaslaDakika2.setBounds(727, 388, 38, 30);
+		standardDataPanel.add(oBaslaDakika2);
+
+		oBitisDakika2 = new JTextField(data[7] == null ? "" : data[7]);
+		oBitisDakika2.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisDakika2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisDakika2.setBorder(compoundBorderForInput);
+		oBitisDakika2.setBounds(764, 388, 38, 30);
+		standardDataPanel.add(oBitisDakika2);
+
+		// ROW 3
+		oBaslaSaat3 = new JTextField(data[8] == null ? "" : data[8]);
+		oBaslaSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBaslaSaat3.setBorder(compoundBorderForInput);
+		oBaslaSaat3.setBounds(653, 417, 38, 30);
+		standardDataPanel.add(oBaslaSaat3);
+
+		oBitisSaat3 = new JTextField(data[9] == null ? "" : data[9]);
+		oBitisSaat3.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisSaat3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisSaat3.setBorder(compoundBorderForInput);
+		oBitisSaat3.setBounds(690, 417, 38, 30);
+		standardDataPanel.add(oBitisSaat3);
+
+		oBaslaDakika3 = new JTextField(data[10] == null ? "" : data[10]);
+		oBaslaDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaDakika3.setBorder(compoundBorderForInput);
+		oBaslaDakika3.setBounds(727, 417, 38, 30);
+		standardDataPanel.add(oBaslaDakika3);
+
+		oBitisDakika3 = new JTextField(data[11] == null ? "" : data[11]);
+		oBitisDakika3.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisDakika3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisDakika3.setBorder(compoundBorderForInput);
+		oBitisDakika3.setBounds(764, 417, 38, 30);
+		standardDataPanel.add(oBitisDakika3);
+
+		// ROW 4
+		oBaslaSaat4 = new JTextField(data[12] == null ? "" : data[12]);
+		oBaslaSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBaslaSaat4.setBorder(compoundBorderForInput);
+		oBaslaSaat4.setBounds(653, 446, 38, 30);
+		standardDataPanel.add(oBaslaSaat4);
+
+		oBitisSaat4 = new JTextField(data[13] == null ? "" : data[13]);
+		oBitisSaat4.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisSaat4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisSaat4.setBorder(compoundBorderForInput);
+		oBitisSaat4.setBounds(690, 446, 38, 30);
+		standardDataPanel.add(oBitisSaat4);
+
+		oBaslaDakika4 = new JTextField(data[14] == null ? "" : data[14]);
+		oBaslaDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaDakika4.setBorder(compoundBorderForInput);
+		oBaslaDakika4.setBounds(727, 446, 38, 30);
+		standardDataPanel.add(oBaslaDakika4);
+
+		oBitisDakika4 = new JTextField(data[15] == null ? "" : data[15]);
+		oBitisDakika4.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisDakika4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisDakika4.setBorder(compoundBorderForInput);
+		oBitisDakika4.setBounds(764, 446, 38, 30);
+		standardDataPanel.add(oBitisDakika4);
+
+		// ROW 5
+		oBaslaSaat5 = new JTextField(data[16] == null ? "" : data[16]);
+		oBaslaSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBaslaSaat5.setBorder(compoundBorderForInput);
+		oBaslaSaat5.setBounds(653, 475, 38, 30);
+		standardDataPanel.add(oBaslaSaat5);
+
+		oBitisSaat5 = new JTextField(data[17] == null ? "" : data[17]);
+		oBitisSaat5.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisSaat5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisSaat5.setBorder(compoundBorderForInput);
+		oBitisSaat5.setBounds(690, 475, 38, 30);
+		standardDataPanel.add(oBitisSaat5);
+
+		oBaslaDakika5 = new JTextField(data[18] == null ? "" : data[18]);
+		oBaslaDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBaslaDakika5.setBorder(compoundBorderForInput);
+		oBaslaDakika5.setBounds(727, 475, 38, 30);
+		standardDataPanel.add(oBaslaDakika5);
+
+		oBitisDakika5 = new JTextField(data[19] == null ? "" : data[19]);
+		oBitisDakika5.setHorizontalAlignment(SwingConstants.RIGHT);
+		oBitisDakika5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		oBitisDakika5.setBorder(compoundBorderForInput);
+		oBitisDakika5.setBounds(764, 475, 38, 30);
+		standardDataPanel.add(oBitisDakika5);
 	}
 
 	@Override

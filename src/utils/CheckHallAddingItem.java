@@ -45,27 +45,27 @@ public class CheckHallAddingItem
 						+ "WHERE bitki_adi = '" + plantName + "'");
 		while (rs.next())
 		{
-			if (!firstHall.get(0).equals(rs.getString(3)))
+			if (!firstHall.get(0).equals(rs.getString(3)) && !firstHall.get(0).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(1).equals(rs.getString(4)))
+			if (!firstHall.get(1).equals(rs.getString(4)) && !firstHall.get(1).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(2).equals(rs.getString(7)))
+			if (!firstHall.get(2).equals(rs.getString(7)) && !firstHall.get(2).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(3).equals(rs.getString(5)))
+			if (!firstHall.get(3).equals(rs.getString(5)) && !firstHall.get(3).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(4).equals(rs.getString(6)))
+			if (!firstHall.get(4).equals(rs.getString(6)) && !firstHall.get(4).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(5).equals(rs.getString(1)))
+			if (!firstHall.get(5).equals(rs.getString(1)) && !firstHall.get(5).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(6).equals(rs.getString(8)))
+			if (!firstHall.get(6).equals(rs.getString(8)) && !firstHall.get(6).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(7).equals(rs.getString(9)))
+			if (!firstHall.get(7).equals(rs.getString(9)) && !firstHall.get(7).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(8).equals(rs.getString(10)))
+			if (!firstHall.get(8).equals(rs.getString(10)) && !firstHall.get(8).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(9).equals(rs.getString(11)))
+			if (!firstHall.get(9).equals(rs.getString(11)) && !firstHall.get(9).equals(0))
 				isPlantable = false;
-			if (!firstHall.get(10).equals(rs.getString(2)))
+			if (!firstHall.get(10).equals(rs.getString(2)) && !firstHall.get(10).equals(0))
 				isPlantable = false;
 			
 			bitkiID = rs.getInt(12);

@@ -72,7 +72,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 	public HallManagment()
 	{
 		errorLog = new ErrorLog();
-		
+
 		setTitle("Bölüm Yönetimi");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(300, 300, 450, 312);
@@ -136,21 +136,18 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 				write.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
 						+ "', 'Yeni bölüm olusturdu.')");
 
-				// populate Table
-				// createTable();
-				
-				//	Get insertID
+				// Get insertID
 				int insertID = 0;
-				
+
 				ReadDatabase getInsertId = new ReadDatabase(connection.getMysqlConnection());
 				ResultSet rs = getInsertId.getData("SELECT _id FROM bolum ORDER BY _id DESC LIMIT 1");
-				
-				while(rs.next())
+
+				while (rs.next())
 				{
 					insertID = rs.getInt(1);
 				}
-				
-				//	Generate 24 HALLS
+
+				// Generate 24 HALLS
 				String hallGenerator = "INSERT INTO hall (bolum_id, bitki_id) VALUES";
 				hallGenerator += "('" + insertID + "', '0'),";
 				hallGenerator += "('" + insertID + "', '0'),";
@@ -176,9 +173,8 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 				hallGenerator += "('" + insertID + "', '0'),";
 				hallGenerator += "('" + insertID + "', '0'),";
 				hallGenerator += "('" + insertID + "', '0');";
-				
 				write.executeQuery(hallGenerator);
-				
+
 				dispose();
 			}
 		});
@@ -214,7 +210,7 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 					ResultSet rs = checkBeforeDelete.getData("SELECT bitki_id FROM hall WHERE bolum_id = '" + bolumID + "'");
 					while (rs.next())
 					{
-						if(rs.getInt(1) > 0)
+						if (rs.getInt(1) > 0)
 						{
 							isCardEmpty = false;
 							break;
@@ -231,6 +227,11 @@ public class HallManagment extends JFrame implements LoginDataDisplay
 						WriteDatabase deleteHall = new WriteDatabase(connection.getMysqlConnection());
 						deleteHall.executeQuery("DELETE FROM hall WHERE bolum_id = '" + bolumID + "'");
 						deleteHall.executeQuery("DELETE FROM bolum WHERE _id = '" + bolumID + "' LIMIT 1");
+						deleteHall.executeQuery("DELETE FROM bolum_cansuyu WHERE bolum_id = '" + bolumID + "'");
+						deleteHall.executeQuery("DELETE FROM bolum_isik WHERE bolum_id = '" + bolumID + "'");
+						deleteHall.executeQuery("DELETE FROM bolum_su WHERE bolum_id = '" + bolumID + "'");
+						deleteHall.executeQuery("DELETE FROM bolum_co WHERE bolum_id = '" + bolumID + "'");
+						deleteHall.executeQuery("DELETE FROM bolum_o WHERE bolum_id = '" + bolumID + "'");
 
 						// Create USERLOG
 						deleteHall.executeQuery("INSERT INTO user_log(user_id, login_time, user_process) VALUES('" + _id + "', '" + CreateTime.getCurrentTime()
