@@ -67,7 +67,20 @@ public class CreateDatabase
 
 				"CREATE TABLE `bolum` (`_id` int(3) UNSIGNED NOT NULL, `add_date` date NOT NULL DEFAULT '0000-00-00') ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
-				"CREATE TABLE `bolum_setting` (`_id` int(6) NOT NULL, `bolum_id` int(4) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
+				"CREATE TABLE `bolum_cansuyu` (`_id` int(6) UNSIGNED NOT NULL, `bolum_id` int(4) NOT NULL, `basla_saat` varchar(2) DEFAULT NULL, `bitis_saat` varchar(2) DEFAULT NULL,"
+						+ " `basla_dakika` varchar(2) DEFAULT NULL, `bitis_dakika` varchar(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
+
+				"CREATE TABLE `bolum_isik` (`_id` int(6) UNSIGNED NOT NULL, `bolum_id` int(4) NOT NULL, `basla_saat` varchar(2) DEFAULT NULL, `bitis_saat` varchar(2) DEFAULT NULL,"
+						+ " `basla_dakika` varchar(2) DEFAULT NULL, `bitis_dakika` varchar(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
+
+				"CREATE TABLE `bolum_su` (`_id` int(6) UNSIGNED NOT NULL, `bolum_id` int(4) NOT NULL, `basla_saat` varchar(2) DEFAULT NULL, `bitis_saat` varchar(2) DEFAULT NULL,"
+						+ " `basla_dakika` varchar(2) DEFAULT NULL, `bitis_dakika` varchar(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
+
+				"CREATE TABLE `bolum_co` (`_id` int(6) UNSIGNED NOT NULL, `bolum_id` int(4) NOT NULL, `basla_saat` varchar(2) DEFAULT NULL, `bitis_saat` varchar(2) DEFAULT NULL,"
+						+ " `basla_dakika` varchar(2) DEFAULT NULL, `bitis_dakika` varchar(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
+
+				"CREATE TABLE `bolum_o` (`_id` int(6) UNSIGNED NOT NULL, `bolum_id` int(4) NOT NULL, `basla_saat` varchar(2) DEFAULT NULL, `bitis_saat` varchar(2) DEFAULT NULL,"
+						+ " `basla_dakika` varchar(2) DEFAULT NULL, `bitis_dakika` varchar(2) DEFAULT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
 				"CREATE TABLE `countries` (`_id` int(3) UNSIGNED NOT NULL, `country_code` varchar(2) NOT NULL, `country_name` varchar(100) NOT NULL) ENGINE=InnoDB DEFAULT CHARSET=utf8;",
 
@@ -106,6 +119,11 @@ public class CreateDatabase
 		String[] alterTables = {
 				"ALTER TABLE `bitki` ADD PRIMARY KEY (`_id`);",
 				"ALTER TABLE `bolum` ADD PRIMARY KEY (`_id`);",
+				"ALTER TABLE `bolum_cansuyu` ADD PRIMARY KEY (`_id`);",
+				"ALTER TABLE `bolum_isik` ADD PRIMARY KEY (`_id`);",
+				"ALTER TABLE `bolum_su` ADD PRIMARY KEY (`_id`);",
+				"ALTER TABLE `bolum_co` ADD PRIMARY KEY (`_id`);",
+				"ALTER TABLE `bolum_o` ADD PRIMARY KEY (`_id`);",
 				"ALTER TABLE `countries` ADD PRIMARY KEY (`_id`);",
 				"ALTER TABLE `hall` ADD PRIMARY KEY (`_id`);",
 				"ALTER TABLE `pic_cards` ADD PRIMARY KEY (`_id`);",
@@ -115,6 +133,11 @@ public class CreateDatabase
 				"ALTER TABLE `user_auth` ADD PRIMARY KEY (`_id`), ADD UNIQUE KEY `auth_name` (`auth_name`);",
 				"ALTER TABLE `user_log` ADD PRIMARY KEY (`_id`);", "ALTER TABLE `bitki` MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;",
 				"ALTER TABLE `bolum` MODIFY `_id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT;",
+				"ALTER TABLE `bolum_cansuyu` MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;",
+				"ALTER TABLE `bolum_isik` MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;",
+				"ALTER TABLE `bolum_su` MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;",
+				"ALTER TABLE `bolum_co` MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;",
+				"ALTER TABLE `bolum_o` MODIFY `_id` int(6) UNSIGNED NOT NULL AUTO_INCREMENT;",
 				"ALTER TABLE `countries` MODIFY `_id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;",
 				"ALTER TABLE `hall` MODIFY `_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;",
 				"ALTER TABLE `pic_cards` MODIFY `_id` int(5) UNSIGNED NOT NULL AUTO_INCREMENT;",
